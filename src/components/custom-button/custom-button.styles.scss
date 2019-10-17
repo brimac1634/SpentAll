@@ -1,0 +1,61 @@
+.custom-button {
+  position: relative;
+  min-width: 165px;
+  width: auto;
+  height: 40px;
+  line-height: 100%;
+  padding: 0 18px;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  outline: none;
+  text-transform: uppercase;
+  font-family: 'Lexend Deca', sans-serif;
+  letter-spacing: 4.5px;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+
+  &.large {
+    padding: 0 35px;
+  }
+
+  &.mobile {
+
+    @media screen and (max-width: 768px) {
+      letter-spacing: 3px;
+      min-width: 50px;
+      padding: 0 15px;
+      height: 35px;
+      font-size: 14px;
+    }
+
+    @media screen and (max-width: 500px) {
+      font-size: 12px;
+      height: 30px;
+    }
+  }
+
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+
+  &.inverted {
+    border: 1px solid black;
+    background-color: transparent;
+    color: black;
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
+
+  .link {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}

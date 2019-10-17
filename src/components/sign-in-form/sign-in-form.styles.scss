@@ -1,0 +1,25 @@
+.sign-in-form {
+	width: 380px;
+	display: flex;
+	flex-direction: column;
+
+	.title {
+		margin: 10px 0;
+	}
+
+	.error {
+		color: red;
+		transition: all 500ms ease-in-out;
+		opacity: 0;
+
+		&.show {
+			opacity: 1;
+		}
+	}
+
+	.buttons {
+		margin-bottom: 15px;
+		display: flex;
+		justify-content: space-between;
+	}
+}
