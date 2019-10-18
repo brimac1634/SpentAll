@@ -1,10 +1,12 @@
 import React, { Component, lazy, Suspense } from 'react';
 
+import ExpenseInput from '../../components/expense-input/expense-input.component';
+
 const Home = () => {
 
 	return (
 		<div>
-			Spentall
+			<ExpenseInput />
 		</div>
 	)
 }

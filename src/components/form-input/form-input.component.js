@@ -4,6 +4,15 @@ import './form-input.styles.scss';
 const FormInput = ({ area, handleChange, label, ...otherProps }) => (
 	<div className='group'>
 		{
+			label ? 
+			(<label 
+				className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}
+			>
+				{label}
+			</label>)
+			: null
+		}
+		{
 			area
 			?	<textarea 
 					className='form-input form-area' 
@@ -15,15 +24,6 @@ const FormInput = ({ area, handleChange, label, ...otherProps }) => (
 					onChange={handleChange} 
 					{ ...otherProps }
 				/>
-		}
-		{
-			label ? 
-			(<label 
-				className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}
-			>
-				{label}
-			</label>)
-			: null
 		}
 	</div>
 )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -19,7 +19,11 @@ const mapDispatchToProps = dispatch => ({
 const Alert = ({ isShowing, message, toggleAlert }) => {
 	const animate = isShowing ? 'fade-in' : 'fade-out';
 
-	if (isShowing) setTimeout(()=>toggleAlert(), 4000)
+	useEffect(()=>{
+		if (!isShowing) return;
+		const interval = setInterval(() => toggleAlert(), 3000)
+		return () => clearInterval(interval)
+	}, [isShowing, toggleAlert])
 
 	return (
 		<div className={`alert ${animate}`}>
