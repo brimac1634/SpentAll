@@ -15,8 +15,9 @@ export function* handleSignIn(data) {
 		if (data.error) {
 			yield put(signInFailure(data.error))
 		} else {
-			const { user: { name, email }, token } = data;
+			const { user: { name, user_id, email }, token } = data;
 			yield put(signInSuccess({
+				userID: user_id,
 				userName: name,
 				userEmail: email
 			}));

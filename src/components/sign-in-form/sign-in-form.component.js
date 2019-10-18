@@ -36,7 +36,7 @@ const SignInForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 
 	return (
 		<div className='sign-in-form'>
-			<h2>Admin Portal</h2>
+			<h2>Login</h2>
 			<form onSubmit={handleSubmit}>
 				<FormInput 
 					name='email' 

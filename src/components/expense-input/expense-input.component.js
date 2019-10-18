@@ -1,19 +1,36 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import axios from 'axios';
+import { numberWithCommas } from '../../utils';
+
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import './expense-input.styles.scss';
 
-const ExpenseInput = () => {
+const mapStateToProps = createStructuredSelector({
+	currentUser: selectCurrentUser
+})
+
+const ExpenseInput = ({ currentUser }) => {
 	const [expense, setExpense] = useState({amount: '', type: ''});
-	const { amount, type } = expense;
+	let { amount, type } = expense;
+
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-
-		//send expense to database
-		// timestamp, amount, type
+		const { userID } = currentUser;
+		axios.post('/add-expenditure', {
+			user_id: userID, 
+			type, 
+			amount, 
+			timestamp: new Date()
+		}).then(({ data }) => {
+			console.log(data)
+		}).catch(err => console.log(err))
 	}
 
 	const handleChange = event => {
@@ -29,7 +46,7 @@ const ExpenseInput = () => {
 						name='amount' 
 						type='amount' 
 						value={amount} 
-						label='amount'
+						label='$'
 						handleChange={handleChange}
 						required 
 					/>
@@ -52,4 +69,4 @@ const ExpenseInput = () => {
 	)
 }
 
-export default ExpenseInput;
+export default connect(mapStateToProps)(ExpenseInput);

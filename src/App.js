@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 import Header from './components/header/header.component';
 import Home from './pages/home/home.component';
+import Expenses from './pages/expenses/expenses.component';
 import Loader from './components/loader/loader.component';
 import Alert from './components/alert/alert.component';
 
@@ -37,8 +38,8 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
 
     useEffect(() => {
         if (currentUser) {
-            const { displayName } = currentUser;
-            setAlert(`Welcome, ${displayName}`)
+            const { userName } = currentUser;
+            setAlert(`Welcome, ${userName}`)
         }
     }, [currentUser, setAlert])
 
@@ -49,6 +50,7 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                 <Header />
                 <Switch>
                     <Route exact path='/' component={Home}/>
+                    <Route exact path='/expenses' component={Expenses}/>
                     <Route 
                         exact 
                         path='/login' 
