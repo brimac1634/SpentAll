@@ -44,32 +44,30 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
 
     return (
       <div>
-            <div>
-                <ErrorBoundary>
-                    <Suspense fallback={<Loader />}>
-                        <Header />
-                        <Switch>
-                            <Route exact path='/' component={Home}/>
-                            <Route 
-                                exact 
-                                path='/login' 
-                                render={() => 
-                                    currentUser ? (
-                                      <Redirect to={'/'}/>
-                                    ) : (
-                                      <SignIn />
-                                    )
-                                }
-                            />
-                            <Redirect to='/' />
-                        </Switch>
-                    </Suspense>
-                </ErrorBoundary>
-                {isLoading &&
-                    <Loader fixed message={loadingMessage} />
-                }
-            </div>
-            <Alert />
+        <ErrorBoundary>
+            <Suspense fallback={<Loader />}>
+                <Header />
+                <Switch>
+                    <Route exact path='/' component={Home}/>
+                    <Route 
+                        exact 
+                        path='/login' 
+                        render={() => 
+                            currentUser ? (
+                              <Redirect to={'/'}/>
+                            ) : (
+                              <SignIn />
+                            )
+                        }
+                    />
+                    <Redirect to='/' />
+                </Switch>
+            </Suspense>
+        </ErrorBoundary>
+        {isLoading &&
+            <Loader fixed message={loadingMessage} />
+        }
+        <Alert />
       </div>
     )
 }

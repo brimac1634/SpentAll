@@ -11,7 +11,9 @@ const ExpenseInput = () => {
 
 	const handleSubmit = async event => {
 		event.preventDefault();
+
 		//send expense to database
+		// timestamp, amount, type
 	}
 
 	const handleChange = event => {
