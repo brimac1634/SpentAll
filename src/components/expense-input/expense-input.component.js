@@ -47,6 +47,7 @@ const ExpenseInput = ({ currentUser }) => {
 						type='amount' 
 						value={amount} 
 						label='$'
+						placeholder='125.50'
 						handleChange={handleChange}
 						required 
 					/>
@@ -55,6 +56,7 @@ const ExpenseInput = ({ currentUser }) => {
 						type='type' 
 						value={type} 
 						label='type'
+						placeholder='lunch'
 						handleChange={handleChange}
 						required 
 					/>

@@ -21,6 +21,10 @@ $input-color: #f7f9fc;
     height: 50px;
     border: none;
 
+    &::placeholder {
+      color: #abcaff;
+    }
+
     &:focus {
       outline: none;
     }
@@ -46,18 +50,6 @@ $input-color: #f7f9fc;
     padding: 0 10px;
     line-height: 50px;
     letter-spacing: 2px;
-
-    &:after {
-      display: block;
-      content: '';
-      width: 1px;
-      height: 60%;
-      background: $label-color;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
   }
 }
 

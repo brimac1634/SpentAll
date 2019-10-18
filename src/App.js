@@ -1,6 +1,6 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { connect } from 'react-redux'; 
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
@@ -30,11 +30,14 @@ const mapDispatchToProps = dispatch => ({
   setAlert: message => dispatch(setAlert(message))
 })
 
-const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage }) => {
-
+const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, history }) => {
     useEffect(() => {
         checkUserSession();
     }, [checkUserSession])
+
+    useEffect(()=>{
+      if (!currentUser) history.push('/welcome');
+    }, [history, currentUser])
 
     useEffect(() => {
         if (currentUser) {
@@ -50,10 +53,10 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                 <Header />
                 <Switch>
                     <Route exact path='/' component={Home}/>
-                    <Route exact path='/expenses' component={Expenses}/>
+                    <Route path='/expenses' component={Expenses}/>
                     <Route 
                         exact 
-                        path='/login' 
+                        path='/welcome' 
                         render={() => 
                             currentUser ? (
                               <Redirect to={'/'}/>
@@ -74,5 +77,5 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
