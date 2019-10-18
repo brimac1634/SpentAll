@@ -12,10 +12,7 @@ export function* fetchExpensesAsync({payload}) {
 	try {
 		const { data } = yield axios.post('/get-expenditures', { user_id: payload 
 		});
-		const expenses = data.map(expense => {
-			return { ...expense, amount: expense.amount / 100}
-		})
-		yield put(fetchExpensesSuccess(expenses));
+		yield put(fetchExpensesSuccess(data));
 	} catch (err) {
 		yield put(fetchExpensesFailure(err.message))
 	}

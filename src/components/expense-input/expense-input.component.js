@@ -5,6 +5,7 @@ import axios from 'axios';
 import { numberWithCommas } from '../../utils';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { fetchExpensesSuccess } from '../../redux/expenses/expenses.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -15,7 +16,11 @@ const mapStateToProps = createStructuredSelector({
 	currentUser: selectCurrentUser
 })
 
-const ExpenseInput = ({ currentUser }) => {
+const mapDispatchToProps = dispatch => ({
+	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses))
+})
+
+const ExpenseInput = ({ currentUser, updateExpenses }) => {
 	const [expense, setExpense] = useState({amount: '', type: ''});
 	let { amount, type } = expense;
 
@@ -29,7 +34,7 @@ const ExpenseInput = ({ currentUser }) => {
 			amount, 
 			timestamp: new Date()
 		}).then(({ data }) => {
-			console.log(data)
+			updateExpenses(data)
 		}).catch(err => console.log(err))
 	}
 
@@ -71,4 +76,4 @@ const ExpenseInput = ({ currentUser }) => {
 	)
 }
 
-export default connect(mapStateToProps)(ExpenseInput);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseInput);

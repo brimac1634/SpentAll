@@ -1,0 +1,20 @@
+.meter {
+	position: relative;
+
+	.percent {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 32px;
+		color: #f6a4eb;
+	}
+
+	.meter-ring {
+		transform: rotate(-90deg);
+
+		.circle {
+			transition: stroke-dashoffset 1000ms ease-in-out;
+		}
+	}
+}

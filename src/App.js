@@ -13,6 +13,7 @@ import Alert from './components/alert/alert.component';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { setAlert } from './redux/alert/alert.actions'; 
 import { selectIsLoading, selectLoadingMessage } from './redux/loading/loading.selectors';
+import { fetchExpensesStart } from './redux/expenses/expenses.actions';
 import { checkUserSession } from './redux/user/user.actions';
 
 import './App.scss';
@@ -27,13 +28,19 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   checkUserSession: () => dispatch(checkUserSession()),
+  fetchExpenses: userID => dispatch(fetchExpensesStart(userID)),
   setAlert: message => dispatch(setAlert(message))
 })
 
-const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, history }) => {
+const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, history, fetchExpenses }) => {
     useEffect(() => {
-        checkUserSession();
+      checkUserSession();
     }, [checkUserSession])
+
+    useEffect(()=>{
+      if (!currentUser) return;
+      fetchExpenses(currentUser.userID)
+    }, [fetchExpenses, currentUser])
 
     useEffect(()=>{
       if (!currentUser) history.push('/welcome');

@@ -7,6 +7,15 @@ export const selectExpensesList = createSelector(
 	expenses => expenses.expenses
 )
 
+export const selectTotalExpenses = createSelector(
+	[selectExpensesList],
+	expenses => expenses
+		?	expenses.reduce((accum, expense) => {
+				return accum + expense.amount
+			}, 0)
+		: null
+)
+
 export const selectAreExpensesFetching = createSelector(
 	[selectExpenses],
 	expenses => expenses.isFetching
