@@ -22,7 +22,7 @@ $input-color: var(--white);
     border: none;
 
     &::placeholder {
-      color: $label-color;
+      color: $input-color;
     }
 
     &:focus {
@@ -49,7 +49,6 @@ $input-color: var(--white);
     pointer-events: none;
     padding: 0 10px;
     line-height: 50px;
-    letter-spacing: 2px;
   }
 }
 
@@ -62,4 +61,10 @@ input:-webkit-autofill:active  {
 
 input:-webkit-autofill {
     -webkit-text-fill-color: $input-color;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }

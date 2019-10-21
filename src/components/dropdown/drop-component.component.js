@@ -29,6 +29,7 @@ const DropComponent = ({toggle, show, triggerRect, children }) => {
 		<div 
 			className={`drop-down ${show ? 'fade-in' : 'fade-out'}`} 
 			style={{width: `${contentWidth}px`, height: `${contentHeight}px`, top: `${y + height}px`, left: `${x - contentWidth + width}px`}}
+			onClick={toggle}
 		>
 			<div ref={content}>
 				{childrenWithProps}

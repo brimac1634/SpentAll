@@ -5,8 +5,13 @@ const Trigger = ({ toggle, setPositition, children }) => {
 
 	useEffect(()=>{
 		const rect = selectedElement.current.getBoundingClientRect()
-		setPositition(rect);
-	}, [selectedElement])
+		setPositition({
+			x: rect.x,
+			y: rect.y,
+			width: rect.width,
+			height: rect.height
+		});
+	}, [selectedElement, setPositition])
 
 	const childrenWithProps = React.Children.map(children, child => {
       	 return React.cloneElement(child, { onClick: toggle, ref: selectedElement })      

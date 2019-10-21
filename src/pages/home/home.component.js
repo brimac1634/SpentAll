@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React from 'react';
 
 import ExpenseInput from '../../components/expense-input/expense-input.component';
 import Meter from '../../components/meter/meter.component';

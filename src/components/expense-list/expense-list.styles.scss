@@ -1,3 +1,13 @@
 .expense-list {
+	width: 100%;
+
+	.time-frames {
+		width: 30%;
+	}
 	
+	.list {
+		width: 400px;
+		display: flex;
+		flex-direction: column;
+	}
 }

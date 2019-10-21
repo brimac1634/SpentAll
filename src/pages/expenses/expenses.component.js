@@ -1,29 +1,15 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-// import { fetchExpensesStart } from '../../redux/expenses/expenses.actions';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
+import React from 'react';
 
 import ExpenseList from '../../components/expense-list/expense-list.component';
 
-const mapStateToProps = createStructuredSelector({
-	currentUser: selectCurrentUser
-})
+import './expenses.styles.scss';
 
-// const mapDispatchToProps = dispatch => ({
-// 	fetchExpenses: userID => dispatch(fetchExpensesStart(userID))
-// })
-
-const Expenses = ({ currentUser }) => {
-	// useEffect(()=>{
-	// 	if (!currentUser) return;
-	// 	fetchExpenses(currentUser.userID)
-	// }, [fetchExpenses, currentUser])
-
+const Expenses = () => {
 	return (
-		<ExpenseList />
+		<div className='expenses'>
+			<ExpenseList />
+		</div>
 	)
 }
 
-export default connect(mapStateToProps)(Expenses);
+export default Expenses;

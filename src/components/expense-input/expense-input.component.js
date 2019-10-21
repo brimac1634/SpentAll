@@ -48,7 +48,8 @@ const ExpenseInput = ({ currentUser, updateExpenses }) => {
 				<div className='form'>
 					<FormInput 
 						name='amount' 
-						type='amount' 
+						type='number' 
+						min='0'
 						value={amount} 
 						label='$'
 						placeholder='125.50'
@@ -57,7 +58,7 @@ const ExpenseInput = ({ currentUser, updateExpenses }) => {
 					/>
 					<FormInput 
 						name='type' 
-						type='type' 
+						type='text' 
 						value={type} 
 						label='type'
 						placeholder='lunch'
