@@ -24,12 +24,29 @@ const ExpenseList = ({ expenseList }) => {
 				return list.filter(({ timestamp }) => {
 					return date(timestamp).getMonth() === new Date().getMonth();
 				})
+			case 'week':
+				return list.filter(({ timestamp }) => {
+					const today = new Date();
+					const dayOfWeek = today.getDay();
+					return date(timestamp).getdate() >= new Date().getdate() - dayOfWeek;
+				})
 			case 'today':
 				return list.filter(({ timestamp}) => {
 					return date(timestamp).getDate() === new Date().getDate();
 				})
+			case 'last 30 days':
+				return list.filter(({ timestamp}) => {
+					return date(timestamp).getDate() >= new Date().getDate() - 30;
+				})
+			case 'last 7 days':
+				return list.filter(({ timestamp}) => {
+					return date(timestamp).getDate() >= new Date().getDate() - 7;
+				})
+
 			default:
-				return 'hey'
+				return list.filter(({ timestamp }) => {
+					return date(timestamp).getMonth() === new Date().getMonth();
+				})
 		}
 	}
 	const filteredList = filterExpenses(timeFrame, expenseList);
