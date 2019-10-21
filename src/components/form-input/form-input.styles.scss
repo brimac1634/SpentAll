@@ -1,6 +1,6 @@
-$main-color: #819efc;
-$label-color: #c4f0ff;
-$input-color: #f7f9fc;
+$main-color: var(--purple);
+$label-color: var(--light-blue);
+$input-color: var(--white);
 
 .group {
   background-color: $main-color;
@@ -22,7 +22,7 @@ $input-color: #f7f9fc;
     border: none;
 
     &::placeholder {
-      color: #abcaff;
+      color: $label-color;
     }
 
     &:focus {

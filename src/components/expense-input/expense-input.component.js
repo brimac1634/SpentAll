@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axios from 'axios';
-import { numberWithCommas } from '../../utils';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { fetchExpensesSuccess } from '../../redux/expenses/expenses.actions';
@@ -39,7 +38,7 @@ const ExpenseInput = ({ currentUser, updateExpenses }) => {
 	}
 
 	const handleChange = event => {
-		const { value, name } = event.target;
+		let { value, name } = event.target;
 		setExpense({ ...expense, [name]: value });
 	}
 

@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #6772e5;;
+  background-color: var(--dark-purple);
   overflow-x: hidden;
   z-index: 5;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.14);
@@ -15,11 +15,16 @@
     padding: 10px 20px;
   }
 
-  .icon {
-    width: 38px;
-    height: 38px;
-    padding: 5px;
-    fill: #c4f0ff;
-    cursor: pointer;
+  .icon-set {
+    display: flex;
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      padding: 5px;
+      fill: var(--light-blue);
+      cursor: pointer;
+      margin-left: 10px;
+    }
   }
 }

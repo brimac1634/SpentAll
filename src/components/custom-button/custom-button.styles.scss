@@ -6,17 +6,13 @@
   padding: 0 18px;
   font-size: 18px;
   letter-spacing: 2px;
-  background-color: #f6a4eb;
+  background-color: var(--pink);
   border-radius: 3px;
   color: white;
   outline: none;
   cursor: pointer;
   border: none;
   transition: all 200ms ease-in-out;
-  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffb9f6;
+  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
 
-
-  &:hover {
-
-  }
 }

@@ -17,6 +17,7 @@ const Meter = ({ totalExpenses }) => {
 		? 	totalExpenses * 100 / target
 		: 	0
 	percent = percent > 100 ? 100 : percent;
+	percent = Math.ceil(percent);
 
 	const diameter = 320;
 	const strokeWidth = 22;

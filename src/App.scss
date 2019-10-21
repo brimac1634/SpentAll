@@ -1,9 +1,28 @@
+// $base-color: #c6538c;
+:root {
+	--dark-purple: #6772e5;
+	--purple: #819efc;
+	--pink: #ffb9f6;
+	--light-blue: #c4f0ff;
+	--white: #f7f9fc;
+}
+
+
 * {
   box-sizing: border-box;
 }
 
 body {
-	color: #c4f0ff;
-	background-color: #6772e5;
+	color: var(--white);
+	background-color: var(--dark-purple);
 	overflow-x: hidden;
+	font-family: 'Karla', sans-serif;
 }
+
+h1, h2, h3 {
+	font-family: 'Rubik', sans-serif;
+	letter-spacing: 4px;
+	font-weight: 100;
+	color: var(--pink);
+}
+
