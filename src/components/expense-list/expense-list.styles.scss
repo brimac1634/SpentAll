@@ -1,13 +1,33 @@
 .expense-list {
 	width: 100%;
+	height: calc(100vh - 120px);
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 20px;
 
 	.time-frames {
-		width: 30%;
-	}
-	
-	.list {
-		width: 400px;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+
+		.buttons {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-gap: 20px;
+		}
 	}
+	
+	.center {
+		text-align: center;
+
+		.list {
+			height: calc(100vh - 120px);
+			padding: 0 3px 10px 3px;
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
+		}
+	}
+	
 }

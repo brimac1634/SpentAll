@@ -11,7 +11,7 @@ const ListItem = ({ expense }) => {
 		<div className='list-item'>
 			<span>{formattedDate}</span>
 			<span>{type}</span>
-			<span>{`$${numberWithCommas(expense.amount)}`}</span>
+			<span>{`$${numberWithCommas(amount)}`}</span>
 		</div>
 	)
 }

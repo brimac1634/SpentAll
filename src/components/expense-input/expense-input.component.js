@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { fetchExpensesSuccess } from '../../redux/expenses/expenses.actions';
+import { setAlert } from '../../redux/alert/alert.actions'; 
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -16,10 +17,11 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses))
+	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses)),
+	setAlert: alert => dispatch(setAlert(alert))
 })
 
-const ExpenseInput = ({ currentUser, updateExpenses }) => {
+const ExpenseInput = ({ currentUser, updateExpenses, setAlert }) => {
 	const [expense, setExpense] = useState({amount: '', type: ''});
 	let { amount, type } = expense;
 
@@ -34,7 +36,12 @@ const ExpenseInput = ({ currentUser, updateExpenses }) => {
 			timestamp: new Date()
 		}).then(({ data }) => {
 			updateExpenses(data)
-		}).catch(err => console.log(err))
+			setAlert('spent!')
+			setExpense({amount: '', type: ''})
+		}).catch(err => {
+			setAlert('unable to update expenditures')
+			console.log(err)
+		})
 	}
 
 	const handleChange = event => {

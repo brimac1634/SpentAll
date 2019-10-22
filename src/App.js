@@ -40,13 +40,12 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
     }, [checkUserSession])
 
     useEffect(()=>{
-      if (!currentUser) return;
-      fetchExpenses(currentUser.userID)
+      if (currentUser) fetchExpenses(currentUser.userID);
     }, [fetchExpenses, currentUser])
 
     useEffect(()=>{
       if (userError) history.push('/welcome');
-    }, [history, currentUser])
+    }, [history, userError])
 
     useEffect(() => {
         if (currentUser) {
