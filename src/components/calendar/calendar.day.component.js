@@ -1,11 +1,14 @@
 import React from 'react';
 
+import { checkDateRange } from '../../utils';
+
 import './calendar.styles.scss'
 
 const Day = ({ day, select, dateRange }) => {
     const { startDate, endDate } = dateRange;
 	const { date, isCurrentMonth, isToday, number } = day;
-    const selected = (date >= startDate && date <= endDate) || (date <= startDate && date >= endDate);
+    const selected = checkDateRange(date, startDate, endDate);
+    
     return (
         <span 
             key={date.toString()} 
