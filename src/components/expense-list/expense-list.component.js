@@ -65,7 +65,8 @@ const ExpenseList = ({ expenseList }) => {
 				<div className='buttons'>
 					{
 						timeFrames.map(time => (
-							<CustomButton 
+							<CustomButton
+								key={time} 
 								onClick={()=>setTimeFrame(time)}
 							> 
 								{time} 
@@ -73,7 +74,7 @@ const ExpenseList = ({ expenseList }) => {
 						))
 					}
 				</div>
-				<div className='calendar'>
+				<div className='calendar-box'>
 					<Calendar />
 				</div>
 			</div>

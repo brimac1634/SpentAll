@@ -6,11 +6,9 @@ const DayNames = () => {
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	return (
         <div className="calendar-row day-names">
-            {dayNames.map(day => {
-                return (
-                    <span className="day" key={day}><h4>{day}</h4></span>
-                );
-            })}
+            {dayNames.map(day => (
+                <span className="day" key={day}><h4>{day}</h4></span>
+            ))}
         </div>
     );
 }
