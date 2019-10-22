@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { numberWithCommas } from '../../utils';
 
-import { selectExpensesList, selectTimeFrame } from '../../redux/expenses/expenses.selectors';
+import { selectExpensesList } from '../../redux/expenses/expenses.selectors';
 import { setTimeFrame } from '../../redux/expenses/expenses.actions';
 
 import ListItem from '../list-item/list-item.component';
 import Calendar from '../calendar/calendar.component';
+import LineChart from '../line-chart/line-chart.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import './expense-list.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	timeFrame: selectTimeFrame,
 	expenseList: selectExpensesList
 })
 
@@ -21,12 +21,16 @@ const mapDispatchToProps = dispatch => ({
 	setTimeFrame: timeFrame => dispatch(setTimeFrame(timeFrame))
 })
 
-const ExpenseList = ({ setTimeFrame, timeFrame, expenseList }) => {
+const ExpenseList = ({ setTimeFrame, expenseList }) => {
 	const timeFrames = ['today', 'this week', 'this month', 'this year']
+
+	useEffect(()=>{
+		setTimeFrame('this month')
+	}, [setTimeFrame])
 
 	return (
 		<div className='expense-list'>
-			<div className='time-frames'>
+			<div className='panel'>
 				<h3>Time Frame</h3>
 				<div className='buttons'>
 					{
@@ -44,7 +48,7 @@ const ExpenseList = ({ setTimeFrame, timeFrame, expenseList }) => {
 					<Calendar />
 				</div>
 			</div>
-			<div className='center'>
+			<div className='panel'>
 				<h3>Expenditure List</h3>
 				<div className='list'>
 					{
@@ -57,6 +61,10 @@ const ExpenseList = ({ setTimeFrame, timeFrame, expenseList }) => {
 						))
 					}
 				</div>
+			</div>
+			<div className='panel'>
+				<h3>Charts</h3>
+				<LineChart />
 			</div>
 		</div>
 	)

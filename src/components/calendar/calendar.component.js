@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectDateRange } from '../../redux/expenses/expenses.selectors';
-import { setDateRange, setTimeFrame } from '../../redux/expenses/expenses.actions';
+import { setDateRange } from '../../redux/expenses/expenses.actions';
 
 import Week from './calendar.week.component';
 import DayNames from './calendar.day-names.component';
@@ -16,20 +16,12 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-	setTimeFrame: timeFrame => dispatch(setTimeFrame(timeFrame)),
 	setDateRange: dateRange => dispatch(setDateRange(dateRange))
 })
 
-const Calendar = ({ setDateRange, dateRange, setTimeFrame }) => {
+const Calendar = ({ setDateRange, dateRange }) => {
 	const [month, setMonth] = useState(moment());
 	const [isStartDate, setIsStartDate] = useState(false);
-
-	useEffect(()=>{
-		setDateRange({
-			startDate: moment(),
-			endDate: moment()
-		})
-	}, [setDateRange])
 
     const renderWeeks = () => {
 	    let weeks = [];
@@ -50,7 +42,6 @@ const Calendar = ({ setDateRange, dateRange, setTimeFrame }) => {
 							?	{ ...dateRange, startDate: date}
 							: 	{ ...dateRange, endDate: date}
 						)
-						setTimeFrame('date range')
 						setMonth(date.clone())
 						setIsStartDate(!isStartDate);
 					}} 

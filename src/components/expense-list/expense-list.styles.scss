@@ -7,10 +7,10 @@
 	grid-template-rows: 1fr;
 	grid-column-gap: 20px;
 
-	.time-frames {
+	.panel {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		text-align: center;
 
 		.buttons {
 			display: grid;
@@ -23,10 +23,6 @@
 			margin-top: 20px;
 			padding: 20px 10px;
 		}
-	}
-	
-	.center {
-		text-align: center;
 
 		.list {
 			height: calc(100vh - 120px);
@@ -35,5 +31,4 @@
 			-webkit-overflow-scrolling: touch;
 		}
 	}
-	
 }
