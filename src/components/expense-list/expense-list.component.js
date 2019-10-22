@@ -6,6 +6,7 @@ import { numberWithCommas } from '../../utils';
 import { selectExpensesList } from '../../redux/expenses/expenses.selectors';
 
 import ListItem from '../list-item/list-item.component';
+import Calendar from '../calendar/calendar.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import './expense-list.styles.scss';
@@ -73,7 +74,7 @@ const ExpenseList = ({ expenseList }) => {
 					}
 				</div>
 				<div className='calendar'>
-
+					<Calendar />
 				</div>
 			</div>
 			<div className='center'>
