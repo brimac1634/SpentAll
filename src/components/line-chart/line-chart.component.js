@@ -14,36 +14,37 @@ const mapStateToProps = createStructuredSelector({
 const LineChart = ({ expenseList }) => {
 	if (!expenseList) return <span>No Data</span>
 	const expenseMap = expenseList.reduce((accum, expense)=>{
-		const date = formatDate(new Date(expense.timestamp));
+		const { timestamp, amount } = expense;
+		const date = formatDate(new Date(timestamp));
 		accum[date] = accum[date] 
-			? 	[ ...accum[date], expense ]
-			: 	[expense]
+			? 	accum[date] + amount
+			: 	amount
 		return accum
 	}, {})
 	console.log(expenseMap)
 	const data = {
-		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+		labels: Object.keys(expenseMap).reverse(),
 		datasets: [
 			{
 			  label: 'My First dataset',
-			  fill: false,
-			  lineTension: 0.1,
-			  backgroundColor: 'rgba(75,192,192,0.4)',
-			  borderColor: 'rgba(75,192,192,1)',
+			  fill: true,
+			  lineTension: 0.3,
+			  backgroundColor: 'rgba(255,185,246,.4)',
+			  borderColor: '#ffb9f6',
 			  borderCapStyle: 'butt',
 			  borderDash: [],
 			  borderDashOffset: 0.0,
 			  borderJoinStyle: 'miter',
-			  pointBorderColor: 'rgba(75,192,192,1)',
-			  pointBackgroundColor: '#fff',
+			  pointBorderColor: '#f7f9fc',
+			  pointBackgroundColor: '#f7f9fc',
 			  pointBorderWidth: 1,
 			  pointHoverRadius: 5,
-			  pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+			  pointHoverBackgroundColor: '#819efc',
 			  pointHoverBorderColor: 'rgba(220,220,220,1)',
 			  pointHoverBorderWidth: 2,
 			  pointRadius: 1,
 			  pointHitRadius: 10,
-			  data: [65, 59, 80, 81, 56, 55, 40]
+			  data: Object.values(expenseMap).reverse()
 			}
 		]
 	};
@@ -51,7 +52,7 @@ const LineChart = ({ expenseList }) => {
 	return (
 		<Line 
 			data={data}
-			height={250} 
+			height={200} 
 		/>
 	)
 }
