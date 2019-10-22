@@ -1,9 +1,11 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import axios from 'axios';
+import moment from 'moment';
 
 import {
 	fetchExpensesSuccess,
-	fetchExpensesFailure
+	fetchExpensesFailure,
+	setDateRange
 } from './expenses.actions';
 
 import ExpensesActionTypes from './expenses.types';
@@ -18,6 +20,26 @@ export function* fetchExpensesAsync({payload}) {
 	}
 }
 
+export function* transformTimeFrame({payload}) {
+	const getDateRange = () => {
+		switch (payload) {
+			case 'this year':
+				return { startDate: moment().dayOfYear(1), endDate: moment().dayOfYear(366)}
+			case 'this month':
+				return { startDate: moment().date(1), endDate: moment().endOf('month')}
+			case 'this week':
+				return { startDate: moment().day(0), endDate: moment().day(6)}
+			case 'today':
+				const now = moment();
+				return { startDate: now, endDate: now}
+			default:
+				return { startDate: moment().date(1), endDate: moment().endOf('month')}
+		}
+	}
+	const dateRange = yield getDateRange(payload);
+	yield put(setDateRange(dateRange));
+}
+
 export function* fetchExpensesStart() {
 	yield takeLatest(
 		ExpensesActionTypes.FETCH_EXPENSES_START, 
@@ -25,6 +47,16 @@ export function* fetchExpensesStart() {
 	)
 }
 
+export function* setTimeFrame() {
+	yield takeLatest(
+		ExpensesActionTypes.SET_TIME_FRAME, 
+		transformTimeFrame
+	)
+}
+
 export function* expensesSagas() {
-	yield all([call(fetchExpensesStart)])
+	yield all([
+		call(fetchExpensesStart),
+		call(setTimeFrame)
+	])
 }

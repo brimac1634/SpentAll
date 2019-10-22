@@ -17,7 +17,8 @@ export const formatDate = date => {
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
 
-export const checkDateRange = (date, startDate, endDate) => {
+export const checkDateRange = (dateToCompare, startDate, endDate) => {
+  const date = moment(dateToCompare).second(1);
   const startEnd = moment(startDate).hour(23).minute(59).second(59);
   const endEnd = moment(endDate).hour(23).minute(59).second(59);
   const startBegin = moment(startDate).hour(0).minute(0).second(0);
