@@ -8,15 +8,11 @@ import './calendar.styles.scss'
 
 const Calendar = () => {
 	const [month, setMonth] = useState(moment());
-
-	// select(day, entry) {
-	// 	const { selectEntry } = this.props;
-	//     this.setState({
-	//       selected: day.date,
-	//       month: day.date.clone(),
-	//     });
-	//     selectEntry(entry)
- //    }
+	const [dateRange, setDateRange] = useState({
+		startDate: month.clone(),
+		endDate: month.clone()
+	})
+	const [isStartDate, setIsStartDate] = useState(false);
 
     const renderWeeks = () => {
 	    let weeks = [];
@@ -26,20 +22,28 @@ const Calendar = () => {
 	    let monthIndex = date.month();
 
 	    while (!done) {
-	      weeks.push(
-	        <Week 
-	        	key={date} 
-				date={date.clone()} 
-				month={month}
-				// select={(day, entry)=>this.select(day, entry)} 
-				// selected={selected} 
-			/>
-	      );
+			weeks.push(
+				<Week 
+					key={date} 
+					date={date.clone()} 
+					month={month}
+					select={({ date })=>{
+						setDateRange(
+							isStartDate
+							?	{ ...dateRange, startDate: date}
+							: 	{ ...dateRange, endDate: date}
+						)
+						setMonth(date.clone())
+						setIsStartDate(!isStartDate);
+					}} 
+					dateRange={dateRange} 
+				/>
+			);
 
-	      date.add(1, 'w');
-	      
-	      done = count++ > 2 && monthIndex !== date.month();
-	      monthIndex = date.month();
+			date.add(1, 'w');
+
+			done = count++ > 2 && monthIndex !== date.month();
+			monthIndex = date.month();
 	    }
 	    return weeks;
     };
@@ -51,7 +55,6 @@ const Calendar = () => {
     }
 
     const isNotThisMonth = canGoNext()
-    console.log(month)
 
 	return (
       <section className="calendar">
@@ -59,17 +62,17 @@ const Calendar = () => {
           <div className="month-display calendar-row">
             <div 
             	className="arrow" 
-            	onClick={()=>setMonth(month.subtract(1, 'month'))}
+            	onClick={()=>setMonth(month.clone().subtract(1, 'month'))}
             >
         		<p>&#10094;</p>
 			</div>
             <span className="month-label">
             	<h3>{month.format("MMMM YYYY")}</h3>
-            </span>;
+            </span>
         	<div 
         		className="arrow" 
         		onClick={isNotThisMonth 
-        			? ()=>setMonth(month.add(1,'month')) 
+        			? ()=>setMonth(month.clone().add(1,'month')) 
         			: null
         		}
         	>

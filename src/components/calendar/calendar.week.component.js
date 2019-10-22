@@ -7,7 +7,7 @@ import './calendar.styles.scss'
 const Week = (props) => {
 	let days = [];
     let { date } = props;
-    const { month, selected, select } = props;
+    const { month, dateRange, select } = props;
 
     for (var i = 0; i < 7; i++) {
         let day = {
@@ -21,7 +21,7 @@ const Week = (props) => {
             <Day 
                 key={i}
 	            day={day}
-	            selected={selected}
+	            dateRange={dateRange}
 	            select={select}
             />
         );

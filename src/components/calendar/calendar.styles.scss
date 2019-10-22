@@ -57,6 +57,7 @@
                 height: 50px;
 
                 &:hover {
+                    border: solid 1px var(--dark-purple);
                     background: inherit;
                 }
 
@@ -73,7 +74,7 @@
             justify-content:center;
             align-items: center;
             flex: 1;
-            height: 60px;
+            height: 40px;
             border: 1px solid var(--dark-purple);
             border-radius: 3px;
             cursor: pointer;
@@ -86,16 +87,15 @@
             }
 
             &.today {
-                background: var(--pink);
+                background: var(--purple);
             }
 
             &.different-month {
-                color: var(--cantoDarkGray);
+                color: #d6d6d6;
             }
 
             &.selected {
-                background: var(--cantoPink);
-                color: var(--cantoWhite);
+                background: var(--pink);
             }
 
             .day-number {
