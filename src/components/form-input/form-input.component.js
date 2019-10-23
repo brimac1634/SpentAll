@@ -1,8 +1,8 @@
 import React from 'react';
 import './form-input.styles.scss';
 
-const FormInput = ({ area, handleChange, label, ...otherProps }) => (
-	<div className='group'>
+const FormInput = ({ area, handleChange, margin, label, ...otherProps }) => (
+	<div className='group' style={{margin: margin ? margin : null}}>
 		{
 			label ? 
 			(<label 
