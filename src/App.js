@@ -31,7 +31,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   checkUserSession: () => dispatch(checkUserSession()),
-  fetchExpenses: userID => dispatch(fetchExpensesStart(userID)),
+  fetchExpenses: () => dispatch(fetchExpensesStart()),
   setAlert: message => dispatch(setAlert(message))
 })
 

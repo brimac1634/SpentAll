@@ -6,6 +6,10 @@ const INITIAL_STATE = {
 		startDate: null,
 		endDate: null
 	},
+	cycleDateRange: {
+		startDate: null,
+		endDate: null
+	},
 	expenses: null,
 	isFetching: false,
 	errorMessage: undefined
@@ -33,12 +37,17 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 		case ExpensesActionTypes.SET_TIME_FRAME:
 			return {
 				...state,
-				timeFrame: action.payload
+				timeFrame: action.payload.timeFrame
 			}
 		case ExpensesActionTypes.SET_DATE_RANGE:
 			return {
 				...state,
 				dateRange: action.payload
+			}
+		case ExpensesActionTypes.SET_CYCLE_DATE_RANGE:
+			return {
+				...state,
+				cycleDateRange: action.payload
 			}
 		default:
 			return state;

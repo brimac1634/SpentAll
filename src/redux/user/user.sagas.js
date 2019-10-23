@@ -11,6 +11,8 @@ import {
 	setUserSettings
 } from './user.actions';
 
+import { setTimeFrame } from '../expenses/expenses.actions';
+
 export function* handleSignIn(user) {
 	const { userName, userEmail, target, cycle, categories } = user;
 	yield put(setUserSettings({ 
@@ -18,6 +20,7 @@ export function* handleSignIn(user) {
 		cycle, 
 		categories: categories.split(',') 
 	}));
+	yield put(setTimeFrame({ timeFrame: cycle, isTarget: true }))
 	yield put(signInSuccess({ userName, userEmail }));
 }
 

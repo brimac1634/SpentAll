@@ -22,7 +22,10 @@ const ExpenseList = ({ setTimeFrame, timeFrame }) => {
 	const timeFrames = ['today', 'this week', 'this month', 'this year']
 
 	useEffect(()=>{
-		setTimeFrame('this month')
+		setTimeFrame({
+			timeFrame: 'this month',
+			isTarget: false
+		})
 	}, [setTimeFrame])
 
 	return (
@@ -33,7 +36,10 @@ const ExpenseList = ({ setTimeFrame, timeFrame }) => {
 						<CustomButton
 							key={time} 
 							selected={time === timeFrame}
-							onClick={()=>setTimeFrame(time)}
+							onClick={()=>setTimeFrame({
+								timeFrame: time,
+								isTarget: false
+							})}
 						> 
 							{time} 
 						</CustomButton>

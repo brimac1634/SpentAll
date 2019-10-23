@@ -14,12 +14,17 @@ export const fetchExpensesFailure = errorMessage => ({
 	payload: errorMessage
 })
 
-export const setTimeFrame = timeFrame => ({
+export const setTimeFrame = timeFrameAndType => ({
 	type: ExpensesActionTypes.SET_TIME_FRAME,
-	payload: timeFrame
+	payload: timeFrameAndType
 })
 
 export const setDateRange = dateRange => ({
 	type: ExpensesActionTypes.SET_DATE_RANGE,
 	payload: dateRange
+})
+
+export const setCycleDateRange = cycleDateRange => ({
+	type: ExpensesActionTypes.SET_CYCLE_DATE_RANGE,
+	payload: cycleDateRange
 })

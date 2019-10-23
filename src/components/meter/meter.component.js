@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectTotalExpenses } from '../../redux/expenses/expenses.selectors';
+import { selectUserSettings } from '../../redux/user/user.selectors';
 
 import './meter.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	totalExpenses: selectTotalExpenses
+	totalExpenses: selectTotalExpenses,
+	userSettings: selectUserSettings
 })
 
-const Meter = ({ totalExpenses }) => {
-	const target = 20000;
+const Meter = ({ totalExpenses, userSettings }) => {
+	const { target, cycle } = userSettings;
 
 	let percent = totalExpenses
 		? 	totalExpenses * 100 / target

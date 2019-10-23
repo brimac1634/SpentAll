@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ExpenseInput from '../../components/expense-input/expense-input.component';
-import Meter from '../../components/meter/meter.component';
+import MeterContainer from '../../components/meter/meter.container';
 
 import './home.styles.scss';
 
@@ -9,7 +9,7 @@ const Home = () => {
 
 	return (
 		<div className='home'>
-			<Meter />
+			<MeterContainer />
 			<ExpenseInput />
 		</div>
 	)
