@@ -1,5 +1,16 @@
 .expenses {
 	padding: 15px 30px;
-	display: flex;
-	justify-content: center;
+	width: 100%;
+	height: calc(100vh - 80px);
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 20px;
+
+	.panel {
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+	}
 }

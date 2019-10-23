@@ -27,7 +27,7 @@ const Header = ({ history }) => {
 						<Menu />
 					</DropComponent>
 				</Controller>
-				<div className='icon' onClick={()=>history.push('/login')}>
+				<div className='icon' onClick={()=>history.push('/settings')}>
 					<UserIcon />
 				</div>
 			</div>

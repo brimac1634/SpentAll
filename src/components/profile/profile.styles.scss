@@ -1,0 +1,22 @@
+.profile {
+	max-width: 600px;
+	margin: 0 auto;
+
+	.settings-box {
+		width: 100%;
+		padding: 10px;
+		// display: flex;
+		// flex-direction: column;
+
+		.top-bar {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.edit-group {
+			// display: flex;
+			// flex-direction: column;
+		}
+	}
+}

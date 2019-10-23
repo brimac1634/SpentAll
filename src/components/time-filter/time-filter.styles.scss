@@ -1,0 +1,13 @@
+.time-filter {
+	.buttons {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: 20px;
+	}
+
+	.calendar-box {
+		width: 100%;
+		margin-top: 20px;
+		padding: 20px 10px;
+	}
+}

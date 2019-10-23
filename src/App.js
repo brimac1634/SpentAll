@@ -20,6 +20,7 @@ import './App.scss';
 const SignIn = lazy(() => import('./pages/sign-in/sign-in.component'))
 const Expenses = lazy(() => import('./pages/expenses/expenses.component'))
 const Charts = lazy(() => import('./pages/charts/charts.component'))
+const Settings = lazy(() => import('./pages/settings/settings.component'))
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
@@ -63,6 +64,7 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                   <Route exact path='/' component={Home}/>
                   <Route path='/expenditures' component={Expenses}/>
                   <Route path='/charts' component={Charts}/>
+                  <Route path='/settings' component={Settings}/>
                   <Route 
                       exact 
                       path='/welcome' 

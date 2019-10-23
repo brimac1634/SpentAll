@@ -56,7 +56,9 @@ const SignInForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 				/>
 				<div className='buttons'>
 					<CustomButton 
-						type='submit'> 
+						selected
+						type='submit'
+					> 
 						Sign In 
 					</CustomButton>
 				</div>

@@ -73,6 +73,7 @@ const ExpenseInput = ({ currentUser, updateExpenses, setAlert }) => {
 						required 
 					/>
 					<CustomButton 
+						selected
 						type='submit'
 					> 
 						Spent 

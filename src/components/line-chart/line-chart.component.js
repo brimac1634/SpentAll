@@ -13,6 +13,8 @@ const mapStateToProps = createStructuredSelector({
 
 const LineChart = ({ expenseList }) => {
 	if (!expenseList) return <span>No Data</span>
+
+	const currency = '$USD';
 	const expenseMap = expenseList.reduce((accum, expense)=>{
 		const { timestamp, amount } = expense;
 		const date = formatDate(new Date(timestamp));
@@ -21,12 +23,12 @@ const LineChart = ({ expenseList }) => {
 			: 	amount
 		return accum
 	}, {})
-	console.log(expenseMap)
+
 	const data = {
 		labels: Object.keys(expenseMap).reverse(),
 		datasets: [
 			{
-			  label: 'My First dataset',
+			  label: 'Expenditures',
 			  fill: true,
 			  lineTension: 0.3,
 			  backgroundColor: 'rgba(255,185,246,.4)',
@@ -49,10 +51,52 @@ const LineChart = ({ expenseList }) => {
 		]
 	};
 
+	const options = {
+		responsive: true,
+	    legend: {
+	    	display: false
+	    },
+	    tooltips: {
+	      mode: 'label',
+	    },
+	    hover: {
+	      mode: 'nearest',
+	      intersect: true
+	    },
+		scales: {
+	      xAxes: [{
+	        display: true,
+	        ticks: {
+                fontColor: '#f7f9fc'
+            },
+	        gridLines: {
+	        	display: true,
+				color: '#819efc'
+	        }
+	      }],
+	      yAxes: [{
+	        display: true,
+	        ticks: {
+                fontColor: '#f7f9fc'
+            },
+	        gridLines: {
+	          display: true,
+	          color: '#819efc'
+	        },
+	        scaleLabel: {
+	          display: true,
+	          labelString: currency,
+	          fontColor: '#f7f9fc'
+	        }
+	      }]
+	    }
+	}
+
 	return (
 		<Line 
 			data={data}
 			height={200} 
+			options={options}
 		/>
 	)
 }
