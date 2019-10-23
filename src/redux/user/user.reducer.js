@@ -26,7 +26,7 @@ const userReducer = (state=initialState, action) => {
 				...state,
 				currentUser: null,
 				isFetching: false,
-				error: null
+				error: 'signed out'
 			}
 		case UserActionTypes.SIGN_IN_FAILURE:
 			return {

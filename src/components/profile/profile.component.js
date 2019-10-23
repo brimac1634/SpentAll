@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { signOutStart } from '../../redux/user/user.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -13,7 +14,11 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 })
 
-const Profile = ({ currentUser }) => {
+const mapDispatchToProps = dispatch => ({
+	logout: () => dispatch(signOutStart())
+})
+
+const Profile = ({ currentUser, logout }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [settings, setSettings] = useState({
 		target: '',
@@ -47,8 +52,16 @@ const Profile = ({ currentUser }) => {
 
 	return (
 		<div className='profile'>
-			<h2>Welcome, {userName}</h2>
-			<div className='settings-box'>
+			<div className='box profile-box'>
+				<h3>Welcome, {userName}</h3>
+				<CustomButton
+					selected
+					onClick={logout}
+				> 
+					logout
+				</CustomButton>
+			</div>
+			<div className='box'>
 				<div className='top-bar'>
 					<h3>Settings</h3>
 					<CustomButton
@@ -61,50 +74,59 @@ const Profile = ({ currentUser }) => {
 				{
 					isEditing &&
 					<div className='edit-group'>
-						<FormInput 
-							name='target' 
-							type='number' 
-							min='0'
-							value={target} 
-							label='target $'
-							placeholder='2,000'
-							handleChange={handleChange}
-						/>
-						<div className='target-times'>
-							{
-								targetTimes.map(time=>(
-									<CustomButton
-										selected
-										onClick={()=>setSettings({ 
-											...settings, targetTime: time
-										})}
-									> 
-										 {time}
-									</CustomButton>
-								))
-							}
+						<div className='sub-group'>
+							<span className='label'>spending limit target</span>
+							<FormInput 
+								name='target' 
+								type='number' 
+								min='0'
+								value={target} 
+								label='target $'
+								placeholder='2,000'
+								handleChange={handleChange}
+							/>
 						</div>
-						<FormInput 
-							name='category' 
-							type='text'
-							label='new type'
-							placeholder='entertainment'
-							handleChange={handleNewCategory}
-						/>
-						<div className='categories'>
-							{
-								categories &&
-								categories.map((category, i)=>(
-									<div key={i}>
-										<span>{category}</span>
-										<span
-											onClick={()=>removeFromArray(categories, i)}
-										>
-											&#10005;
-										</span>
-									</div>
-								))
-							}
+						<div className='sub-group'>
+							<span className='label'>spending target time frame</span>
+							<div className='target-times'>
+								{
+									targetTimes.map(time=>(
+										<CustomButton
+											selected
+											onClick={()=>setSettings({ 
+												...settings, targetTime: time
+											})}
+										> 
+											 {time}
+										</CustomButton>
+									))
+								}
+							</div>
+						</div>
+						<div className='sub-group'>
+							<span className='label'>add or remove spending categories</span>
+							<FormInput 
+								name='category' 
+								type='text'
+								label='new type'
+								placeholder='entertainment'
+								handleChange={handleNewCategory}
+							/>
+							<div className='categories'>
+								{
+									categories &&
+									categories.map((category, i)=>(
+										<div key={i}>
+											<span>{category}</span>
+											<span
+												onClick={()=>removeFromArray(categories, i)}
+											>
+												&#10005;
+											</span>
+										</div>
+									))
+								}
+							</div>
 						</div>
 					</div>
 				}
@@ -112,4 +134,4 @@ const Profile = ({ currentUser }) => {
 		</div>
 	)
 }
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

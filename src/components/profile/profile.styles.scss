@@ -1,12 +1,21 @@
 .profile {
-	max-width: 600px;
+	max-width: 900px;
 	margin: 0 auto;
+	display: flex;
 
-	.settings-box {
+	.box {
 		width: 100%;
-		padding: 10px;
-		// display: flex;
-		// flex-direction: column;
+		background-color: var(--dark-purple);
+		border-radius: 3px;
+		padding: 20px;
+		box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--dark-purple);
+		display: flex;
+		flex-direction: column;
+
+		&.profile-box {
+			max-width: 300px;
+			margin-right: 20px;
+		}
 
 		.top-bar {
 			width: 100%;
@@ -15,8 +24,18 @@
 		}
 
 		.edit-group {
-			// display: flex;
-			// flex-direction: column;
+			display: flex;
+			flex-direction: column;
+
+			.sub-group {
+				margin: 20px 0;
+
+				.target-times {
+					& > * {
+						margin: 0 10px 10px 0; 
+					}
+				}
+			}
 		}
 	}
 }
