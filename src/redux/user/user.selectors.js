@@ -7,6 +7,16 @@ export const selectCurrentUser = createSelector(
 	user => user.currentUser
 )
 
+export const selectUserSettings = createSelector(
+	[selectUser],
+	user => user.userSettings
+)
+
+export const selectIsUserSettingsLoaded = createSelector(
+	[selectUser],
+	user => !!user.userSettings
+)
+
 export const selectIsUserFetching = createSelector(
 	[selectUser],
 	user => user.isFetching

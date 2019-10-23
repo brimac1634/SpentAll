@@ -7,20 +7,27 @@ import UserActionTypes from './user.types';
 import { 
 	signInSuccess, 
 	signInFailure, 
-	signOutSuccess
+	signOutSuccess,
+	setUserSettings
 } from './user.actions';
 
-export function* handleSignIn(data) {
+export function* handleSignIn(user) {
+	const { userName, userEmail, target, cycle, categories } = user;
+	yield put(setUserSettings({ 
+		target, 
+		cycle, 
+		categories: categories.split(',') 
+	}));
+	yield put(signInSuccess({ userName, userEmail }));
+}
+
+export function* parseLoginWithToken(data) {
 	try {	
 		if (data.error) {
 			yield put(signInFailure(data.error))
 		} else {
-			const { user: { name, user_id, email }, token } = data;
-			yield put(signInSuccess({
-				userID: user_id,
-				userName: name,
-				userEmail: email
-			}));
+			const { user, token } = data;
+			yield call(handleSignIn, user)
 			const cookies = new Cookies();
 			cookies.set('authToken', token, { path: '/' });
 		}
@@ -34,7 +41,7 @@ export function* signInWithEmail({ payload: { email, password }}) {
 	try {
 		const { data } = yield axios.post('/login', {email, password})
 		if (data) {
-			yield call(handleSignIn, data)
+			yield call(parseLoginWithToken, data)
 		} else {
 			yield put(signInFailure('unable to login'))
 		}
@@ -49,7 +56,7 @@ export function* isUserAuthenticated() {
     if (token) {
     	try {
 			const { data } = yield axios.get('/check-user')
-			yield put(signInSuccess(data));
+			yield call(handleSignIn, data)
 		} catch (err) {
 		    yield put(signInFailure('no user'))
 		}

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axios from 'axios';
 
-import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { selectUserSettings } from '../../redux/user/user.selectors';
+import { setAlert } from '../../redux/alert/alert.actions'; 
+import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -11,28 +13,43 @@ import CustomButton from '../custom-button/custom-button.component';
 import './settings.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
+	userSettings: selectUserSettings
 })
 
-const Settings = ({ currentUser }) => {
+const mapDispatchToProps = dispatch => ({
+	startLoading: message => dispatch(startLoading(message)),
+	stopLoading: () => dispatch(stopLoading()),
+	setAlert: alert => dispatch(setAlert(alert))
+})
+
+const Settings = ({ userSettings, setAlert, startLoading, stopLoading }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [settings, setSettings] = useState({
-		target: '',
-		targetTime: 'monthly',
+		target: userSettings.target,
+		cycle: userSettings.cycle,
 		category: '',
-		categories: []
+		categories: userSettings.categories
 	});
 
 	const targetTimes = ['monthly', 'weekly', 'daily'];
-	let { target, targetTime, category, categories } = settings;
+	let { target, cycle, category, categories } = settings;
 
 	const updateProfile = async settings => {
-		axios.post('/update-settings', settings)
-			.then(({ data })=>{
-				console.log(data)
-			}).catch(err => {
-				console.log(err)
-			})
+		startLoading('updating settings')
+		axios.post('/update-settings', {
+			...settings,
+			categories: categories.join(',')
+		}).then(({ data })=>{
+			stopLoading();
+			setAlert('settings updated!')
+			setIsEditing(false);
+			console.log(data)
+		}).catch(err => {
+			stopLoading();
+			setAlert('unable to update settings')
+			setIsEditing(false);
+			console.log(err)
+		})
 	}
 
 	const handleChange = event => {
@@ -70,11 +87,11 @@ const Settings = ({ currentUser }) => {
 				<div className='edit-group'>
 					<div className='sub-group'>
 						<span className='label'>spending limit: </span>
-						<span>20,000</span>
+						<span>{target}</span>
 					</div>
 					<div className='sub-group'>
 						<span className='label'>spending cycle: </span>
-						<span>monthly</span>
+						<span>{cycle}</span>
 					</div>
 					<div className='sub-group'>
 						<span className='label'>categories: </span>
@@ -114,9 +131,9 @@ const Settings = ({ currentUser }) => {
 								targetTimes.map(time=>(
 									<CustomButton
 										key={time}
-										selected={time === targetTime}
+										selected={time === cycle}
 										onClick={()=>setSettings({ 
-											...settings, targetTime: time
+											...settings, cycle: time
 										})}
 									> 
 										 {time}
@@ -166,4 +183,4 @@ const Settings = ({ currentUser }) => {
 		</div>
 	)
 }
-export default connect(mapStateToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

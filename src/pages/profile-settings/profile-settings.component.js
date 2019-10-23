@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Profile from '../../components/profile/profile.component';
-import Settings from '../../components/settings/settings.component';
+import SettingsContainer from '../../components/settings/settings.container';
 
 import './profile-settings.styles.scss';
 
@@ -11,7 +11,7 @@ const ProfileSettings = () => (
 			<Profile />
 		</div>
 		<div className='box'>
-			<Settings />
+			<SettingsContainer />
 		</div>
 	</div>
 )

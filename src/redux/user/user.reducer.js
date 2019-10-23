@@ -2,6 +2,7 @@ import UserActionTypes from './user.types';
 
 const initialState = {
 	currentUser: null,
+	userSettings: null,
 	error: null,
 	isFetching: true
 } 
@@ -13,6 +14,11 @@ const userReducer = (state=initialState, action) => {
 			return {
 				...state,
 				isFetching: true
+			}
+		case UserActionTypes.SET_USER_SETTINGS:
+			return {
+				...state,
+				userSettings: action.payload
 			}
 		case UserActionTypes.SIGN_IN_SUCCESS:
 			return {
