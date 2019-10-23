@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { numberWithCommas } from '../../utils';
 
 import { selectExpensesList } from '../../redux/expenses/expenses.selectors';
 

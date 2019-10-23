@@ -10,10 +10,9 @@ import {
 
 import ExpensesActionTypes from './expenses.types';
 
-export function* fetchExpensesAsync({payload}) {
+export function* fetchExpensesAsync() {
 	try {
-		const { data } = yield axios.post('/get-expenditures', { user_id: payload 
-		});
+		const { data } = yield axios.get('/get-expenditures');
 		yield put(fetchExpensesSuccess(data));
 	} catch (err) {
 		yield put(fetchExpensesFailure(err.message))

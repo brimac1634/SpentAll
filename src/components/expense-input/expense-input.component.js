@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import axios from 'axios';
 
-import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { fetchExpensesSuccess } from '../../redux/expenses/expenses.actions';
 import { setAlert } from '../../redux/alert/alert.actions'; 
 
@@ -12,25 +10,19 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import './expense-input.styles.scss';
 
-const mapStateToProps = createStructuredSelector({
-	currentUser: selectCurrentUser
-})
-
 const mapDispatchToProps = dispatch => ({
 	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses)),
 	setAlert: alert => dispatch(setAlert(alert))
 })
 
-const ExpenseInput = ({ currentUser, updateExpenses, setAlert }) => {
+const ExpenseInput = ({ updateExpenses, setAlert }) => {
 	const [expense, setExpense] = useState({amount: '', type: ''});
 	let { amount, type } = expense;
 
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		const { userID } = currentUser;
 		axios.post('/add-expenditure', {
-			user_id: userID, 
 			type, 
 			amount, 
 			timestamp: new Date()
@@ -84,4 +76,4 @@ const ExpenseInput = ({ currentUser, updateExpenses, setAlert }) => {
 	)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseInput);
+export default connect(null, mapDispatchToProps)(ExpenseInput);

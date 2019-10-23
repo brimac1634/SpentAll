@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { signOutStart } from '../../redux/user/user.actions';
 
-import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import './profile.styles.scss';

@@ -41,7 +41,7 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
     }, [checkUserSession])
 
     useEffect(()=>{
-      if (currentUser) fetchExpenses(currentUser.userID);
+      if (currentUser) fetchExpenses();
     }, [fetchExpenses, currentUser])
 
     useEffect(()=>{

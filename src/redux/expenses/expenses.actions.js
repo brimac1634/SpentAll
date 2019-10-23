@@ -1,8 +1,7 @@
 import ExpensesActionTypes from './expenses.types';
 
-export const fetchExpensesStart = userID => ({
-	type: ExpensesActionTypes.FETCH_EXPENSES_START,
-	payload: userID
+export const fetchExpensesStart = () => ({
+	type: ExpensesActionTypes.FETCH_EXPENSES_START
 })
 
 export const fetchExpensesSuccess = expenses => ({
