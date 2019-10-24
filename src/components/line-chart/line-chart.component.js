@@ -5,11 +5,11 @@ import { Line } from 'react-chartjs-2';
 
 import { formatDate } from '../../utils';
 
-import { selectExpensesList, selectDateRange } from '../../redux/expenses/expenses.selectors';
+import { selectExpensesList, selectFixedDateRange } from '../../redux/expenses/expenses.selectors';
 
 const mapStateToProps = createStructuredSelector({
 	expenseList: selectExpensesList,
-	dateRange: selectDateRange
+	dateRange: selectFixedDateRange
 })
 
 const LineChart = ({ expenseList, dateRange }) => {
@@ -30,7 +30,7 @@ const LineChart = ({ expenseList, dateRange }) => {
 	}, {})
 
 	const getLabels = (startDate, endDate) => {
-		let currentDate = startDate
+		let currentDate = startDate.clone()
 		let datesArray = [];
 		while(currentDate <= endDate) {
 			const formattedDate = formatDate(currentDate.toDate());
@@ -42,7 +42,7 @@ const LineChart = ({ expenseList, dateRange }) => {
 
 
 	const data = {
-		// labels: getLabels(startDate, endDate),
+		labels: getLabels(startDate, endDate),
 		datasets: [
 			{
 			  label: 'Expenditures',

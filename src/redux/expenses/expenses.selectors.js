@@ -32,17 +32,17 @@ export const selectDateRange = createSelector(
 	expenses => expenses.dateRange
 )
 
-// export const selectFixedDateRange = createSelector(
-// 	[selectExpenses],
-// 	({ dateRange }) => {
-// 		const { startDate, endDate } = dateRange;
-// 		if (startDate === endDate || startDate < endDate) {
-// 			return dateRange;
-// 		} else {
-// 			return { startDate: endDate, endDate: startDate }
-// 		}
-// 	}
-// )
+export const selectFixedDateRange = createSelector(
+	[selectExpenses],
+	({ dateRange }) => {
+		const { startDate, endDate } = dateRange;
+		if (startDate === endDate || startDate < endDate) {
+			return dateRange;
+		} else {
+			return { startDate: endDate, endDate: startDate }
+		}
+	}
+)
 
 const getTotalValue = list => {
 	return list

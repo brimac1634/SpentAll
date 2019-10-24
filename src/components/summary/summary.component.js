@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { numberWithCommas, formatDate } from '../../utils';
 
-import { selectTotalExpenses, selectDateRange } from '../../redux/expenses/expenses.selectors';
+import { selectTotalExpenses, selectFixedDateRange } from '../../redux/expenses/expenses.selectors';
 
 import './summary.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
 	totalExpense: selectTotalExpenses,
-	dateRange: selectDateRange
+	dateRange: selectFixedDateRange
 })
 
 const Summary = ({ totalExpense, dateRange }) => {
