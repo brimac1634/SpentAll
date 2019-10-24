@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axios from 'axios';
+import { numberWithCommas } from '../../utils';
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
 import { setAlert } from '../../redux/alert/alert.actions'; 
@@ -87,7 +88,7 @@ const Settings = ({ userSettings, setAlert, startLoading, stopLoading }) => {
 				<div className='edit-group'>
 					<div className='sub-group'>
 						<span className='label'>spending limit: </span>
-						<span>{target}</span>
+						<span>${numberWithCommas(target)}</span>
 					</div>
 					<div className='sub-group'>
 						<span className='label'>spending cycle: </span>
@@ -161,6 +162,7 @@ const Settings = ({ userSettings, setAlert, startLoading, stopLoading }) => {
 									<div key={i} className='cat'>
 										<span>{category}</span>
 										<span
+											className='delete'
 											onClick={()=>removeFromArray(categories, i)}
 										>
 											&#10005;

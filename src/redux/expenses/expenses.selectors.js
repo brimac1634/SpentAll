@@ -4,16 +4,22 @@ import { checkDateRange } from '../../utils';
 
 const selectExpenses = state => state.expenses;
 
+const filterList = (list, dates) => {
+	if (!list) return null;
+	const { startDate, endDate } = dates;
+	return list.filter(({ timestamp }) => {
+		return checkDateRange(new Date(timestamp), startDate, endDate)
+	})
+}
+
 export const selectExpensesList = createSelector(
 	[selectExpenses],
-	expense => {
-		const { expenses, dateRange } = expense;
-		if (!expenses) return null;
-		const { startDate, endDate } = dateRange;
-		return expenses.filter(({ timestamp }) => {
-			return checkDateRange(new Date(timestamp), startDate, endDate)
-		})
-	}
+	({ expenses, dateRange }) => filterList(expenses, dateRange)
+)
+
+export const selectTargetExpensesList = createSelector(
+	[selectExpenses],
+	({ expenses, cycleDateRange }) => filterList(expenses, cycleDateRange)
 )
 
 export const selectTimeFrame = createSelector(
@@ -26,13 +32,28 @@ export const selectDateRange = createSelector(
 	expenses => expenses.dateRange
 )
 
+const getTotalValue = list => {
+	return list
+		?	list.reduce((accum, item) => {
+				return accum + item.amount
+			}, 0)
+		: 0
+}
+
 export const selectTotalExpenses = createSelector(
 	[selectExpensesList],
-	expenses => expenses
-		?	expenses.reduce((accum, expense) => {
-				return accum + expense.amount
-			}, 0)
-		: null
+	expenses => getTotalValue(expenses)
+)
+
+export const selectTotalTargetExpenses = createSelector(
+	[selectTargetExpensesList],
+	expenses => getTotalValue(expenses)
+)
+
+// change to total target
+export const selectIsTotalExpensesLoaded = createSelector(
+	[selectTotalExpenses],
+	totalExpenses => !!totalExpenses
 )
 
 export const selectAreExpensesFetching = createSelector(

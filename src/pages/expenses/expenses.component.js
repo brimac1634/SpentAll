@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Summary from '../../components/summary/summary.component';
 import ExpenseList from '../../components/expense-list/expense-list.component';
 import TimeFilter from '../../components/time-filter/time-filter.component';
 import LineChart from '../../components/line-chart/line-chart.component';
@@ -14,6 +15,7 @@ const Expenses = () => {
 				<TimeFilter />
 			</div>
 			<div className='panel'>
+				<Summary />
 				<h3>Expenditure List</h3>
 				<ExpenseList />
 			</div>
