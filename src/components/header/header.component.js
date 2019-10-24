@@ -1,13 +1,9 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
-import Trigger from '../compound/compound-trigger.component';
-import Controller from '../compound/compound-controller.component';
-import DropComponent from '../dropdown/drop-component.component';
-import Menu from '../menu/menu.component';
-
-import { ReactComponent as UserIcon } from '../../assets/user.svg'
-import { ReactComponent as MenuIcon } from '../../assets/menu.svg'
+import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
+import { ReactComponent as AnalyticsIcon } from '../../assets/analytics.svg'
+import { ReactComponent as HomeIcon } from '../../assets/home.svg'
 
 import './header.styles.scss';
 
@@ -15,21 +11,17 @@ const Header = ({ history }) => {
 
     return (
 		<div className='header'>
-			<h3>SpentAll</h3>
+			<h3 className='title'>SpentAll</h3>
 			<div className='icon-set'>
-				<Controller>
-					<Trigger>
-						<div className='icon'>
-							<MenuIcon />
-						</div>
-					</Trigger>
-					<DropComponent>
-						<Menu />
-					</DropComponent>
-				</Controller>
-				<div className='icon' onClick={()=>history.push('/settings')}>
-					<UserIcon />
-				</div>
+				<Link to={'/'} className='icon'>
+					<HomeIcon />
+				</Link>
+				<Link to={'/analytics'} className='icon'>
+					<AnalyticsIcon />
+				</Link>
+				<Link to={'/settings'} className='icon'>
+					<SettingsIcon />
+				</Link>
 			</div>
 		</div>
 	)

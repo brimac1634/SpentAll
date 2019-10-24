@@ -57,7 +57,7 @@ const Meter = ({ totalTargetExpense, userSettings }) => {
 					<h1>{percent}%</h1>
 					<h3>of your {cycle} limit</h3>
 				</div>
-				<span>OR</span>
+				<h3>OR</h3>
 				<div className='row'>
 					<h1>${numberWithCommas(totalTargetExpense)}</h1>
 					<h3>out of</h3>
