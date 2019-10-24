@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { numberWithCommas } from '../../utils';
@@ -30,9 +30,6 @@ const Meter = ({ totalTargetExpense, userSettings }) => {
 
 	return (
 		<div className='meter'>
-			<div className='message-group'>
-				<h1>{percent}% of your {cycle} limit</h1>
-			</div>
 			<div className='ring-group'>
 				<svg
 					className='meter-ring'
@@ -56,9 +53,16 @@ const Meter = ({ totalTargetExpense, userSettings }) => {
 				<span className='percent'>{percent}%</span>
 			</div>
 			<div className='message-group'>
-				<h1>
-					${numberWithCommas(totalTargetExpense)} spent of your ${numberWithCommas(target)} limit
-				</h1>
+				<div className='row'>
+					<h1>{percent}%</h1>
+					<h3>of your {cycle} limit</h3>
+				</div>
+				<span>OR</span>
+				<div className='row'>
+					<h1>${numberWithCommas(totalTargetExpense)}</h1>
+					<h3>out of</h3>
+					<h1>${numberWithCommas(target)}</h1>
+				</div>
 			</div>
 		</div>
 	)

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import { numberWithCommas } from '../../utils';
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
 import { setAlert } from '../../redux/alert/alert.actions'; 
+import { setUserSettings } from '../../redux/user/user.actions'; 
 import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
 
 import FormInput from '../form-input/form-input.component';
@@ -18,12 +19,13 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
+	setUserSettings: settings => dispatch(setUserSettings(settings)),
 	startLoading: message => dispatch(startLoading(message)),
 	stopLoading: () => dispatch(stopLoading()),
 	setAlert: alert => dispatch(setAlert(alert))
 })
 
-const Settings = ({ userSettings, setAlert, startLoading, stopLoading }) => {
+const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopLoading }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [settings, setSettings] = useState({
 		target: userSettings.target,
@@ -41,15 +43,19 @@ const Settings = ({ userSettings, setAlert, startLoading, stopLoading }) => {
 			...settings,
 			categories: categories.join(',')
 		}).then(({ data })=>{
+			const { cycle, target, categories } = data;
+			setUserSettings({ 
+				cycle, 
+				target, 
+				categories: categories.split(',') 
+			})
 			stopLoading();
 			setAlert('settings updated!')
 			setIsEditing(false);
-			console.log(data)
 		}).catch(err => {
 			stopLoading();
 			setAlert('unable to update settings')
 			setIsEditing(false);
-			console.log(err)
 		})
 	}
 

@@ -1,8 +1,13 @@
 .meter {
 	padding: 20px 40px;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-column-gap: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+
+	> * {
+		margin: 10px 20px;
+	}
 
 	.ring-group {
 		position: relative;
@@ -30,7 +35,20 @@
 
 	.message-group {
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		flex-direction: column;
+
+		h1, h3 {
+			line-height: 40px;
+			margin-right: 10px;
+		}
+
+		h3 {
+			color: var(--light-blue);
+		}
+		
+		.row {
+			display: flex;
+			align-items: flex-end;
+		}
 	}
 }
