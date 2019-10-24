@@ -5,16 +5,21 @@ import { Line } from 'react-chartjs-2';
 
 import { formatDate } from '../../utils';
 
-import { selectExpensesList } from '../../redux/expenses/expenses.selectors';
+import { selectExpensesList, selectDateRange } from '../../redux/expenses/expenses.selectors';
 
 const mapStateToProps = createStructuredSelector({
-	expenseList: selectExpensesList
+	expenseList: selectExpensesList,
+	dateRange: selectDateRange
 })
 
-const LineChart = ({ expenseList }) => {
-	if (!expenseList) return <span>No Data</span>
+const LineChart = ({ expenseList, dateRange }) => {
+	if (!expenseList || !dateRange) return <span>No Data</span>
+	
+	const { startDate, endDate } = dateRange;
+	if (startDate === endDate) return <span>No chart for this date range</span>
 
 	const currency = '$USD';
+
 	const expenseMap = expenseList.reduce((accum, expense)=>{
 		const { timestamp, amount } = expense;
 		const date = formatDate(new Date(timestamp));
@@ -24,8 +29,20 @@ const LineChart = ({ expenseList }) => {
 		return accum
 	}, {})
 
+	const getLabels = (startDate, endDate) => {
+		let currentDate = startDate
+		let datesArray = [];
+		while(currentDate <= endDate) {
+			const formattedDate = formatDate(currentDate.toDate());
+			datesArray.push(formattedDate);
+			currentDate.add(1, 'd');
+		}
+		return datesArray;
+	}
+
+
 	const data = {
-		labels: Object.keys(expenseMap).reverse(),
+		// labels: getLabels(startDate, endDate),
 		datasets: [
 			{
 			  label: 'Expenditures',

@@ -32,6 +32,18 @@ export const selectDateRange = createSelector(
 	expenses => expenses.dateRange
 )
 
+// export const selectFixedDateRange = createSelector(
+// 	[selectExpenses],
+// 	({ dateRange }) => {
+// 		const { startDate, endDate } = dateRange;
+// 		if (startDate === endDate || startDate < endDate) {
+// 			return dateRange;
+// 		} else {
+// 			return { startDate: endDate, endDate: startDate }
+// 		}
+// 	}
+// )
+
 const getTotalValue = list => {
 	return list
 		?	list.reduce((accum, item) => {
@@ -50,10 +62,9 @@ export const selectTotalTargetExpenses = createSelector(
 	expenses => getTotalValue(expenses)
 )
 
-// change to total target
-export const selectIsTotalExpensesLoaded = createSelector(
-	[selectTotalExpenses],
-	totalExpenses => !!totalExpenses
+export const selectIsTotalTargetExpensesLoaded = createSelector(
+	[selectTotalTargetExpenses],
+	totalTargetExpenses => !!totalTargetExpenses
 )
 
 export const selectAreExpensesFetching = createSelector(
