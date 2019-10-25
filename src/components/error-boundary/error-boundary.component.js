@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import iceCream from '../../assets/404.png';
+
+import './error-boundary.styles.scss';
+
 class ErrorBoundary extends Component {
 	constructor() {
 		super();
@@ -18,7 +22,12 @@ class ErrorBoundary extends Component {
 
 	render() {
 		if (this.state.hasErrored) {
-			return <div>Oops! Something has gone wrong.</div>
+			return (
+				<div className='error-boundary'>
+					<img src={iceCream} alt='ice cream' />
+					<span>Oops! Something has gone wrong.</span>
+				</div>
+			)
 		} 
 		return this.props.children
 	}

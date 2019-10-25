@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-export const formatDate = date => {
+export const formatDate = (date, short) => {
   const monthNames = [
     "Jan", "Feb", "Mar",
     "Apr", "May", "Jun", "Jul",
@@ -12,9 +12,26 @@ export const formatDate = date => {
 
   const day = date.getDate();
   const monthIndex = date.getMonth();
-  const year = date.getFullYear();
+  if (short) return day + ' ' + monthNames[monthIndex]
 
+  const year = date.getFullYear();
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+export const dateAndTime = date => {
+  const dateToFormat = new Date(date)
+  const timezoneOffsetMinutes = dateToFormat.getTimezoneOffset();
+  const setMinutes = dateToFormat.getMinutes() - timezoneOffsetMinutes;
+  dateToFormat.setMinutes(setMinutes);
+  return dateToFormat.toLocaleDateString('en-US', { 
+    weekday: 'short', 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'short' 
+  });
 }
 
 export const checkDateRange = (dateToCompare, startDate, endDate) => {

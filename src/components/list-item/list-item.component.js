@@ -6,7 +6,7 @@ import './list-item.styles.scss';
 
 const ListItem = ({ expense, selected, ...otherProps }) => {
 	const { timestamp, type, amount } = expense;
-	const formattedDate = formatDate(new Date(timestamp))
+	const formattedDate = formatDate(new Date(timestamp), true)
 	return (
 		<div className={`list-item ${selected ? 'selected' : null}`} {...otherProps}>
 			<span>{formattedDate}</span>

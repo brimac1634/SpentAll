@@ -2,9 +2,8 @@
 	background-color: var(--purple);
 	margin: 8px 5px 8px 0;
 	border-radius: 3px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	padding: 5px 10px;
 	height: 40px;
 	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--purple);
@@ -18,5 +17,18 @@
 	&.selected {
 		background-color: var(--pink);
 		box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
+	}
+
+	span {
+		line-height: 30px;
+	}
+
+	:first-child,
+	:nth-child(2) {
+		text-align: left;
+	}
+
+	:last-child {
+		text-align: right;
 	}
 }
