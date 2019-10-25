@@ -7,6 +7,7 @@ import { fetchExpensesSuccess, toggleAddExpense } from '../../redux/expenses/exp
 import { selectShowAddExpense } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
 import { setAlert } from '../../redux/alert/alert.actions'; 
+import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -22,26 +23,33 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
 	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses)),
 	setAlert: alert => dispatch(setAlert(alert)),
-	toggleAddExpense: () => dispatch(toggleAddExpense())
+	toggleAddExpense: () => dispatch(toggleAddExpense()),
+	startLoading: message => dispatch(startLoading(message)),
+	stopLoading: () => dispatch(stopLoading()),
 })
 
-const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, toggleAddExpense }) => {
+const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, toggleAddExpense, startLoading, stopLoading }) => {
 	const [expense, setExpense] = useState({amount: '', type: ''});
+	const [incomplete, setIncomplete] = useState(false);
 	let { amount, type } = expense;
 	const { categories } = userSettings;
 
 
 	const handleSubmit = async event => {
 		event.preventDefault();
+		startLoading()
 		axios.post('/add-expenditure', {
 			type, 
 			amount, 
 			timestamp: new Date()
 		}).then(({ data }) => {
 			updateExpenses(data)
+			stopLoading();
 			setAlert('spent!')
 			setExpense({amount: '', type: ''})
+			toggleAddExpense();
 		}).catch(err => {
+			stopLoading();
 			setAlert('unable to update expenditures')
 			console.log(err)
 		})
@@ -59,7 +67,7 @@ const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, 
 
 	return (
 		<div className={`expense-input ${showAddExpense ? 'show' : 'hide'}`}>
-			<div className='box'>
+			<div className={`box ${showAddExpense ? null : 'hide'}`}>
 				<h3>Add Expenditure</h3>
 				<form onSubmit={handleSubmit}>
 					<div className='form'>
@@ -97,7 +105,7 @@ const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, 
 					</CustomButton>
 					<CustomButton 
 						selected
-						type='submit'
+						onClick={handleSubmit}
 					> 
 						spent 
 					</CustomButton>
