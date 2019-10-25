@@ -7,7 +7,7 @@ const DayNames = () => {
 	return (
         <div className="calendar-row day-names">
             {dayNames.map(day => (
-                <span className="day" key={day}><h4>{day}</h4></span>
+                <span className="day" key={day}><h3>{day}</h3></span>
             ))}
         </div>
     );

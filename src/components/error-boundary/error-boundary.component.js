@@ -24,7 +24,7 @@ class ErrorBoundary extends Component {
 		if (this.state.hasErrored) {
 			return (
 				<div className='error-boundary'>
-					<img src={iceCream} alt='ice cream' />
+					<img src={iceCream} alt='SpentAll' />
 					<span>Oops! Something has gone wrong.</span>
 				</div>
 			)

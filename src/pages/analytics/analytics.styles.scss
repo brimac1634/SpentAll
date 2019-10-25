@@ -4,7 +4,7 @@
 	height: calc(100vh - 80px);
 	overflow: hidden;
 	display: grid;
-	grid-template-columns: max-content max-content auto;
+	grid-template-columns: max-content 20% 50%;
 	grid-template-rows: 1fr;
 	grid-column-gap: 30px;
 

@@ -1,13 +1,17 @@
 import moment from 'moment';
 
-export const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const numberWithCommas = x => {
+  const numberWithDecimals = Number(x).toFixed(2);
+  const numString = numberWithDecimals.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return numString
+}
 
 export const formatDate = (date, short) => {
   const monthNames = [
-    "Jan", "Feb", "Mar",
-    "Apr", "May", "Jun", "Jul",
-    "Aug", "Sep", "Oct",
-    "Nov", "Dec"
+    'Jan', 'Feb', 'Mar',
+    'Apr', 'May', 'Jun', 'Jul',
+    'Aug', 'Sep', 'Oct',
+    'Nov', 'Dec'
   ];
 
   const day = date.getDate();

@@ -82,4 +82,18 @@ export const selectSelectedExpense = createSelector(
 	expenses => expenses.selectedExpense
 )
 
+export const selectCategoriesTotals = createSelector(
+	[selectExpensesList],
+	expenses => {
+		if (!expenses) return null;
+		return expenses.reduce((accum, expense) => {
+			const { type, amount } = expense;
+			accum[type] = accum[type]
+				?	accum[type] + amount
+				: 	amount
+			return accum
+		}, {})
+	}
+)
+
 
