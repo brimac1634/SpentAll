@@ -32,3 +32,8 @@ export const setCycleDateRange = cycleDateRange => ({
 	type: ExpensesActionTypes.SET_CYCLE_DATE_RANGE,
 	payload: cycleDateRange
 })
+
+export const setSelectedExpense = selectedExpense => ({
+	type: ExpensesActionTypes.SET_SELECTED_EXPENSE,
+	payload: selectedExpense
+})

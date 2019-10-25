@@ -77,4 +77,9 @@ export const selectAreExpensesFetching = createSelector(
 	expenses => expenses.isFetching
 )
 
+export const selectSelectedExpense = createSelector(
+	[selectExpenses],
+	expenses => expenses.selectedExpense
+)
+
 

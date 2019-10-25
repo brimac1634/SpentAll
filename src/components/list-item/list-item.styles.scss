@@ -1,6 +1,6 @@
 .list-item {
 	background-color: var(--purple);
-	margin: 8px 0;
+	margin: 8px 5px 8px 0;
 	border-radius: 3px;
 	display: flex;
 	align-items: center;
@@ -9,8 +9,14 @@
 	height: 40px;
 	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--purple);
 	cursor: pointer;
+	transition: all 300ms ease-in-out;
 
 	&:first-child {
 		margin-top: 0;
+	}
+
+	&.selected {
+		background-color: var(--pink);
+		box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
 	}
 }

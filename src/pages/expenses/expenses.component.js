@@ -3,28 +3,27 @@ import React from 'react';
 import Summary from '../../components/summary/summary.component';
 import ExpenseList from '../../components/expense-list/expense-list.component';
 import TimeFilter from '../../components/time-filter/time-filter.component';
-import LineChart from '../../components/line-chart/line-chart.component';
+import ExpenditureDetails from '../../components/expenditure-details/expenditure-details.component';
 
 import './expenses.styles.scss';
 
-const Expenses = () => {
-	return (
-		<div className='expenses'>
-			<div className='panel'>
-				<h3>Time Frame</h3>
-				<TimeFilter />
-			</div>
-			<div className='panel'>
-				<Summary />
-				<h3>Expenditure List</h3>
+const Expenses = () => (
+	<div className='expenses'>
+		<div className='panel'>
+			<h3>Time Frame</h3>
+			<TimeFilter />
+		</div>
+		<div className='panel summary-panel'>
+			<Summary />
+			<ExpenditureDetails />
+		</div>
+		<div className='panel'>
+			<h3>Expenditure List</h3>
+			<div className='list-container'>
 				<ExpenseList />
 			</div>
-			<div className='panel'>
-				<h3>Charts</h3>
-				<LineChart />
-			</div>
 		</div>
-	)
-}
+	</div>
+)
 
 export default Expenses;

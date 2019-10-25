@@ -11,6 +11,7 @@ const INITIAL_STATE = {
 		startDate: null,
 		endDate: null
 	},
+	selectedExpense: null,
 	expenses: null,
 	isFetching: false,
 	errorMessage: undefined
@@ -54,6 +55,11 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				cycleDateRange: action.payload
+			}
+		case ExpensesActionTypes.SET_SELECTED_EXPENSE:
+			return {
+				...state,
+				selectedExpense: action.payload
 			}
 		default:
 			return state;

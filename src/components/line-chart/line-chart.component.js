@@ -7,6 +7,8 @@ import { formatDate } from '../../utils';
 
 import { selectExpensesList, selectFixedDateRange } from '../../redux/expenses/expenses.selectors';
 
+import './line-chart.styles.scss';
+
 const mapStateToProps = createStructuredSelector({
 	expenseList: selectExpensesList,
 	dateRange: selectFixedDateRange
@@ -70,6 +72,7 @@ const LineChart = ({ expenseList, dateRange }) => {
 
 	const options = {
 		responsive: true,
+		maintainAspectRatio: true,
 	    legend: {
 	    	display: false
 	    },
@@ -112,7 +115,6 @@ const LineChart = ({ expenseList, dateRange }) => {
 	return (
 		<Line 
 			data={data}
-			height={200} 
 			options={options}
 		/>
 	)
