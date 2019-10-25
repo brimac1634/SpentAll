@@ -32,6 +32,11 @@ export const selectDateRange = createSelector(
 	expenses => expenses.dateRange
 )
 
+export const selectShowAddExpense = createSelector(
+	[selectExpenses],
+	expenses => expenses.showAddExpense
+)
+
 export const selectFixedDateRange = createSelector(
 	[selectExpenses],
 	({ dateRange }) => {

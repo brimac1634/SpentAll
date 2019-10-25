@@ -1,5 +1,9 @@
 import ExpensesActionTypes from './expenses.types';
 
+export const toggleAddExpense = () => ({
+	type: ExpensesActionTypes.TOGGLE_ADD_EXPENSE
+})
+
 export const fetchExpensesStart = () => ({
 	type: ExpensesActionTypes.FETCH_EXPENSES_START
 })

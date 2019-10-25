@@ -1,6 +1,7 @@
 import ExpensesActionTypes from './expenses.types';
 
 const INITIAL_STATE = {
+	showAddExpense: false,
 	timeFrame: 'this month',
 	dateRange: {
 		startDate: null,
@@ -17,6 +18,11 @@ const INITIAL_STATE = {
 
 const expensesReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
+		case ExpensesActionTypes.TOGGLE_ADD_EXPENSE:
+			return {
+				...state,
+				showAddExpense: !state.showAddExpense
+			}
 		case ExpensesActionTypes.FETCH_EXPENSES_START:
 			return {
 				...state,

@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 import Header from './components/header/header.component';
 import Home from './pages/home/home.component';
+import ExpenseInputContainer from './components/expense-input/expense-input.container';
 import Loader from './components/loader/loader.component';
 import Alert from './components/alert/alert.component';
 
@@ -25,7 +26,7 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   userError: selectUserError,
   isLoading: selectIsLoading,
-  loadingMessage: selectLoadingMessage
+  loadingMessage: selectLoadingMessage,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -76,6 +77,7 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                   />
                   <Redirect to='/' />
               </Switch>
+              <ExpenseInputContainer />
             </Suspense>
         </ErrorBoundary>
         {isLoading &&
