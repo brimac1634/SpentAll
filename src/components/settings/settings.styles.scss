@@ -34,20 +34,6 @@
 
 			.categories {
 				margin: 20px 0;
-
-				.cat {
-					display: inline-block;
-					background-color: var(--purple);
-					border-radius: 3px;
-					padding: 10px;
-					box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--purple);
-					margin: 0 10px 10px 0;
-
-					.delete {
-						margin-left: 5px;
-						cursor: pointer;
-					}
-				}
 			}
 		}
 	}

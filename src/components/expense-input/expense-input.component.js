@@ -10,6 +10,7 @@ import { setAlert } from '../../redux/alert/alert.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import Category from '../category/category.component';
 
 import './expense-input.styles.scss';
 
@@ -76,16 +77,15 @@ const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, 
 							{
 								categories &&
 								categories.map((category, i)=>(
-									<div 
-										key={i} 
-										className='cat'
+									<Category 
+										key={i}
+										selected={type === category}
+										category={category}
 										onClick={()=>setExpense({
 											...expense,
 											type: category
 										})}
-									>
-										<span>{category}</span>
-									</div>
+									/>
 								))
 							}
 						</div>

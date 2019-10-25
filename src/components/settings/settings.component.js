@@ -11,6 +11,7 @@ import { startLoading, stopLoading } from '../../redux/loading/loading.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import Category from '../category/category.component';
 
 import './settings.styles.scss';
 
@@ -106,9 +107,10 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 							{
 								categories &&
 								categories.map((category, i)=>(
-									<div key={i} className='cat'>
-										<span>{category}</span>
-									</div>
+									<Category 
+										key={i}
+										category={category}
+									/>
 								))
 							}
 						</div>
@@ -165,15 +167,11 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 							{
 								categories &&
 								categories.map((category, i)=>(
-									<div key={i} className='cat'>
-										<span>{category}</span>
-										<span
-											className='delete'
-											onClick={()=>removeFromArray(categories, i)}
-										>
-											&#10005;
-										</span>
-									</div>
+									<Category 
+										key={i}
+										category={category}
+										onDelete={()=>removeFromArray(categories, i)}
+									/>
 								))
 							}
 						</div>
