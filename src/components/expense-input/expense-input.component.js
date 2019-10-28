@@ -35,6 +35,7 @@ const ExpenseInput = ({ updateExpenses, setAlert, userSettings, toggleAddExpense
 
 	const handleSubmit = async event => {
 		event.preventDefault();
+		if (!amount || !type) return setIncomplete(true);
 		startLoading()
 		axiosConfig('post', '/add-expenditure', {
 			type, 
@@ -46,10 +47,9 @@ const ExpenseInput = ({ updateExpenses, setAlert, userSettings, toggleAddExpense
 			setAlert('spent!')
 			setExpense({amount: '', type: ''})
 			toggleAddExpense();
-		}).catch(err => {
+		}).catch(() => {
 			stopLoading();
 			setAlert('unable to update expenditures')
-			console.log(err)
 		})
 	}
 
@@ -59,8 +59,8 @@ const ExpenseInput = ({ updateExpenses, setAlert, userSettings, toggleAddExpense
 	}
 
 	const cancel = () => {
-		setExpense({amount: '', type: ''})
 		toggleAddExpense();
+		setExpense({amount: '', type: ''})
 	}
 
 	return (
@@ -94,6 +94,7 @@ const ExpenseInput = ({ updateExpenses, setAlert, userSettings, toggleAddExpense
 							))
 						}
 					</div>
+					<span className={`error ${incomplete ? 'show' : 'hide'}`}>*You must add a valid amount and choose a spending category*</span>
 				</div>
 			</form>
 			<div className='button-container'>

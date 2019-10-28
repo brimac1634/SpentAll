@@ -1,0 +1,35 @@
+.list-group {
+	padding: 15px 30px;
+	width: 100%;
+	height: calc(100vh - 100px);
+	display: grid;
+	grid-template-areas: 
+		'list summary details'
+		'list new details ';
+	grid-column-gap: 30px;
+	grid-row-gap: 30px;
+	grid-template-columns: repeat(3, 1fr);
+
+	.new,
+	.summary-panel {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.summary-panel { 
+		grid-area: summary;
+		flex-direction: column;
+
+		> * {
+			margin: 10px 0;
+		}
+	}
+
+	.list { 
+		position: relative;
+		grid-area: list; 
+	}
+	.details { grid-area: details; }
+	.new { grid-area: new }
+}

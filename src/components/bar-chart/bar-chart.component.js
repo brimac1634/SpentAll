@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Bar } from 'react-chartjs-2';
 
-import { formatDate } from '../../utils';
-
 import { 
 	selectExpensesDateMap, 
 	selectFixedDateRange,

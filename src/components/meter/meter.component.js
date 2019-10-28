@@ -78,7 +78,7 @@ const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense }) => {
 					selected
 					onClick={toggleAddExpense}
 				> 
-					Add Expenditure 
+					add expenditure 
 				</CustomButton>
 			</div>
 		</div>
