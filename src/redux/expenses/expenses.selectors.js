@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-import { checkDateRange, formatDate } from '../../utils';
+import { checkDateRange, formatDate, sortProperties } from '../../utils';
 
 const selectExpenses = state => state.expenses;
 
@@ -116,14 +116,22 @@ export const selectCategoriesTotals = createSelector(
 	[selectExpensesList],
 	expenses => {
 		if (!expenses) return null;
-		return expenses.reduce((accum, expense) => {
+		const categoryMap = expenses.reduce((accum, expense) => {
 			const { type, amount } = expense;
 			accum[type] = accum[type]
 				?	accum[type] + amount
 				: 	amount
 			return accum
 		}, {})
+		
+		const sortedArray = sortProperties(categoryMap).reduce((accum, array) => {
+			accum[array[0]] = array[1]
+			return accum
+		}, {})
+		return sortedArray;
 	}
 )
+
+
 
 

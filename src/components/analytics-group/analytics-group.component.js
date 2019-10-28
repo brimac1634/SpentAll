@@ -20,10 +20,12 @@ const AnalyticsGroup = () => {
 					time filter
 				</CustomButton>
 			</div>
-			<div className='bar'>
+			<div className='chart bar'>
+				<h4>amount spent per day</h4>
 				<BarChart />
 			</div>
-			<div className='doughnut'>
+			<div className='chart doughnut'>
+				<h4>amount spent per category ($USD)</h4>
 				<DoughnutChart />
 			</div>
 			<HoverBox show={showFilter}>

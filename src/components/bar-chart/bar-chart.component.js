@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Bar } from 'react-chartjs-2';
+import { lightenDarkenColor } from '../../utils';
 
 import { 
 	selectExpensesDateMap, 
@@ -33,9 +34,10 @@ const BarChart = ({ expenseMap, dateRange, datesArray }) => {
 			{
 			  label: 'Expenditures',
 			  fill: true,
-			  backgroundColor: 'rgba(255,185,246)',
+			  backgroundColor: lightenDarkenColor('#ffb9f6', 40),
+			  hoverBackgroundColor: '#ffb9f6',
 			  borderWidth: 1,
-			  borderColor: '#ffffff',
+			  borderColor: '#f7f9fc',
 			  data: expenditures
 			}
 		]
@@ -48,7 +50,8 @@ const BarChart = ({ expenseMap, dateRange, datesArray }) => {
 	    	display: false
 	    },
 	    tooltips: {
-	      mode: 'label',
+	      mode: 'nearest',
+	      cornerRadius: 3
 	    },
 	    hover: {
 	      mode: 'nearest',

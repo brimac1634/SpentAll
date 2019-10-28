@@ -2,6 +2,7 @@ import React from 'react';
 import {Doughnut} from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { lightenDarkenColor } from '../../utils';
 
 import { selectCategoriesTotals } from '../../redux/expenses/expenses.selectors';
 
@@ -22,11 +23,15 @@ const DoughnutChart = ({ categoryTotals }) => {
 		colorIndex = colorIndex < colors.length - 1 ? colorIndex + 1 : 0;
 	}
 
+	const fadedColors = categoryColors.map(color => {
+		return lightenDarkenColor(color, 40)
+	})
+
 	const data = {
 		labels: categoryKeys,
 		datasets: [{
 			data: Object.values(categoryTotals),
-			backgroundColor: categoryColors,
+			backgroundColor: fadedColors,
 			hoverBackgroundColor: categoryColors,
 			borderWidth: 1,
 		}]
@@ -35,13 +40,16 @@ const DoughnutChart = ({ categoryTotals }) => {
 	const options = {
 		responsive: true,
 		maintainAspectRatio: true,
+		cutoutPercentage: 35,
 	    legend: {
 	    	display: false,
-	    	fontColor: 'white',
 	    	position: 'bottom',
 	    	labels: {
 	    		fontColor: '#f7f9fc'
 	    	}
+	    },
+	    tooltips: {
+	    	cornerRadius: 3
 	    }
 	}
 

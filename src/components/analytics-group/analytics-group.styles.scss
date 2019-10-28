@@ -22,6 +22,11 @@
 		}
 	}
 
-	.bar { grid-area: bar; }
-	.doughnut { grid-area: doughnut; }
+	.chart {
+		text-align: center;
+
+		&.bar { grid-area: bar; }
+		&.doughnut { grid-area: doughnut; }
+	}
+	
 }

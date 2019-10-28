@@ -47,6 +47,16 @@ export const checkDateRange = (dateToCompare, startDate, endDate) => {
   return (date >= startBegin && date <= endEnd) || (date <= startEnd && date >= endBegin)
 }
 
+export const sortProperties = obj => {
+  let sortable=[];
+  for(var key in obj)
+    if(obj.hasOwnProperty(key))
+      sortable.push([key, obj[key]]);
+
+  sortable.sort((a, b) => b[1]-a[1]);
+  return sortable;
+}
+
 export const lightenDarkenColor = (col, amt) => {
     var usePound = false;
     if (col[0] === '#') {
