@@ -1,5 +1,5 @@
 .analytics-group {
-	padding: 15px 30px;
+	padding: 15px 30px 30px 30px;
 	width: 100%;
 	height: calc(100vh - 100px);
 	display: grid;
@@ -7,7 +7,7 @@
 		'summary summary summary summary'
 		'bar bar doughnut doughnut';
 	grid-column-gap: 30px;
-	grid-row-gap: 30px;
+	grid-row-gap: 10px;
 	grid-template-columns: repeat(4, 1fr);
 
 	.summary-panel { 

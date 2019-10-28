@@ -14,10 +14,11 @@ import {
 import { setTimeFrame } from '../expenses/expenses.actions';
 
 export function* handleSignIn(user) {
-	const { userName, userEmail, target, cycle, categories } = user;
+	const { userName, userEmail, target, cycle, currency, categories } = user;
 	yield put(setUserSettings({ 
 		target, 
 		cycle, 
+		currency,
 		categories: categories.split(',') 
 	}));
 	yield put(setTimeFrame({ timeFrame: cycle, isTarget: true }))

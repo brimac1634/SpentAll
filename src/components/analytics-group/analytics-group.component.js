@@ -21,11 +21,9 @@ const AnalyticsGroup = () => {
 				</CustomButton>
 			</div>
 			<div className='chart bar'>
-				<h4>amount spent per day</h4>
 				<BarChart />
 			</div>
 			<div className='chart doughnut'>
-				<h4>amount spent per category ($USD)</h4>
 				<DoughnutChart />
 			</div>
 			<HoverBox show={showFilter}>

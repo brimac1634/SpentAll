@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { numberWithCommas } from '../../utils';
 
 import { selectTotalTargetExpenses } from '../../redux/expenses/expenses.selectors';
-import { selectUserSettings } from '../../redux/user/user.selectors';
+import { selectUserSettings, selectCurrency } from '../../redux/user/user.selectors';
 import { toggleAddExpense } from '../../redux/expenses/expenses.actions';
 
 import CustomButton from '../custom-button/custom-button.component';
@@ -13,14 +13,15 @@ import './meter.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
 	totalTargetExpense: selectTotalTargetExpenses,
-	userSettings: selectUserSettings
+	userSettings: selectUserSettings,
+	currency: selectCurrency
 })
 
 const mapDispatchToProps = dispatch => ({
 	toggleAddExpense: () => dispatch(toggleAddExpense())
 })
 
-const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense }) => {
+const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency }) => {
 	const { target, cycle } = userSettings;
 
 	let percent = totalTargetExpense
@@ -67,9 +68,9 @@ const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense }) => {
 					</div>
 					<h3>or</h3>
 					<div className='row'>
-						<h1>${numberWithCommas(totalTargetExpense)}</h1>
+						<h1>{currency}{numberWithCommas(totalTargetExpense)}</h1>
 						<h3>out of</h3>
-						<h1>${numberWithCommas(target)}</h1>
+						<h1>{currency}{numberWithCommas(target)}</h1>
 					</div>
 				</div>
 			</div>

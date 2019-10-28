@@ -26,3 +26,8 @@ export const selectUserError = createSelector(
 	[selectUser],
 	user => user.error
 )
+
+export const selectCurrency = createSelector(
+	[selectUser],
+	({ userSettings }) => userSettings ? userSettings.currency : null
+)

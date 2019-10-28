@@ -9,20 +9,20 @@ import {
 	selectFixedDateRange,
 	selectDatesArray 
 } from '../../redux/expenses/expenses.selectors';
+import { selectCurrency } from '../../redux/user/user.selectors';
 
 const mapStateToProps = createStructuredSelector({
 	expenseMap: selectExpensesDateMap,
 	dateRange: selectFixedDateRange,
-	datesArray: selectDatesArray
+	datesArray: selectDatesArray,
+	currency: selectCurrency
 })
 
-const BarChart = ({ expenseMap, dateRange, datesArray }) => {
+const BarChart = ({ expenseMap, dateRange, datesArray, currency }) => {
 	if (!expenseMap || !dateRange) return <span>No Data</span>
 	
 	const { startDate, endDate } = dateRange;
 	if (startDate === endDate) return <span>No chart for this date range</span>
-
-	const currency = '$USD';
 	
 	const expenditures = datesArray.map(date => {
 		return expenseMap[date] || 0;
@@ -34,7 +34,7 @@ const BarChart = ({ expenseMap, dateRange, datesArray }) => {
 			{
 			  label: 'Expenditures',
 			  fill: true,
-			  backgroundColor: lightenDarkenColor('#ffb9f6', 40),
+			  backgroundColor: lightenDarkenColor('#ffb9f6', 30),
 			  hoverBackgroundColor: '#ffb9f6',
 			  borderWidth: 1,
 			  borderColor: '#f7f9fc',
@@ -87,7 +87,10 @@ const BarChart = ({ expenseMap, dateRange, datesArray }) => {
 	}
 
 	return (
-		<Bar data={data} options={options} />
+		<div>
+    		<h4>total amount spent per day ({currency})</h4>
+			<Bar data={data} options={options} />
+		</div>
 	)
 }
 

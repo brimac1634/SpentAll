@@ -1,19 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { numberWithCommas, formatDate } from '../../utils';
 
+import { selectCurrency } from '../../redux/user/user.selectors';
+
 import './list-item.styles.scss';
 
-const ListItem = ({ expense, selected, ...otherProps }) => {
+const mapStateToProps = createStructuredSelector({
+	currency: selectCurrency
+})
+
+const ListItem = ({ currency, expense, selected }) => {
 	const { timestamp, type, amount } = expense;
 	const formattedDate = formatDate(new Date(timestamp), true)
 	return (
-		<div className={`list-item ${selected ? 'selected' : null}`} {...otherProps}>
+		<div className={`list-item ${selected ? 'selected' : null}`}>
 			<span>{formattedDate}</span>
 			<span>{type}</span>
-			<span>{`$${numberWithCommas(amount)}`}</span>
+			<span>{currency}{numberWithCommas(amount, true)}</span>
 		</div>
 	)
 }
 
-export default ListItem;
+export default connect(mapStateToProps)(ListItem);

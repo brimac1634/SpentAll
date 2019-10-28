@@ -31,12 +31,13 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 	const [settings, setSettings] = useState({
 		target: userSettings.target,
 		cycle: userSettings.cycle,
+		currency: userSettings.currency,
 		category: '',
 		categories: userSettings.categories
 	});
 
 	const targetTimes = ['monthly', 'weekly', 'daily'];
-	let { target, cycle, category, categories } = settings;
+	let { target, cycle, currency, category, categories } = settings;
 
 	const updateProfile = async settings => {
 		startLoading('updating settings')
@@ -44,10 +45,11 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 			...settings,
 			categories: categories.join(',')
 		}).then(({ data })=>{
-			const { cycle, target, categories } = data;
+			const { cycle, currency, target, categories } = data;
 			setUserSettings({ 
 				cycle, 
 				target, 
+				currency,
 				categories: categories.split(',') 
 			})
 			stopLoading();
@@ -94,8 +96,12 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 				!isEditing &&
 				<div className='edit-group'>
 					<div className='sub-group'>
+						<span className='label'>currency: </span>
+						<span>{currency}</span>
+					</div>
+					<div className='sub-group'>
 						<span className='label'>spending limit: </span>
-						<span>${numberWithCommas(target)}</span>
+						<span>{currency}{numberWithCommas(target)}</span>
 					</div>
 					<div className='sub-group'>
 						<span className='label'>spending cycle: </span>
@@ -121,6 +127,18 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 				isEditing &&
 				<div className='edit-group'>
 					<div className='sub-group'>
+						<span className='label'>currency</span>
+						<FormInput 
+							name='currency' 
+							type='text' 
+							value={currency} 
+							margin='0'
+							label='currency'
+							placeholder='$USD'
+							handleChange={handleChange}
+						/>
+					</div>
+					<div className='sub-group'>
 						<span className='label'>spending limit</span>
 						<FormInput 
 							name='target' 
@@ -128,7 +146,7 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 							min='0'
 							value={target} 
 							margin='0'
-							label='target $'
+							label={`target ${currency}`}
 							placeholder='2,000'
 							handleChange={handleChange}
 						/>
