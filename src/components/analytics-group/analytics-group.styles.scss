@@ -1,0 +1,27 @@
+.analytics-group {
+	padding: 15px 30px;
+	width: 100%;
+	height: calc(100vh - 100px);
+	display: grid;
+	grid-template-areas: 
+		'summary summary summary summary'
+		'bar bar doughnut doughnut';
+	grid-column-gap: 30px;
+	grid-row-gap: 30px;
+	grid-template-columns: repeat(4, 1fr);
+
+	.summary-panel { 
+		grid-area: summary; 
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		> * {
+			margin: 10px 0;
+		}
+	}
+
+	.bar { grid-area: bar; }
+	.doughnut { grid-area: doughnut; }
+}

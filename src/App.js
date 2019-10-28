@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 import Header from './components/header/header.component';
 import Home from './pages/home/home.component';
+import HoverBox from './components/hover-box/hover-box.component';
 import ExpenseInputContainer from './components/expense-input/expense-input.container';
 import Loader from './components/loader/loader.component';
 import Alert from './components/alert/alert.component';
@@ -14,6 +15,7 @@ import { selectCurrentUser, selectUserError } from './redux/user/user.selectors'
 import { setAlert } from './redux/alert/alert.actions'; 
 import { selectIsLoading, selectLoadingMessage } from './redux/loading/loading.selectors';
 import { fetchExpensesStart } from './redux/expenses/expenses.actions';
+import { selectShowAddExpense } from './redux/expenses/expenses.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
 import './App.scss';
@@ -28,6 +30,7 @@ const mapStateToProps = createStructuredSelector({
   userError: selectUserError,
   isLoading: selectIsLoading,
   loadingMessage: selectLoadingMessage,
+  showAddExpense: selectShowAddExpense
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -36,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
   setAlert: message => dispatch(setAlert(message))
 })
 
-const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, history, fetchExpenses, userError }) => {
+const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, history, fetchExpenses, userError, showAddExpense }) => {
     useEffect(() => {
       checkUserSession();
     }, [checkUserSession])
@@ -78,7 +81,9 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
               </Switch>
               {
                 currentUser &&
-                <ExpenseInputContainer />
+                <HoverBox show={showAddExpense}>
+                  <ExpenseInputContainer />
+                </HoverBox>
               }
             </Suspense>
         </ErrorBoundary>

@@ -18,8 +18,6 @@ const DoughnutChart = ({ categoryTotals }) => {
 	const categoryColors = categoryKeys.map((cat, i) => {
 		return lightenDarkenColor('#ffb9f6', i * -colorInterval)
 	})
-	console.log(categoryColors)
-	//make a function to count the number of keys and make colors incrementally darker to use as the colors
 
 	const data = {
 		labels: categoryKeys,

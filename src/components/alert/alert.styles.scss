@@ -1,7 +1,7 @@
 .alert {
 	position: fixed;
-	background: #f6a4eb;
-  color: #f7f9fc;
+	background: var(--pink);
+  color: var(--white);
 	top: 80px;
 	left: 50%;
 	transform: translateX(-50%);
@@ -15,7 +15,7 @@
   overflow: hidden;
   pointer-events: none;
   transition: all 500ms ease-in-out;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(103, 114, 229, 0.4);
 
     &.fade-in {
       opacity: 1;

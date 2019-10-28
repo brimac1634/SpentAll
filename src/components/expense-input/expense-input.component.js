@@ -4,7 +4,6 @@ import { createStructuredSelector } from 'reselect';
 import axiosConfig from '../../axios-config';
 
 import { fetchExpensesSuccess, toggleAddExpense } from '../../redux/expenses/expenses.actions';
-import { selectShowAddExpense } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
 import { setAlert } from '../../redux/alert/alert.actions'; 
 import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
@@ -16,8 +15,7 @@ import Category from '../category/category.component';
 import './expense-input.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	userSettings: selectUserSettings,
-	showAddExpense: selectShowAddExpense
+	userSettings: selectUserSettings
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -28,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
 	stopLoading: () => dispatch(stopLoading()),
 })
 
-const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, toggleAddExpense, startLoading, stopLoading }) => {
+const ExpenseInput = ({ updateExpenses, setAlert, userSettings, toggleAddExpense, startLoading, stopLoading }) => {
 	const [expense, setExpense] = useState({amount: '', type: ''});
 	const [incomplete, setIncomplete] = useState(false);
 	let { amount, type } = expense;
@@ -66,50 +64,48 @@ const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, 
 	}
 
 	return (
-		<div className={`expense-input ${showAddExpense ? 'show' : 'hide'}`}>
-			<div className={`box ${showAddExpense ? null : 'hide'}`}>
-				<h3>Add Expenditure</h3>
-				<form onSubmit={handleSubmit}>
-					<div className='form'>
-						<FormInput 
-							name='amount' 
-							type='number' 
-							min='0'
-							value={amount} 
-							label='$'
-							placeholder='125.50'
-							handleChange={handleChange}
-							required 
-						/>
-						<div className='categories-container'>
-							{
-								categories &&
-								categories.map((category, i)=>(
-									<Category 
-										key={i}
-										selected={type === category}
-										category={category}
-										onClick={()=>setExpense({
-											...expense,
-											type: category
-										})}
-									/>
-								))
-							}
-						</div>
+		<div className='expense-input'>
+			<h3>Add Expenditure</h3>
+			<form onSubmit={handleSubmit}>
+				<div className='form'>
+					<FormInput 
+						name='amount' 
+						type='number' 
+						min='0'
+						value={amount} 
+						label='$'
+						placeholder='125.50'
+						handleChange={handleChange}
+						required 
+					/>
+					<div className='categories-container'>
+						{
+							categories &&
+							categories.map((category, i)=>(
+								<Category 
+									key={i}
+									selected={type === category}
+									category={category}
+									onClick={()=>setExpense({
+										...expense,
+										type: category
+									})}
+								/>
+							))
+						}
 					</div>
-				</form>
-				<div className='button-container'>
-					<CustomButton onClick={cancel}> 
-						cancel 
-					</CustomButton>
-					<CustomButton 
-						selected
-						onClick={handleSubmit}
-					> 
-						spent 
-					</CustomButton>
 				</div>
+			</form>
+			<div className='button-container'>
+				<CustomButton onClick={cancel}> 
+					cancel 
+				</CustomButton>
+				<CustomButton 
+					selected
+					onClick={handleSubmit}
+				> 
+					spent 
+				</CustomButton>
 			</div>
 		</div>
 	)

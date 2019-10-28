@@ -5,49 +5,32 @@ import { Bar } from 'react-chartjs-2';
 
 import { formatDate } from '../../utils';
 
-import { selectExpensesList, selectFixedDateRange } from '../../redux/expenses/expenses.selectors';
+import { 
+	selectExpensesDateMap, 
+	selectFixedDateRange,
+	selectDatesArray 
+} from '../../redux/expenses/expenses.selectors';
 
 const mapStateToProps = createStructuredSelector({
-	expenseList: selectExpensesList,
-	dateRange: selectFixedDateRange
+	expenseMap: selectExpensesDateMap,
+	dateRange: selectFixedDateRange,
+	datesArray: selectDatesArray
 })
 
-const BarChart = ({ expenseList, dateRange }) => {
-	if (!expenseList || !dateRange) return <span>No Data</span>
+const BarChart = ({ expenseMap, dateRange, datesArray }) => {
+	if (!expenseMap || !dateRange) return <span>No Data</span>
 	
 	const { startDate, endDate } = dateRange;
 	if (startDate === endDate) return <span>No chart for this date range</span>
 
 	const currency = '$USD';
-
-	const getLabels = (startDate, endDate) => {
-		let currentDate = startDate.clone()
-		let datesArray = [];
-		while(currentDate <= endDate) {
-			const formattedDate = formatDate(currentDate.toDate());
-			datesArray.push(formattedDate);
-			currentDate.add(1, 'd');
-		}
-		return datesArray;
-	}
-
-	const labels = getLabels(startDate, endDate);
-
-	const expenseMap = expenseList.reduce((accum, expense)=>{
-		const { timestamp, amount } = expense;
-		const date = formatDate(new Date(timestamp));
-		accum[date] = accum[date] 
-			? 	accum[date] + amount
-			: 	amount
-		return accum
-	}, {})
-
-	const expenditures = labels.map(date => {
+	
+	const expenditures = datesArray.map(date => {
 		return expenseMap[date] || 0;
 	})
 
 	const data = {
-		labels,
+		labels: datesArray,
 		datasets: [
 			{
 			  label: 'Expenditures',

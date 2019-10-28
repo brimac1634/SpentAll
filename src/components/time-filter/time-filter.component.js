@@ -30,6 +30,7 @@ const ExpenseList = ({ setTimeFrame, timeFrame }) => {
 
 	return (
 		<div className='time-filter'>
+			<h3>time filter</h3>
 			<div className='buttons'>
 				{
 					timeFrames.map(time => (

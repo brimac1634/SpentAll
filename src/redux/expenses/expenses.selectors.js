@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-import { checkDateRange } from '../../utils';
+import { checkDateRange, formatDate } from '../../utils';
 
 const selectExpenses = state => state.expenses;
 
@@ -15,6 +15,21 @@ const filterList = (list, dates) => {
 export const selectExpensesList = createSelector(
 	[selectExpenses],
 	({ expenses, dateRange }) => filterList(expenses, dateRange)
+)
+
+export const selectExpensesDateMap = createSelector(
+	[selectExpensesList],
+	expenseList => {
+		if (!expenseList) return null;
+		return expenseList.reduce((accum, expense)=>{
+			const { timestamp, amount } = expense;
+			const date = formatDate(new Date(timestamp));
+			accum[date] = accum[date] 
+				? 	accum[date] + amount
+				: 	amount
+			return accum
+		}, {})
+	}
 )
 
 export const selectTargetExpensesList = createSelector(
@@ -46,6 +61,21 @@ export const selectFixedDateRange = createSelector(
 		} else {
 			return { startDate: endDate, endDate: startDate }
 		}
+	}
+)
+
+export const selectDatesArray = createSelector(
+	[selectFixedDateRange],
+	({ startDate, endDate }) => {
+		if (!startDate || !endDate) return [];
+		let currentDate = startDate.clone()
+		let datesArray = [];
+		while(currentDate <= endDate) {
+			const formattedDate = formatDate(currentDate.toDate());
+			datesArray.push(formattedDate);
+			currentDate.add(1, 'd');
+		}
+		return datesArray;
 	}
 )
 
