@@ -1,35 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 import { formatDate } from '../../utils';
 
 import { selectExpensesList, selectFixedDateRange } from '../../redux/expenses/expenses.selectors';
-
-import './line-chart.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
 	expenseList: selectExpensesList,
 	dateRange: selectFixedDateRange
 })
 
-const LineChart = ({ expenseList, dateRange }) => {
+const BarChart = ({ expenseList, dateRange }) => {
 	if (!expenseList || !dateRange) return <span>No Data</span>
 	
 	const { startDate, endDate } = dateRange;
 	if (startDate === endDate) return <span>No chart for this date range</span>
 
 	const currency = '$USD';
-
-	const expenseMap = expenseList.reduce((accum, expense)=>{
-		const { timestamp, amount } = expense;
-		const date = formatDate(new Date(timestamp));
-		accum[date] = accum[date] 
-			? 	accum[date] + amount
-			: 	amount
-		return accum
-	}, {})
 
 	const getLabels = (startDate, endDate) => {
 		let currentDate = startDate.clone()
@@ -42,30 +31,29 @@ const LineChart = ({ expenseList, dateRange }) => {
 		return datesArray;
 	}
 
+	const labels = getLabels(startDate, endDate);
+
+	const expenseMap = expenseList.reduce((accum, expense)=>{
+		const { timestamp, amount } = expense;
+		const date = formatDate(new Date(timestamp));
+		accum[date] = accum[date] 
+			? 	accum[date] + amount
+			: 	amount
+		return accum
+	}, {})
+
+	const expenditures = labels.map(date => {
+		return expenseMap[date] || 0;
+	})
 
 	const data = {
-		labels: getLabels(startDate, endDate),
+		labels,
 		datasets: [
 			{
 			  label: 'Expenditures',
 			  fill: true,
-			  lineTension: 0.3,
-			  backgroundColor: 'rgba(255,185,246,.4)',
-			  borderColor: '#ffb9f6',
-			  borderCapStyle: 'butt',
-			  borderDash: [],
-			  borderDashOffset: 0.0,
-			  borderJoinStyle: 'miter',
-			  pointBorderColor: '#f7f9fc',
-			  pointBackgroundColor: '#f7f9fc',
-			  pointBorderWidth: 1,
-			  pointHoverRadius: 5,
-			  pointHoverBackgroundColor: '#819efc',
-			  pointHoverBorderColor: 'rgba(220,220,220,1)',
-			  pointHoverBorderWidth: 2,
-			  pointRadius: 1,
-			  pointHitRadius: 10,
-			  data: Object.values(expenseMap).reverse()
+			  backgroundColor: 'rgba(255,185,246,.8)',
+			  data: expenditures
 			}
 		]
 	};
@@ -113,11 +101,8 @@ const LineChart = ({ expenseList, dateRange }) => {
 	}
 
 	return (
-		<Line 
-			data={data}
-			options={options}
-		/>
+		<Bar data={data} options={options} />
 	)
 }
 
-export default connect(mapStateToProps)(LineChart);
+export default connect(mapStateToProps)(BarChart);

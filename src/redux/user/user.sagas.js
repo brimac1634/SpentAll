@@ -1,6 +1,6 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import Cookies from 'universal-cookie';
-import axios from 'axios';
+import axiosConfig from '../../axios-config';
 
 import UserActionTypes from './user.types';
 
@@ -30,9 +30,9 @@ export function* parseLoginWithToken(data) {
 			yield put(signInFailure(data.error))
 		} else {
 			const { user, token } = data;
-			yield call(handleSignIn, user)
 			const cookies = new Cookies();
 			cookies.set('authToken', token, { path: '/' });
+			yield call(handleSignIn, user)
 		}
 	} catch (err) {
 		yield put(signInFailure(err))
@@ -42,7 +42,7 @@ export function* parseLoginWithToken(data) {
 
 export function* signInWithEmail({ payload: { email, password }}) {
 	try {
-		const { data } = yield axios.post('/login', {email, password})
+		const { data } = yield axiosConfig('post', '/login', {email, password})
 		if (data) {
 			yield call(parseLoginWithToken, data)
 		} else {
@@ -58,7 +58,7 @@ export function* isUserAuthenticated() {
     const token = cookies.get('authToken')
     if (token) {
     	try {
-			const { data } = yield axios.get('/check-user')
+			const { data } = yield axiosConfig('get', '/check-user')
 			yield call(handleSignIn, data)
 		} catch (err) {
 		    yield put(signInFailure('no user'))

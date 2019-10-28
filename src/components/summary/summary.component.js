@@ -13,7 +13,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const Summary = ({ totalExpense, dateRange }) => {
-	if (!totalExpense || !dateRange) return <span>fetching data</span>
+	if (!totalExpense || !dateRange) return <span>No Data</span>
 	let { startDate, endDate } = dateRange;
 	startDate = formatDate(startDate.toDate());
 	endDate = formatDate(endDate.toDate());

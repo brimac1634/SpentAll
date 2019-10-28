@@ -26,6 +26,15 @@
 
   .icon-set {
     display: flex;
+    transition: all 300ms ease-in-out;
+
+    &.show {
+      opacity: 1;
+    }
+
+    &.hide {
+      opacity: 0;
+    }
 
     .icon {
       width: 48px;

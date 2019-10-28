@@ -42,20 +42,17 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
     }, [checkUserSession])
 
     useEffect(()=>{
-      if (currentUser) fetchExpenses();
-    }, [fetchExpenses, currentUser])
-
-    useEffect(()=>{
       if (userError) history.push('/welcome');
     }, [history, userError])
 
     useEffect(() => {
         if (currentUser) {
-            const { userName } = currentUser;
-            setAlert(`Welcome, ${userName}`)
+          fetchExpenses();
+          const { userName } = currentUser;
+          setAlert(`Welcome, ${userName}`)
         }
-    }, [currentUser, setAlert])
-
+    }, [currentUser, fetchExpenses, setAlert])
+    
     return (
       <div>
         <ErrorBoundary>
@@ -79,7 +76,10 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                   />
                   <Redirect to='/' />
               </Switch>
-              <ExpenseInputContainer />
+              {
+                currentUser &&
+                <ExpenseInputContainer />
+              }
             </Suspense>
         </ErrorBoundary>
         {isLoading &&

@@ -1,5 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
+
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
 import { ReactComponent as AnalyticsIcon } from '../../assets/analytics.svg'
@@ -8,12 +12,16 @@ import { ReactComponent as HomeIcon } from '../../assets/home.svg'
 
 import './header.styles.scss';
 
-const Header = () => (
+const mapStateToProps = createStructuredSelector({
+	currentUser: selectCurrentUser
+})
+
+const Header = ({ currentUser }) => (
 	<div className='header'>
 		<Link to={'/'}>
 			<h3 className='title'>SpentAll</h3>
 		</Link>
-		<div className='icon-set'>
+		<div className={`icon-set ${currentUser ? 'show' : 'hide'}`}>
 			<Link to={'/'} className='icon'>
 				<HomeIcon />
 			</Link>
@@ -30,4 +38,4 @@ const Header = () => (
 	</div>
 )
 
-export default Header;
+export default connect(mapStateToProps)(Header);

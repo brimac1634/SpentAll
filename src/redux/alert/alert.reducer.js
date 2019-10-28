@@ -2,7 +2,7 @@ import AlertActionTypes from './alert.types';
 
 const INITIAL_STATE = {
 	alertIsShowing: false,
-	message: 'hey there good'
+	message: ''
 }
 
 const alertReducer = (state = INITIAL_STATE, action) => {

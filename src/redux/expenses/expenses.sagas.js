@@ -1,5 +1,5 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-import axios from 'axios';
+import axiosConfig from '../../axios-config';
 import moment from 'moment';
 
 import {
@@ -13,7 +13,7 @@ import ExpensesActionTypes from './expenses.types';
 
 export function* fetchExpensesAsync() {
 	try {
-		const { data } = yield axios.get('/get-expenditures');
+		const { data } = yield axiosConfig('get', '/get-expenditures');
 		yield put(fetchExpensesSuccess(data));
 	} catch (err) {
 		yield put(fetchExpensesFailure(err.message))

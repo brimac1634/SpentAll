@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import axios from 'axios';
+import axiosConfig from '../../axios-config';
 import { numberWithCommas } from '../../utils';
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
@@ -40,7 +40,7 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 
 	const updateProfile = async settings => {
 		startLoading('updating settings')
-		axios.post('/update-settings', {
+		axiosConfig('post', '/update-settings', {
 			...settings,
 			categories: categories.join(',')
 		}).then(({ data })=>{

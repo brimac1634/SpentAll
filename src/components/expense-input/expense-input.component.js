@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import axios from 'axios';
+import axiosConfig from '../../axios-config';
 
 import { fetchExpensesSuccess, toggleAddExpense } from '../../redux/expenses/expenses.actions';
 import { selectShowAddExpense } from '../../redux/expenses/expenses.selectors';
@@ -38,7 +38,7 @@ const ExpenseInput = ({ showAddExpense, updateExpenses, setAlert, userSettings, 
 	const handleSubmit = async event => {
 		event.preventDefault();
 		startLoading()
-		axios.post('/add-expenditure', {
+		axiosConfig('post', '/add-expenditure', {
 			type, 
 			amount, 
 			timestamp: new Date()
