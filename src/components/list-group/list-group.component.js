@@ -41,8 +41,8 @@ const ListGroup = ({ toggleAddExpense }) => {
 			<div className='details'>
 				<ExpenditureDetails />
 			</div>
-			<HoverBox show={showFilter} onClick={()=>setShowFilter(false)}>
-				<TimeFilter />
+			<HoverBox show={showFilter}>
+				<TimeFilter confirm={()=>setShowFilter(false)}/>
 			</HoverBox>
 		</div>
 	)

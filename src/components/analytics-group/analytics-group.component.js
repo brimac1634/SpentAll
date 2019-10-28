@@ -26,8 +26,8 @@ const AnalyticsGroup = () => {
 			<div className='doughnut'>
 				<DoughnutChart />
 			</div>
-			<HoverBox show={showFilter} onClick={()=>setShowFilter(false)}>
-				<TimeFilter />
+			<HoverBox show={showFilter}>
+				<TimeFilter confirm={()=>setShowFilter(false)} />
 			</HoverBox>
 		</div>
 	)

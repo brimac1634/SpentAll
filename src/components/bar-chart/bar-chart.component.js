@@ -33,7 +33,9 @@ const BarChart = ({ expenseMap, dateRange, datesArray }) => {
 			{
 			  label: 'Expenditures',
 			  fill: true,
-			  backgroundColor: 'rgba(255,185,246,.8)',
+			  backgroundColor: 'rgba(255,185,246)',
+			  borderWidth: 1,
+			  borderColor: '#ffffff',
 			  data: expenditures
 			}
 		]
