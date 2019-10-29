@@ -27,7 +27,7 @@ const ExpenseList = ({ expenseList, selectExpense, selectedExpense }) => (
 						key={i} 
 						selected={expense === selectedExpense}
 						expense={expense}
-						onClick={()=>selectExpense(expense)}
+						onClick={()=>selectExpense(expense.expenditure_id)}
 					/>
 				))
 			}

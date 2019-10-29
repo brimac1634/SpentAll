@@ -109,7 +109,12 @@ export const selectAreExpensesFetching = createSelector(
 
 export const selectSelectedExpense = createSelector(
 	[selectExpenses],
-	expenses => expenses.selectedExpense
+	({ selectedExpense, expenses }) => {
+		if (!expenses) return null;
+		return expenses.filter(({ expenditure_id }) => {
+			return expenditure_id === selectedExpense
+		})[0] || null
+	}
 )
 
 export const selectExpenseToEdit = createSelector(

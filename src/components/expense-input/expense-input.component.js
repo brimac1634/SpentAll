@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axiosConfig from '../../axios-config';
 
-import { fetchExpensesSuccess, toggleAddExpense } from '../../redux/expenses/expenses.actions';
+import { fetchExpensesSuccess, setExpenseToEdit } from '../../redux/expenses/expenses.actions';
 import { selectExpenseToEdit } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
 import { setAlert } from '../../redux/alert/alert.actions'; 
@@ -23,18 +23,19 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
 	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses)),
 	setAlert: alert => dispatch(setAlert(alert)),
-	toggleAddExpense: () => dispatch(toggleAddExpense()),
+	setExpenseToEdit: expense => dispatch(setExpenseToEdit(expense)),
 	startLoading: message => dispatch(startLoading(message)),
 	stopLoading: () => dispatch(stopLoading()),
 })
 
-const ExpenseInput = ({ expenseToEdit, updateExpenses, setAlert, userSettings, toggleAddExpense, startLoading, stopLoading }) => {
+const ExpenseInput = ({ expenseToEdit, updateExpenses, setAlert, userSettings, startLoading, stopLoading, setExpenseToEdit }) => {
 	const [expense, setExpense] = useState({
 		amount: '', 
 		type: ''
 	});
 	const [incomplete, setIncomplete] = useState(false);
 	let { amount, type } = expense;
+	const expenditure_id = expenseToEdit ? expenseToEdit.expenditure_id : null;
 	const { categories, currency } = userSettings;
 	
 	useEffect(()=>{
@@ -48,24 +49,21 @@ const ExpenseInput = ({ expenseToEdit, updateExpenses, setAlert, userSettings, t
 		event.preventDefault();
 		if (!amount || !type) return setIncomplete(true);
 		startLoading()
-		if (expenseToEdit) {
-
-		} else {
-			axiosConfig('post', '/add-expenditure', {
-				type, 
-				amount, 
-				timestamp: new Date()
-			}).then(({ data }) => {
-				updateExpenses(data)
-				stopLoading();
-				setAlert('spent!')
-				setExpense({amount: '', type: ''})
-				toggleAddExpense();
-			}).catch(() => {
-				stopLoading();
-				setAlert('unable to update expenditures')
-			})
-		}
+		axiosConfig('post', '/add-expenditure', {
+			expenditure_id,
+			type, 
+			amount, 
+			timestamp: new Date()
+		}).then(({ data }) => {
+			updateExpenses(data)
+			stopLoading();
+			setAlert(expenditure_id ? 'updated!' : 'spent!')
+			setExpense({amount: '', type: ''})
+			setExpenseToEdit(null);
+		}).catch(() => {
+			stopLoading();
+			setAlert('unable to update expenditures')
+		})
 	}
 
 	const handleChange = event => {
@@ -74,7 +72,7 @@ const ExpenseInput = ({ expenseToEdit, updateExpenses, setAlert, userSettings, t
 	}
 
 	const cancel = () => {
-		toggleAddExpense();
+		setExpenseToEdit(null);
 		setExpense({amount: '', type: ''})
 	}
 
