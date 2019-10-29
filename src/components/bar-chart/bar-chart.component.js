@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Bar } from 'react-chartjs-2';
-import { lightenDarkenColor } from '../../utils';
+import { lightenDarkenColor, monthNames } from '../../utils';
 
 import { 
-	selectExpensesDateMap, 
+	selectExpensesDateMap,
+	selectExpensesMonthMap, 
 	selectFixedDateRange,
-	selectDatesArray 
+	selectDatesArray,
+	selectTimeFrame 
 } from '../../redux/expenses/expenses.selectors';
 import { selectCurrency } from '../../redux/user/user.selectors';
 
@@ -15,21 +17,29 @@ import './bar-chart.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
 	expenseMap: selectExpensesDateMap,
+	expenseMonthMap: selectExpensesMonthMap,
 	dateRange: selectFixedDateRange,
 	datesArray: selectDatesArray,
-	currency: selectCurrency
+	currency: selectCurrency,
+	timeFrame: selectTimeFrame
 })
 
-const BarChart = ({ expenseMap, dateRange, datesArray, currency }) => {
+const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArray, currency }) => {
 	if (!expenseMap || !dateRange) return <span>No Data</span>
 	const { startDate, endDate } = dateRange;
-	
-	const expenditures = datesArray.map(date => {
-		return expenseMap[date] || 0;
-	})
+
+	let labelArray;
+	let expenditures;
+	if (timeFrame === 'this year') {
+		labelArray = monthNames;
+		expenditures = monthNames.map(month => expenseMonthMap[month] || 0)
+	} else {
+		labelArray = datesArray;
+		expenditures = datesArray.map(date => expenseMap[date] || 0);
+	}
 
 	const data = {
-		labels: datesArray,
+		labels: labelArray,
 		datasets: [
 			{
 			  label: 'Expenditures',

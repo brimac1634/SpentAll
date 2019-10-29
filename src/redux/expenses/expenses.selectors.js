@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
 
-import { checkDateRange, formatDate, sortProperties } from '../../utils';
+import { 
+	checkDateRange, 
+	formatDate,
+	sortProperties 
+} from '../../utils';
 
 const selectExpenses = state => state.expenses;
 
@@ -17,19 +21,26 @@ export const selectExpensesList = createSelector(
 	({ expenses, dateRange }) => filterList(expenses, dateRange)
 )
 
+const expenseMapper = (list, byMonth) => {
+	if (!list) return null;
+	return list.reduce((accum, expense)=>{
+		const { timestamp, amount } = expense;
+		const key = formatDate(new Date(timestamp), false, byMonth);
+		accum[key] = accum[key] 
+			? 	accum[key] + amount
+			: 	amount
+		return accum
+	}, {})
+}
+
 export const selectExpensesDateMap = createSelector(
 	[selectExpensesList],
-	expenseList => {
-		if (!expenseList) return null;
-		return expenseList.reduce((accum, expense)=>{
-			const { timestamp, amount } = expense;
-			const date = formatDate(new Date(timestamp));
-			accum[date] = accum[date] 
-				? 	accum[date] + amount
-				: 	amount
-			return accum
-		}, {})
-	}
+	expenseList => expenseMapper(expenseList, false)
+)
+
+export const selectExpensesMonthMap = createSelector(
+	[selectExpensesList],
+	expenseList => expenseMapper(expenseList, true)
 )
 
 export const selectTargetExpensesList = createSelector(

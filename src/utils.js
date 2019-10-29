@@ -6,16 +6,18 @@ export const numberWithCommas = (x, decimal) => {
   return numString
 }
 
-export const formatDate = (date, short) => {
-  const monthNames = [
-    'Jan', 'Feb', 'Mar',
-    'Apr', 'May', 'Jun', 'Jul',
-    'Aug', 'Sep', 'Oct',
-    'Nov', 'Dec'
-  ];
+export const monthNames = [
+  'Jan', 'Feb', 'Mar',
+  'Apr', 'May', 'Jun', 'Jul',
+  'Aug', 'Sep', 'Oct',
+  'Nov', 'Dec'
+];
 
-  const day = date.getDate();
+export const formatDate = (date, short, monthOnly) => {
   const monthIndex = date.getMonth();
+  if (monthOnly) return monthNames[monthIndex];
+  const day = date.getDate();
+  
   if (short) return day + ' ' + monthNames[monthIndex]
 
   const year = date.getFullYear();

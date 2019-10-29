@@ -5,7 +5,9 @@ import { numberWithCommas, dateAndTime } from '../../utils';
 import axiosConfig from '../../axios-config';
 
 import { selectSelectedExpense } from '../../redux/expenses/expenses.selectors';
-import { setExpenseToEdit } from '../../redux/expenses/expenses.actions';
+import { setExpenseToEdit, fetchExpensesSuccess } from '../../redux/expenses/expenses.actions';
+import { setAlert } from '../../redux/alert/alert.actions'; 
+import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
 
 import CustomButton from '../../components/custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
@@ -18,17 +20,30 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-	setExpenseToEdit: expense => dispatch(setExpenseToEdit(expense))
+	setExpenseToEdit: expense => dispatch(setExpenseToEdit(expense)),
+	setAlert: alert => dispatch(setAlert(alert)),
+	startLoading: message => dispatch(startLoading(message)),
+	stopLoading: () => dispatch(stopLoading()),
+	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses)),
 })
 
-const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit }) => {
+const ExpenditureDetails = ({ updateExpenses, selectedExpense, setExpenseToEdit, setAlert, startLoading, stopLoading }) => {
 	const [showModal, setShowModal] = useState(false);
 	if (!selectedExpense) return <div className='expenditure-details'/>
 	const { expenditure_id, amount, timestamp, type } = selectedExpense;
 
 	const deleteExpense = async expenditure_id => {
-		axiosConfig('post', '/delete-expense', { 
+		startLoading();
+		axiosConfig('post', '/delete-expenditure', { 
 			expenditure_id 
+		}).then(({ data }) => {
+			updateExpenses(data);
+			setAlert('deleted');
+			stopLoading();
+			setShowModal(false);
+		}).catch(() => {
+			stopLoading()
+			setShowModal(false);
 		})
 	}
 	
