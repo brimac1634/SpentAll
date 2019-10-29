@@ -112,6 +112,11 @@ export const selectSelectedExpense = createSelector(
 	expenses => expenses.selectedExpense
 )
 
+export const selectExpenseToEdit = createSelector(
+	[selectExpenses],
+	expenses => expenses.expenseToEdit
+)
+
 export const selectCategoriesTotals = createSelector(
 	[selectExpensesList],
 	expenses => {

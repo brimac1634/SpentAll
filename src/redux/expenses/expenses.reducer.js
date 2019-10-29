@@ -12,6 +12,7 @@ const INITIAL_STATE = {
 		endDate: null
 	},
 	selectedExpense: null,
+	expenseToEdit: null,
 	expenses: null,
 	isFetching: false,
 	errorMessage: undefined
@@ -60,6 +61,12 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				selectedExpense: action.payload
+			}
+		case ExpensesActionTypes.SET_EXPENSE_TO_EDIT:
+			return {
+				...state,
+				expenseToEdit: action.payload,
+				showAddExpense: !!action.payload
 			}
 		default:
 			return state;

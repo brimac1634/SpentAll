@@ -4,11 +4,11 @@
 	height: calc(100vh - 100px);
 	display: grid;
 	grid-template-areas: 
-		'list summary details'
-		'list new details ';
+		'summary list details';
 	grid-column-gap: 30px;
 	grid-row-gap: 30px;
 	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr;
 
 	.new,
 	.summary-panel {
@@ -31,5 +31,4 @@
 		grid-area: list; 
 	}
 	.details { grid-area: details; }
-	.new { grid-area: new }
 }

@@ -37,3 +37,8 @@ export const setSelectedExpense = selectedExpense => ({
 	type: ExpensesActionTypes.SET_SELECTED_EXPENSE,
 	payload: selectedExpense
 })
+
+export const setExpenseToEdit = expenseToEdit => ({
+	type: ExpensesActionTypes.SET_EXPENSE_TO_EDIT,
+	payload: expenseToEdit
+})

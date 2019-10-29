@@ -26,8 +26,6 @@ const ListGroup = ({ toggleAddExpense }) => {
 				<CustomButton onClick={()=>setShowFilter(true)}>
 					time filter
 				</CustomButton>
-			</div>
-			<div className='new'>
 				<CustomButton 
 					selected
 					onClick={toggleAddExpense}
