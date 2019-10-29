@@ -1,0 +1,17 @@
+.message-modal {
+
+	.message {
+		display: block;
+		margin: 20px 0 40px 0;
+		text-align: center;
+	}
+
+	.button-container {
+		display: flex;
+		justify-content: space-between;
+
+		:first-child {
+			margin-right: 10px;
+		}
+	}
+}
