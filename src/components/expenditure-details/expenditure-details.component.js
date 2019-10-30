@@ -48,7 +48,7 @@ const ExpenditureDetails = ({ updateExpenses, selectedExpense, setExpenseToEdit,
 	}
 	
 	return (
-		<div className='expenditure-details'>
+		<div className='expenditure-details hover'>
 			<span>{dateAndTime(timestamp)}</span>
 			<h1>${numberWithCommas(amount)}</h1>
 			<span>{type}</span>

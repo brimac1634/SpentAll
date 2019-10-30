@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
 
 import Loader from '../loader/loader.component';
 import FormInput from '../form-input/form-input.component';
@@ -54,6 +55,7 @@ const SignInForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 					handleChange={handleChange}
 					required 
 				/>
+				<Link to='/reset' className='forgot'>forgot password?</Link>
 				<div className='buttons'>
 					<CustomButton 
 						selected

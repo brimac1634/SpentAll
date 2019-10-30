@@ -7,10 +7,10 @@ import './profile-settings.styles.scss';
 
 const ProfileSettings = () => (
 	<div className='profile-settings'>
-		<div className='box'>
+		<div className='box hover'>
 			<Profile />
 		</div>
-		<div className='box'>
+		<div className='box hover'>
 			<SettingsContainer />
 		</div>
 	</div>

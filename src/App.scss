@@ -12,9 +12,17 @@
   box-sizing: border-box;
 }
 
+html {
+	height: 100%;
+	background: linear-gradient(to right top, #5965e3, #8089e8);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
 body {
+	height: 100%;
 	color: var(--white);
-	background-color: var(--dark-purple);
 	overflow-x: hidden;
 	font-family: 'Karla', sans-serif;
 	letter-spacing: 1.5px;
@@ -25,5 +33,18 @@ h1, h2, h3 {
 	letter-spacing: 4px;
 	font-weight: 100;
 	color: var(--pink);
+}
+
+a {
+	display: block;
+	color: var(--white);
+	margin: 10px 0;
+}
+
+// reusable hover 
+.hover {
+	background: var(--dark-purple);
+	border-radius: 3px;
+	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--dark-purple);
 }
 

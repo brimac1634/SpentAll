@@ -21,6 +21,7 @@ import { checkUserSession } from './redux/user/user.actions';
 import './App.scss';
 
 const SignIn = lazy(() => import('./pages/sign-in/sign-in.component'))
+const SignUp = lazy(() => import('./pages/sign-up/sign-up.component'))
 const Analytics = lazy(() => import('./pages/analytics/analytics.component'))
 const Expenses = lazy(() => import('./pages/expenses/expenses.component'))
 const ProfileSettings = lazy(() => import('./pages/profile-settings/profile-settings.component'))
@@ -76,6 +77,17 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                             <SignIn />
                           )
                       }
+                  />
+                  <Route 
+                    exact 
+                    path='/register' 
+                    render={() => 
+                        currentUser ? (
+                          <Redirect to={'/'}/>
+                        ) : (
+                          <SignUp />
+                        )
+                    }
                   />
                   <Redirect to='/' />
               </Switch>

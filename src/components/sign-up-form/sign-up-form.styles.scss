@@ -1,0 +1,16 @@
+.sign-up-form {
+	width: 100%;
+	height: calc(100vh - 100px);
+
+	.item {
+		display: flex;
+		justify-content: center;
+
+		.details {
+			width: 380px;
+			display: flex;
+			flex-direction: column;
+		}
+	}
+	
+}
