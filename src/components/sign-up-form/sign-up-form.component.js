@@ -5,8 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import Carousel from '../carousel/carousel.component';
 import Loader from '../loader/loader.component';
 import FormInput from '../form-input/form-input.component';
-import CustomButton from '../custom-button/custom-button.component';
-import Settings from '../settings/settings.component';
+import Preferences from '../preferences/preferences.component';
+import Categories from '../categories/categories.component';
 
 import { emailSignInStart } from '../../redux/user/user.actions';
 import { selectIsUserFetching, selectUserError } from '../../redux/user/user.selectors';
@@ -26,13 +26,17 @@ const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 	const [userCredentials, setCredentials] = useState({
 		name: '',
 		email: '', 
-		password: ''
+		password: '',
+		currency: '',
+		target: '',
+		cycle: 'monthly',
+		categories: ['food', 'housing', 'transportation', 'travel', 'entertainment', 'clothing', 'groceries', 'utilities', 'health', 'education', 'work']
 	});
 	const { name, email, password } = userCredentials;
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		emailSignInStart(email, password);
+		console.log(userCredentials)
 	}
 
 	const handleChange = event => {
@@ -42,11 +46,11 @@ const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 
 	return (
 		<div className='sign-up-form'>
-			<Carousel showIndicator>
+			<Carousel showIndicator submit={handleSubmit}>
 				<div className='item'>
-					<div className='details'>
-						<h2>Register</h2>
-						<form onSubmit={handleSubmit}>
+					<div className='container'>
+						<h2>User Details</h2>
+						<form>
 							<FormInput 
 								name='name' 
 								type='text' 
@@ -75,15 +79,23 @@ const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 						</form>
 					</div>
 				</div>
-				<div className='item'></div>
 				<div className='item'>
-					<div className='buttons'>
-						<CustomButton 
-							selected
-							type='submit'
-						> 
-							register 
-						</CustomButton>
+					<div className='container'>
+						<h2>Settings</h2>
+						<Preferences 
+							settings={userCredentials}
+							handleChange={handleChange}
+							setSettings={setCredentials}
+						/>
+					</div>
+				</div>
+				<div className='item'>
+					<div className='container'>
+						<h2>Categories</h2>
+						<Categories
+							settings={userCredentials}
+							setSettings={setCredentials}
+						/>
 					</div>
 				</div>
 			</Carousel>

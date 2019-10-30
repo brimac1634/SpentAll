@@ -9,9 +9,10 @@ import { setAlert } from '../../redux/alert/alert.actions';
 import { setUserSettings } from '../../redux/user/user.actions'; 
 import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
 
-import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import Category from '../category/category.component';
+import Preferences from '../preferences/preferences.component';
+import Categories from '../categories/categories.component';
 
 import './settings.styles.scss';
 
@@ -32,12 +33,10 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 		target: userSettings.target,
 		cycle: userSettings.cycle,
 		currency: userSettings.currency,
-		category: '',
 		categories: userSettings.categories
 	});
 
-	const targetTimes = ['monthly', 'weekly', 'daily'];
-	let { target, cycle, currency, category, categories } = settings;
+	let { target, cycle, currency, categories } = settings;
 
 	const updateProfile = async settings => {
 		startLoading('updating settings')
@@ -65,20 +64,6 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 	const handleChange = event => {
 		let { value, name } = event.target;
 		setSettings({ ...settings, [name]: value });
-	}
-
-	const handleNewCategory = event => {
-		if (event.which === 13) {
-			event.preventDefault();
-			const { value } = event.target;
-			categories = categories ? [...categories, value] : [value]
-			setSettings({ ...settings, categories, category: '' });
-		}
-	}
-
-	const removeFromArray = (array, index) => {
-		array.splice(index, 1);
-		setSettings({ ...settings, array });
 	}
 
 	return (
@@ -126,74 +111,15 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 			{
 				isEditing &&
 				<div className='edit-group'>
-					<div className='sub-group'>
-						<span className='label'>currency</span>
-						<FormInput 
-							name='currency' 
-							type='text' 
-							value={currency} 
-							margin='0'
-							label='currency'
-							placeholder='$USD'
-							handleChange={handleChange}
-						/>
-					</div>
-					<div className='sub-group'>
-						<span className='label'>spending limit</span>
-						<FormInput 
-							name='target' 
-							type='number' 
-							min='0'
-							value={target} 
-							margin='0'
-							label={`target ${currency}`}
-							placeholder='2,000'
-							handleChange={handleChange}
-						/>
-					</div>
-					<div className='sub-group'>
-						<span className='label'>spending cycle</span>
-						<div className='target-times'>
-							{
-								targetTimes.map(time=>(
-									<CustomButton
-										key={time}
-										selected={time === cycle}
-										onClick={()=>setSettings({ 
-											...settings, cycle: time
-										})}
-									> 
-										 {time}
-									</CustomButton>
-								))
-							}
-						</div>
-					</div>
-					<div className='sub-group'>
-						<span className='label'>add or remove spending categories</span>
-						<FormInput 
-							name='category' 
-							type='text'
-							label='new category'
-							value={category}
-							margin='0'
-							placeholder='entertainment'
-							handleChange={handleChange}
-							onKeyPress={handleNewCategory}
-						/>
-						<div className='categories'>
-							{
-								categories &&
-								categories.map((category, i)=>(
-									<Category 
-										key={i}
-										category={category}
-										onDelete={()=>removeFromArray(categories, i)}
-									/>
-								))
-							}
-						</div>
-					</div>
+					<Preferences 
+						settings={settings}
+						handleChange={handleChange}
+						setSettings={setSettings}
+					/>
+					<Categories
+						settings={settings}
+						setSettings={setSettings}
+					/>
 					<div className='sub-group'>
 						<CustomButton
 							selected

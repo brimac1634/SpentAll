@@ -1,9 +1,9 @@
 import React from 'react';
 import './custom-button.styles.scss';
 
-const CustomButton = ({ children, show, selected, ...otherProps }) => (
+const CustomButton = ({ children, hide, selected, ...otherProps }) => (
 	<button 
-		className={`custom-button ${selected ? 'selected' : 'unselected'} ${show ? 'show' : 'hide'}`}
+		className={`custom-button ${selected ? 'selected' : 'unselected'} ${hide ? 'hide' : null}`}
 		{...otherProps} 
 	>
 		{children}

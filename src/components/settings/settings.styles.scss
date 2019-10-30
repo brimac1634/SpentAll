@@ -23,19 +23,6 @@
 				margin-bottom: 10px;
 			}
 
-			.target-times {
-				display: flex;
-				justify-content: space-between;
-
-				& > * {
-					margin: 0 10px 10px 0; 
-
-					&:last-child {
-						margin-right: 0;
-					}
-				}
-			}
-
 			.categories {
 				margin: 20px 0;
 			}

@@ -1,0 +1,30 @@
+.preferences {
+	display: flex;
+	flex-direction: column;
+
+	.sub-group {
+		margin: 20px 0;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		.label {
+			display: block;
+			margin-bottom: 10px;
+		}
+
+		.target-times {
+			display: flex;
+			justify-content: space-between;
+
+			& > * {
+				margin: 0 10px 10px 0; 
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}

@@ -4,7 +4,7 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import './carousel.styles.scss';
 
-const Carousel = ({ children, showIndicator, disableLeap }) => {
+const Carousel = ({ children, showIndicator, submit }) => {
 	const [index, setIndex] = useState(0);
 	const [translateValue, setTranslation] = useState(0);
 	const galleryItem = useRef(null);
@@ -31,6 +31,7 @@ const Carousel = ({ children, showIndicator, disableLeap }) => {
 		}
 	}
 
+	const isFinalItem = index === (children.length - 1)
 	return (
 		<div className='carousel' ref={galleryItem}> 
 			<div 
@@ -43,7 +44,7 @@ const Carousel = ({ children, showIndicator, disableLeap }) => {
 	            {children}
 	        </div>
 	        <div className='bottom-bar'>
-				<CustomButton show={index === 0} onClick={previousItem} > 
+				<CustomButton hide={index === 0} onClick={previousItem}> 
 					back 
 				</CustomButton>
 				{
@@ -64,10 +65,9 @@ const Carousel = ({ children, showIndicator, disableLeap }) => {
 				}
 				<CustomButton 
 					selected 
-					show={index === (children.length - 1)} 
-					onClick={nextItem}
+					onClick={isFinalItem ? submit : nextItem}
 				> 
-					continue 
+					{isFinalItem ? 'register' : 'continue'}
 				</CustomButton>
 			</div>
 		</div>

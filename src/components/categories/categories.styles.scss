@@ -1,0 +1,14 @@
+.categories-input {
+	.label {
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	.categories {
+		margin: 20px 0;
+		padding: 0;
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+}
