@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
@@ -6,14 +6,12 @@ import queryString from 'query-string';
 
 import Carousel from '../carousel/carousel.component';
 import Loader from '../loader/loader.component';
-import FormInput from '../form-input/form-input.component';
 import Preferences from '../preferences/preferences.component';
+import NewPassword from '../new-password/new-password.component';
 import Categories from '../categories/categories.component';
 
 import { registerStart } from '../../redux/user/user.actions';
 import { selectIsUserFetching, selectUserError } from '../../redux/user/user.selectors';
-
-import { validatePassword } from '../../utils';
 
 import './register.styles.scss';
 
@@ -42,12 +40,13 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 	const { token } = parsed;
 	if (!token) history.push('/welcome');
 
-	const { firstPassword, secondPassword, categories } = userCredentials;
+	const { firstPassword, target, categories } = userCredentials;
 
 	const handleSubmit = async event => {
 		event.preventDefault();
 		registerStart(firstPassword, token, {
 			...userCredentials,
+			target: target.toFixed(0),
 			categories: categories.join(',')
 		});
 	}
@@ -56,18 +55,6 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 		const { value, name } = event.target;
 		setCredentials({ ...userCredentials, [name]: value });
 	}
-
-	useEffect(()=>{
-		let error;
-		if (!validatePassword(firstPassword)) {
-			error = '*password must have at least 8 characters*';
-		} else if (firstPassword !== secondPassword) {
-			error = '*passwords do not match*'
-		} else {
-			error = null;
-		}
-		setPasswordError(error);
-	}, [firstPassword, secondPassword, setPasswordError])
 
 	const disableNext = index => {
 		switch (index) {
@@ -94,34 +81,12 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 			>
 				<div className='item'>
 					<div className='container'>
-						<h2>Password</h2>
-						<form>
-							<div className='input-group'>
-								<span className='label'>create a new password</span>
-								<FormInput 
-									name='firstPassword' 
-									type='password' 
-									value={firstPassword} 
-									label='password'
-									handleChange={handleChange}
-									required 
-								/>
-							</div>
-							<div className='input-group'>
-								<span className='label'>rewrite your new password</span>
-								<FormInput 
-									name='secondPassword' 
-									type='password' 
-									value={secondPassword} 
-									label='password'
-									handleChange={handleChange}
-									required 
-								/>
-							</div>
-							<span className={`error ${passwordError ? 'show' : 'hide'}`}>
-								{passwordError}
-							</span>
-						</form>
+						<NewPassword
+							passwords={userCredentials}
+							handleChange={handleChange}
+							passwordError={passwordError}
+							setPasswordError={setPasswordError}
+						/>
 					</div>
 				</div>
 				<div className='item'>

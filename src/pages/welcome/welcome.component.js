@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, Switch, Redirect } from 'react';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 import { Route, withRouter } from 'react-router-dom';
@@ -12,6 +12,7 @@ import CustomButton from '../../components/custom-button/custom-button.component
 import './welcome.styles.scss';
 
 const SignUpForm = lazy(() => import('../../components/sign-up-form/sign-up-form.component'))
+const NewPasswordForm = lazy(() => import('../../components/new-password-form/new-password-form.component'))
 const Register = lazy(() => import('../../components/register/register.component'))
 
 const mapStateToProps = createStructuredSelector({
@@ -46,6 +47,14 @@ const Welcome = ({ match, history, isLoadingUser }) => (
 		<Route
 			path={`${match.path}/register`}
 			component={Register}
+		/>
+		<Route
+			path={`${match.path}/reset-account`}
+			component={SignUpForm}
+		/>
+		<Route
+			path={`${match.path}/new-password`}
+			component={NewPasswordForm}
 		/>
 		{
 			isLoadingUser &&

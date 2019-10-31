@@ -17,8 +17,6 @@ const SignInForm = ({ match, emailSignInStart }) => {
 	const [userCredentials, setCredentials] = useState({email: '', password: ''});
 	const { email, password } = userCredentials;
 
-
-
 	const handleSubmit = async event => {
 		event.preventDefault();
 		emailSignInStart(email, password);
@@ -49,7 +47,7 @@ const SignInForm = ({ match, emailSignInStart }) => {
 					handleChange={handleChange}
 					required 
 				/>
-				<Link to={`${match.path}/sign-up`} className='forgot'>forgot password?</Link>
+				<Link to={`${match.path}/reset-account`} className='forgot'>forgot password?</Link>
 				<div className='buttons'>
 					<CustomButton 
 						selected

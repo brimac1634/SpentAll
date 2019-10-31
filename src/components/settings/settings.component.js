@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axiosConfig from '../../axios-config';
@@ -36,19 +36,24 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 		categories: userSettings.categories
 	});
 
+	useEffect(()=>{
+		setSettings(userSettings);
+	}, [setSettings, userSettings])
+
 	let { target, cycle, currency, categories } = settings;
 
 	const updateProfile = async settings => {
 		startLoading('updating settings')
 		axiosConfig('post', '/update-settings', {
 			...settings,
+			target: Number(target).toFixed(0),
 			categories: categories.join(',')
 		}).then(({ data })=>{
 			const { cycle, currency, target, categories } = data;
 			setUserSettings({ 
-				cycle, 
-				target, 
+				cycle,
 				currency,
+				target,
 				categories: categories.split(',') 
 			})
 			stopLoading();
@@ -86,7 +91,7 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 					</div>
 					<div className='sub-group'>
 						<span className='label'>spending limit: </span>
-						<span>{currency}{numberWithCommas(target)}</span>
+						<span>{currency}{numberWithCommas(target, false)}</span>
 					</div>
 					<div className='sub-group'>
 						<span className='label'>spending cycle: </span>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 
@@ -22,9 +23,11 @@ const mapDispatchToProps = dispatch => ({
 	setSignUpMessage: message => dispatch(signUpSuccess(message))
 })
 
-const SignUpForm = ({ emailSignUpStart, signUpMessage, setSignUpMessage }) => {
+const SignUpForm = ({ location, emailSignUpStart, signUpMessage, setSignUpMessage }) => {
 	const [userCredentials, setCredentials] = useState({name: '', email: ''});
 	const { name, email } = userCredentials;
+
+	console.log(location.pathname)
 
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -77,4 +80,4 @@ const SignUpForm = ({ emailSignUpStart, signUpMessage, setSignUpMessage }) => {
 	)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUpForm));
