@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 
-import Loader from '../loader/loader.component';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import { emailSignInStart } from '../../redux/user/user.actions';
-import { selectIsUserFetching } from '../../redux/user/user.selectors';
 
 import './sign-in-form.styles.scss';
-
-const mapStateToProps = createStructuredSelector({
-	isLoadingUser: selectIsUserFetching
-})
 
 const mapDispatchToProps = dispatch => ({
 	emailSignInStart: (email, password) => dispatch(emailSignInStart({ email, password}))
 })
 
-const SignInForm = ({ match, emailSignInStart, isLoadingUser }) => {
+const SignInForm = ({ match, emailSignInStart }) => {
 	const [userCredentials, setCredentials] = useState({email: '', password: ''});
 	const { email, password } = userCredentials;
 
@@ -66,12 +59,8 @@ const SignInForm = ({ match, emailSignInStart, isLoadingUser }) => {
 					</CustomButton>
 				</div>
 			</form>
-			{
-				isLoadingUser &&
-				<Loader />
-			}
 		</div>
 	)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignInForm));
+export default withRouter(connect(null, mapDispatchToProps)(SignInForm));

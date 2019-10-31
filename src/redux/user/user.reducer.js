@@ -26,7 +26,8 @@ const userReducer = (state=initialState, action) => {
 		case UserActionTypes.SIGN_UP_SUCCESS:
 			return {
 				...state,
-				message: action.payload
+				message: action.payload,
+				isFetching: false
 			}
 		case UserActionTypes.SIGN_IN_SUCCESS:
 			return {

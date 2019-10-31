@@ -1,6 +1,11 @@
 import React, { lazy } from 'react';
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect';
 import { Route, withRouter } from 'react-router-dom';
 
+import { selectIsUserFetching } from '../../redux/user/user.selectors';
+
+import Loader from '../../components/loader/loader.component';
 import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
@@ -9,7 +14,11 @@ import './welcome.styles.scss';
 const SignUpForm = lazy(() => import('../../components/sign-up-form/sign-up-form.component'))
 const Register = lazy(() => import('../../components/register/register.component'))
 
-const Welcome = ({ match, history }) => (
+const mapStateToProps = createStructuredSelector({
+	isLoadingUser: selectIsUserFetching
+})
+
+const Welcome = ({ match, history, isLoadingUser }) => (
 	<div>
 		<Route
 			exact
@@ -38,7 +47,11 @@ const Welcome = ({ match, history }) => (
 			path={`${match.path}/register`}
 			component={Register}
 		/>
+		{
+			isLoadingUser &&
+			<Loader />
+		}
 	</div>
 )
 
-export default withRouter(Welcome);
+export default withRouter(connect(mapStateToProps)(Welcome));

@@ -147,6 +147,8 @@ export function* onSignOutStart() {
 export function* userSagas() {
 	yield all([
 		call(onEmailSignInStart),
+		call(onEmailSignUpStart),
+		call(onRegisterStart),
 		call(onCheckUserSession),
 		call(onSignOutStart)
 	])

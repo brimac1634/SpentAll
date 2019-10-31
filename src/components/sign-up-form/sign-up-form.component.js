@@ -1,35 +1,34 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
-import { Link } from 'react-router-dom';
 
-import Loader from '../loader/loader.component';
+import { selectMessage } from '../../redux/user/user.selectors';
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import HoverBox from '../../components/hover-box/hover-box.component';
+import MessageModal from '../../components/message-modal/message-modal.component';
 
-import { emailSignInStart } from '../../redux/user/user.actions';
-import { selectIsUserFetching, selectUserError } from '../../redux/user/user.selectors';
+import { emailSignUpStart, signUpSuccess } from '../../redux/user/user.actions';
 
 import './sign-up-form.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	isLoadingUser: selectIsUserFetching,
-	userError: selectUserError
+	signUpMessage: selectMessage
 })
 
 const mapDispatchToProps = dispatch => ({
-	emailSignInStart: (email, password) => dispatch(emailSignInStart({ email, password}))
+	emailSignUpStart: (name, email) => dispatch(emailSignUpStart({ name, email })),
+	setSignUpMessage: message => dispatch(signUpSuccess(message))
 })
 
-const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
-	const [userCredentials, setCredentials] = useState({email: '', password: ''});
-	const { email, password } = userCredentials;
-
-
+const SignUpForm = ({ emailSignUpStart, signUpMessage, setSignUpMessage }) => {
+	const [userCredentials, setCredentials] = useState({name: '', email: ''});
+	const { name, email } = userCredentials;
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		emailSignInStart(email, password);
+		emailSignUpStart(name, email);
 	}
 
 	const handleChange = event => {
@@ -39,8 +38,16 @@ const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 
 	return (
 		<div className='sign-up-form'>
-			<h2>Login</h2>
+			<h2>Sign Up</h2>
 			<form onSubmit={handleSubmit}>
+				<FormInput 
+					name='name' 
+					type='text' 
+					value={name} 
+					label='name'
+					handleChange={handleChange}
+					required 
+				/>
 				<FormInput 
 					name='email' 
 					type='email' 
@@ -49,28 +56,23 @@ const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 					handleChange={handleChange}
 					required 
 				/>
-				<FormInput 
-					name='password' 
-					type='password' 
-					value={password} 
-					label='password'
-					handleChange={handleChange}
-					required 
-				/>
-				<Link to='/reset' className='forgot'>forgot password?</Link>
 				<div className='buttons'>
 					<CustomButton 
 						selected
 						type='submit'
 					> 
-						Sign In 
+						sign up 
 					</CustomButton>
 				</div>
 			</form>
-			{
-				isLoadingUser &&
-				<Loader />
-			}
+			<HoverBox show={!!signUpMessage}>
+				<MessageModal
+					title='success'
+					message={signUpMessage}
+					confirm='okay' 
+					confirmCallback={()=>setSignUpMessage(null)}
+				/>
+			</HoverBox>
 		</div>
 	)
 }

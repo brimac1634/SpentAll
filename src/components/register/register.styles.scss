@@ -21,12 +21,15 @@
 		}
 
 		.error {
-			color: var(--purple);
+			color: var(--white);
 			transition: all 500ms ease-in-out;
-			opacity: 0;
 
 			&.show {
 				opacity: 1;
+			}
+
+			&.hide {
+				opacity: 0;
 			}
 		}
 	}

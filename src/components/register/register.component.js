@@ -35,6 +35,9 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 		cycle: 'monthly',
 		categories: ['food', 'housing', 'transportation', 'travel', 'entertainment', 'clothing', 'groceries', 'utilities', 'health', 'education', 'work']
 	});
+	const [passwordError, setPasswordError] = useState(null);
+	const [passwordMatches, setPasswordMatches] = useState(null);
+
 	const parsed = queryString.parse(location.search);
 	const { token } = parsed;
 	if (!token) history.push('/welcome');
@@ -50,7 +53,24 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 		const { value, name } = event.target;
 		setCredentials({ ...userCredentials, [name]: value });
 	}
-	// validatePassword
+	
+	const verifyPassword = event => {
+		handleChange(event);
+		const { value } = event.target;
+		setPasswordError(validatePassword(value)
+			? 	''
+			: 	'password must have at least 8 characters'
+		)
+	}
+
+	const verifyPasswordMatches = event => {
+		handleChange(event);
+		console.log(firstPassword,secondPassword)
+		setPasswordMatches(firstPassword === secondPassword
+			? 	''
+			: 	'passwords do not match'
+		)
+	}
 
 	return (
 		<div className='register'>
@@ -64,7 +84,7 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 								type='password' 
 								value={firstPassword} 
 								label='password'
-								handleChange={handleChange}
+								handleChange={verifyPassword}
 								required 
 							/>
 							<FormInput 
@@ -72,10 +92,15 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 								type='password' 
 								value={secondPassword} 
 								label='password'
-								handleChange={handleChange}
+								handleChange={verifyPasswordMatches}
 								required 
 							/>
-							<span className={`error ${userError ? 'show' : null}`}>{userError ? userError.title : ''}</span>
+							<span className={`error ${passwordError ? 'show' : 'hide'}`}>
+								{passwordError}
+							</span>
+							<span className={`error ${passwordMatches ? 'show' : 'hide'}`}>
+								{passwordMatches}
+							</span>
 						</form>
 					</div>
 				</div>

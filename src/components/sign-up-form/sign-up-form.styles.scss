@@ -1,4 +1,5 @@
 .sign-up-form {
+	margin: 0 auto;
 	width: 380px;
 	display: flex;
 	flex-direction: column;
@@ -6,16 +7,4 @@
 	.title {
 		margin: 10px 0;
 	}
-
-	.forgot {
-		text-align: right;
-		margin-right: 20px;
-	}
-
-	.buttons {
-		margin-bottom: 15px;
-		display: flex;
-		justify-content: space-between;
-	}
-	
 }

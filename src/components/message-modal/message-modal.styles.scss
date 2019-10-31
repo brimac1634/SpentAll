@@ -1,4 +1,7 @@
 .message-modal {
+	h2 {
+		text-align: center;
+	}
 
 	.message {
 		display: block;
@@ -12,6 +15,10 @@
 
 		:first-child {
 			margin-right: 10px;
+		}
+
+		:last-child {
+			margin-left: auto;
 		}
 	}
 }

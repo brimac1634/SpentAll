@@ -4,9 +4,10 @@ import CustomButton from '../../components/custom-button/custom-button.component
 
 import './message-modal.styles.scss';
 
-const MessageModal = ({ message, confirm, cancel, confirmCallback, cancelCallback }) => (
+const MessageModal = ({ title, message, confirm, cancel, confirmCallback, cancelCallback }) => (
 	<div className='message-modal'>
-		<h3 className='message'>{message}</h3>
+		<h2>{title}</h2>
+		<span className='message'>{message}</span>
 		<div className='button-container'>
 			{
 				cancel &&
