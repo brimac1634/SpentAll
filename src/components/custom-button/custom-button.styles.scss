@@ -1,3 +1,8 @@
+@mixin purple {
+  background-color: var(--purple);
+  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--purple);
+}
+
 .custom-button {
   opacity: 1;
   min-width: 165px;
@@ -21,8 +26,7 @@
   }
 
   &.unselected {
-    background-color: var(--purple);
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--purple);
+    @include purple();
   }
 
   &.selected {
@@ -32,6 +36,12 @@
 
   &.hide {
     opacity: 0;
+  }
+
+  &.disabled {
+    @include purple();
+    pointer-events: none;
+    color: var(--dark-purple);
   }
 
 }

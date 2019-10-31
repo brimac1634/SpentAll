@@ -13,7 +13,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const DoughnutChart = ({ categoryTotals, currency }) => {
-	if (!categoryTotals) return <span>No data to show</span>
+	if (!categoryTotals) return <span>No data</span>
 
 	const categoryKeys = Object.keys(categoryTotals)
 	const colors = ['#819efc', '#ffb9f6'];

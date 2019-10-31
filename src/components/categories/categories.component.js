@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip'
 
 import FormInput from '../form-input/form-input.component';
 import Category from '../category/category.component';
+import { ReactComponent as QuestionIcon } from '../../assets/question.svg'
 
 import './categories.styles.scss';
 
@@ -26,7 +28,13 @@ const Categories = ({ settings, setSettings }) => {
 
 	return (
 		<div className='categories-input'>
-			<span className='label'>add or remove spending categories</span>
+			<div className='info-group'>
+				<span className='label'>add or remove spending categories</span>
+				<div data-tip='These will be your category options when adding new expenditures.'>
+					<QuestionIcon />
+				</div>
+				<ReactTooltip effect='solid'/>
+			</div>
 			<FormInput 
 				name='category' 
 				type='text'

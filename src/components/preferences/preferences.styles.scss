@@ -9,10 +9,21 @@
 			margin-bottom: 0;
 		}
 
-		.label {
-			display: block;
-			margin-bottom: 10px;
+		.info-group {
+			display: flex;
+			
+			.label {
+				display: block;
+				margin-bottom: 10px;
+			}
+			svg {
+				margin: 0 8px;
+				fill: var(--white);
+				width: 18px;
+				height: 18px;
+			}
 		}
+		
 
 		.target-times {
 			display: flex;

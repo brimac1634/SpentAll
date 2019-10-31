@@ -9,7 +9,7 @@ import {
 const selectExpenses = state => state.expenses;
 
 const filterList = (list, dates) => {
-	if (!list) return null;
+	if (!list || !!!list.length) return null;
 	const { startDate, endDate } = dates;
 	return list.filter(({ timestamp }) => {
 		return checkDateRange(new Date(timestamp), startDate, endDate)

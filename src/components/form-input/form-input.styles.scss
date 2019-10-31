@@ -22,7 +22,7 @@ $input-color: var(--white);
     border: none;
 
     &::placeholder {
-      color: #d6d6d6;
+      color: var(--dark-purple);
     }
 
     &:focus {

@@ -18,18 +18,33 @@
 			padding: 0 20px;
 			max-width: 500px;
 			text-align: left;
-		}
+			display: flex;
+			flex-direction: column;
 
-		.error {
-			color: var(--white);
-			transition: all 500ms ease-in-out;
+			.input-group {
+				padding: 20px 0;
 
-			&.show {
-				opacity: 1;
+				:last-child {
+					margin: 0;
+				}
+
+				.label {
+					display: block;
+					margin-bottom: 10px;
+				}
 			}
 
-			&.hide {
-				opacity: 0;
+			.error {
+				color: var(--pink);
+				transition: all 500ms ease-in-out;
+
+				&.show {
+					opacity: 1;
+				}
+
+				&.hide {
+					opacity: 0;
+				}
 			}
 		}
 	}

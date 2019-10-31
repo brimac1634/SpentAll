@@ -25,6 +25,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArray, currency }) => {
+	console.log(expenseMap, dateRange)
 	if (!expenseMap || !dateRange) return <span>No Data</span>
 	const { startDate, endDate } = dateRange;
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
@@ -35,71 +35,91 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 		cycle: 'monthly',
 		categories: ['food', 'housing', 'transportation', 'travel', 'entertainment', 'clothing', 'groceries', 'utilities', 'health', 'education', 'work']
 	});
+	const [index, setIndex] = useState(0);
 	const [passwordError, setPasswordError] = useState(null);
-	const [passwordMatches, setPasswordMatches] = useState(null);
 
 	const parsed = queryString.parse(location.search);
 	const { token } = parsed;
 	if (!token) history.push('/welcome');
 
-	const { firstPassword, secondPassword } = userCredentials;
+	const { firstPassword, secondPassword, categories } = userCredentials;
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		registerStart(firstPassword, token, userCredentials);
+		registerStart(firstPassword, token, {
+			...userCredentials,
+			categories: categories.join(',')
+		});
 	}
 
 	const handleChange = event => {
 		const { value, name } = event.target;
 		setCredentials({ ...userCredentials, [name]: value });
 	}
-	
-	const verifyPassword = event => {
-		handleChange(event);
-		const { value } = event.target;
-		setPasswordError(validatePassword(value)
-			? 	''
-			: 	'password must have at least 8 characters'
-		)
-	}
 
-	const verifyPasswordMatches = event => {
-		handleChange(event);
-		console.log(firstPassword,secondPassword)
-		setPasswordMatches(firstPassword === secondPassword
-			? 	''
-			: 	'passwords do not match'
-		)
+	useEffect(()=>{
+		let error;
+		if (!validatePassword(firstPassword)) {
+			error = '*password must have at least 8 characters*';
+		} else if (firstPassword !== secondPassword) {
+			error = '*passwords do not match*'
+		} else {
+			error = null;
+		}
+		setPasswordError(error);
+	}, [firstPassword, secondPassword, setPasswordError])
+
+	const disableNext = index => {
+		switch (index) {
+			case 0:
+				return !!passwordError
+			case 1:
+				return Object.values(userCredentials).some(item => {
+					return !item || item === '';
+				})
+			case 2:
+				return !!!categories.length
+			default:
+				return true
+		}
 	}
 
 	return (
 		<div className='register'>
-			<Carousel showIndicator submit={handleSubmit}>
+			<Carousel 
+				showIndicator 
+				submit={handleSubmit}
+				handleIndex={setIndex}
+				disableNext={disableNext(index)}
+			>
 				<div className='item'>
 					<div className='container'>
-						<h2>User Details</h2>
+						<h2>Password</h2>
 						<form>
-							<FormInput 
-								name='firstPassword' 
-								type='password' 
-								value={firstPassword} 
-								label='password'
-								handleChange={verifyPassword}
-								required 
-							/>
-							<FormInput 
-								name='secondPassword' 
-								type='password' 
-								value={secondPassword} 
-								label='password'
-								handleChange={verifyPasswordMatches}
-								required 
-							/>
+							<div className='input-group'>
+								<span className='label'>create a new password</span>
+								<FormInput 
+									name='firstPassword' 
+									type='password' 
+									value={firstPassword} 
+									label='password'
+									handleChange={handleChange}
+									required 
+								/>
+							</div>
+							<div className='input-group'>
+								<span className='label'>rewrite your new password</span>
+								<FormInput 
+									name='secondPassword' 
+									type='password' 
+									value={secondPassword} 
+									label='password'
+									handleChange={handleChange}
+									required 
+								/>
+							</div>
 							<span className={`error ${passwordError ? 'show' : 'hide'}`}>
 								{passwordError}
-							</span>
-							<span className={`error ${passwordMatches ? 'show' : 'hide'}`}>
-								{passwordMatches}
 							</span>
 						</form>
 					</div>
@@ -107,6 +127,9 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 				<div className='item'>
 					<div className='container'>
 						<h2>Settings</h2>
+						<span className='error show'>
+							all items must be filled
+						</span>
 						<Preferences 
 							settings={userCredentials}
 							handleChange={handleChange}

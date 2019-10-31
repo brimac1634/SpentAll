@@ -1,13 +1,17 @@
-import React, { useCallback, useState, useRef} from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 
 import CustomButton from '../custom-button/custom-button.component';
 
 import './carousel.styles.scss';
 
-const Carousel = ({ children, showIndicator, submit }) => {
+const Carousel = ({ children, showIndicator, submit, handleIndex, disableNext }) => {
 	const [index, setIndex] = useState(0);
 	const [translateValue, setTranslation] = useState(0);
 	const galleryItem = useRef(null);
+
+	useEffect(()=>{
+		handleIndex(index);
+	}, [handleIndex, index])
 
 	const nextItem = useCallback(() => {
 		const { width } = galleryItem.current.getBoundingClientRect()
@@ -65,6 +69,7 @@ const Carousel = ({ children, showIndicator, submit }) => {
 				}
 				<CustomButton 
 					selected 
+					disabled={disableNext}
 					onClick={isFinalItem ? submit : nextItem}
 				> 
 					{isFinalItem ? 'register' : 'continue'}
