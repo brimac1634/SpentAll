@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import Loader from '../loader/loader.component';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import { emailSignInStart } from '../../redux/user/user.actions';
-import { selectIsUserFetching, selectUserError } from '../../redux/user/user.selectors';
+import { selectIsUserFetching } from '../../redux/user/user.selectors';
 
 import './sign-in-form.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	isLoadingUser: selectIsUserFetching,
-	userError: selectUserError
+	isLoadingUser: selectIsUserFetching
 })
 
 const mapDispatchToProps = dispatch => ({
 	emailSignInStart: (email, password) => dispatch(emailSignInStart({ email, password}))
 })
 
-const SignInForm = ({ emailSignInStart, isLoadingUser, userError }) => {
+const SignInForm = ({ match, emailSignInStart, isLoadingUser }) => {
 	const [userCredentials, setCredentials] = useState({email: '', password: ''});
 	const { email, password } = userCredentials;
+
+
 
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -55,7 +56,7 @@ const SignInForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 					handleChange={handleChange}
 					required 
 				/>
-				<Link to='/reset' className='forgot'>forgot password?</Link>
+				<Link to={`${match.path}/sign-up`} className='forgot'>forgot password?</Link>
 				<div className='buttons'>
 					<CustomButton 
 						selected
@@ -64,7 +65,6 @@ const SignInForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 						Sign In 
 					</CustomButton>
 				</div>
-				<span className={`error ${userError ? 'show' : null}`}>{userError ? userError.title : ''}</span>
 			</form>
 			{
 				isLoadingUser &&
@@ -74,4 +74,4 @@ const SignInForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 	)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignInForm));

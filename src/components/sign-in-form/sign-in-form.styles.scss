@@ -7,16 +7,6 @@
 		margin: 10px 0;
 	}
 
-	.error {
-		color: red;
-		transition: all 500ms ease-in-out;
-		opacity: 0;
-
-		&.show {
-			opacity: 1;
-		}
-	}
-
 	.forgot {
 		text-align: right;
 		margin-right: 20px;

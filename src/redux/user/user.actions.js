@@ -1,5 +1,20 @@
 import UserActionTypes from './user.types';
 
+export const emailSignUpStart = nameAndEmail => ({
+	type: UserActionTypes.EMAIL_SIGN_UP_START,
+	payload: nameAndEmail
+});
+
+export const signUpSuccess = message => ({
+	type: UserActionTypes.SIGN_UP_SUCCESS,
+	payload: message
+})
+
+export const registerStart = passwordAndTokenAndSettings => ({
+	type: UserActionTypes.REGISTER_START,
+	payload: passwordAndTokenAndSettings
+});
+
 export const emailSignInStart = emailAndPassword => ({
 	type: UserActionTypes.EMAIL_SIGN_IN_START,
 	payload: emailAndPassword
@@ -10,8 +25,8 @@ export const signInSuccess = user => ({
 	payload: user
 })
 
-export const signInFailure = error => ({
-	type: UserActionTypes.SIGN_IN_FAILURE,
+export const userFailure = error => ({
+	type: UserActionTypes.USER_FAILURE,
 	payload: error
 })
 

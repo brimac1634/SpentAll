@@ -5,13 +5,15 @@ import axiosConfig from '../../axios-config';
 import UserActionTypes from './user.types';
 
 import { 
-	signInSuccess, 
-	signInFailure, 
+	signUpSuccess,
+	userFailure,
+	signInSuccess,
 	signOutSuccess,
 	setUserSettings
 } from './user.actions';
 
 import { setTimeFrame } from '../expenses/expenses.actions';
+import { setAlert } from '../alert/alert.actions';
 
 export function* handleSignIn(user) {
 	const { userName, userEmail, target, cycle, currency, categories } = user;
@@ -19,7 +21,7 @@ export function* handleSignIn(user) {
 		target, 
 		cycle, 
 		currency,
-		categories: categories.split(',') 
+		categories: categories ? categories.split(',') : []
 	}));
 	yield put(setTimeFrame({ timeFrame: cycle, isTarget: true }))
 	yield put(signInSuccess({ userName, userEmail }));
@@ -28,7 +30,9 @@ export function* handleSignIn(user) {
 export function* parseLoginWithToken(data) {
 	try {	
 		if (data.error) {
-			yield put(signInFailure(data.error))
+			const { error } = data;
+			yield put(userFailure(error))
+			yield put(setAlert(error.title))
 		} else {
 			const { user, token } = data;
 			const cookies = new Cookies();
@@ -36,7 +40,7 @@ export function* parseLoginWithToken(data) {
 			yield call(handleSignIn, user)
 		}
 	} catch (err) {
-		yield put(signInFailure(err))
+		yield put(userFailure(err))
 	}
 }
 
@@ -47,12 +51,51 @@ export function* signInWithEmail({ payload: { email, password }}) {
 		if (data) {
 			yield call(parseLoginWithToken, data)
 		} else {
-			yield put(signInFailure('unable to login'))
+			yield put(userFailure('unable to login'))
 		}
 	} catch (err) {
-		yield put(signInFailure(err))
+		yield put(userFailure(err))
 	}
 }
+
+export function* signUpWithEmail({ payload: { name, email }}) {
+	try {
+		const { data } = yield axiosConfig('post', '/register', {name, email})
+		if (data.error) {
+			const { error } = data;
+			yield put(userFailure(error))
+			yield put(setAlert(error.title))
+		} else {
+			yield put(signUpSuccess('Please check your email for a verification line'))
+		}
+	} catch (err) {
+		yield put(userFailure(err))
+	}
+}
+
+export function* register({ payload: { password, token, settings }}) {
+	try {
+		const { data } = yield axiosConfig('post', '/complete-register', {password, token, settings})
+		if (data.error) {
+			const { error } = data;
+			yield put(userFailure(error))
+			yield put(setAlert(error.title))
+		} else {
+			yield call(parseLoginWithToken, data)
+		}
+	} catch (err) {
+		yield put(userFailure(err))
+	}
+}
+
+// export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
+// 	try {
+// 		const data = yield apiRequest('POST', '/api/v1/auth/facebook', {accessToken, id, email, name})
+// 		yield call(handleSignIn, data)
+// 	} catch (err) {
+// 		yield put(userFailure(err))
+// 	}
+// }
 
 export function* isUserAuthenticated() {
 	const cookies = new Cookies();
@@ -62,10 +105,10 @@ export function* isUserAuthenticated() {
 			const { data } = yield axiosConfig('get', '/check-user')
 			yield call(handleSignIn, data)
 		} catch (err) {
-		    yield put(signInFailure('no user'))
+		    yield put(userFailure('no user'))
 		}
     } else {
-    	yield put(signInFailure('no user'))
+    	yield put(userFailure('no user'))
     }
 }
 
@@ -78,6 +121,18 @@ export function* signOut() {
 export function* onEmailSignInStart() {
 	yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START,
 		signInWithEmail
+	)
+}
+
+export function* onEmailSignUpStart() {
+	yield takeLatest(UserActionTypes.EMAIL_SIGN_UP_START,
+		signUpWithEmail
+	)
+}
+
+export function* onRegisterStart() {
+	yield takeLatest(UserActionTypes.REGISTER_START,
+		register
 	)
 }
 

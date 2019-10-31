@@ -3,6 +3,7 @@ import UserActionTypes from './user.types';
 const initialState = {
 	currentUser: null,
 	userSettings: null,
+	message: null,
 	error: null,
 	isFetching: true
 } 
@@ -11,6 +12,8 @@ const userReducer = (state=initialState, action) => {
 	switch(action.type) {
 		case UserActionTypes.CHECK_USER_SESSION:
 		case UserActionTypes.EMAIL_SIGN_IN_START:
+		case UserActionTypes.EMAIL_SIGN_UP_START:
+		case UserActionTypes.REGISTER_START:
 			return {
 				...state,
 				isFetching: true
@@ -19,6 +22,11 @@ const userReducer = (state=initialState, action) => {
 			return {
 				...state,
 				userSettings: action.payload
+			}
+		case UserActionTypes.SIGN_UP_SUCCESS:
+			return {
+				...state,
+				message: action.payload
 			}
 		case UserActionTypes.SIGN_IN_SUCCESS:
 			return {
@@ -34,7 +42,7 @@ const userReducer = (state=initialState, action) => {
 				isFetching: false,
 				error: 'signed out'
 			}
-		case UserActionTypes.SIGN_IN_FAILURE:
+		case UserActionTypes.USER_FAILURE:
 			return {
 				...state,
 				error: action.payload,

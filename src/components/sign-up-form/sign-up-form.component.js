@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
 
-import Carousel from '../carousel/carousel.component';
 import Loader from '../loader/loader.component';
 import FormInput from '../form-input/form-input.component';
-import Preferences from '../preferences/preferences.component';
-import Categories from '../categories/categories.component';
+import CustomButton from '../custom-button/custom-button.component';
 
 import { emailSignInStart } from '../../redux/user/user.actions';
 import { selectIsUserFetching, selectUserError } from '../../redux/user/user.selectors';
@@ -23,20 +22,14 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
-	const [userCredentials, setCredentials] = useState({
-		name: '',
-		email: '', 
-		password: '',
-		currency: '',
-		target: '',
-		cycle: 'monthly',
-		categories: ['food', 'housing', 'transportation', 'travel', 'entertainment', 'clothing', 'groceries', 'utilities', 'health', 'education', 'work']
-	});
-	const { name, email, password } = userCredentials;
+	const [userCredentials, setCredentials] = useState({email: '', password: ''});
+	const { email, password } = userCredentials;
+
+
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		console.log(userCredentials)
+		emailSignInStart(email, password);
 	}
 
 	const handleChange = event => {
@@ -46,59 +39,34 @@ const SignUpForm = ({ emailSignInStart, isLoadingUser, userError }) => {
 
 	return (
 		<div className='sign-up-form'>
-			<Carousel showIndicator submit={handleSubmit}>
-				<div className='item'>
-					<div className='container'>
-						<h2>User Details</h2>
-						<form>
-							<FormInput 
-								name='name' 
-								type='text' 
-								value={name} 
-								label='name'
-								handleChange={handleChange}
-								required 
-							/>
-							<FormInput 
-								name='email' 
-								type='email' 
-								value={email} 
-								label='email'
-								handleChange={handleChange}
-								required 
-							/>
-							<FormInput 
-								name='password' 
-								type='password' 
-								value={password} 
-								label='password'
-								handleChange={handleChange}
-								required 
-							/>
-							<span className={`error ${userError ? 'show' : null}`}>{userError ? userError.title : ''}</span>
-						</form>
-					</div>
+			<h2>Login</h2>
+			<form onSubmit={handleSubmit}>
+				<FormInput 
+					name='email' 
+					type='email' 
+					value={email} 
+					label='email'
+					handleChange={handleChange}
+					required 
+				/>
+				<FormInput 
+					name='password' 
+					type='password' 
+					value={password} 
+					label='password'
+					handleChange={handleChange}
+					required 
+				/>
+				<Link to='/reset' className='forgot'>forgot password?</Link>
+				<div className='buttons'>
+					<CustomButton 
+						selected
+						type='submit'
+					> 
+						Sign In 
+					</CustomButton>
 				</div>
-				<div className='item'>
-					<div className='container'>
-						<h2>Settings</h2>
-						<Preferences 
-							settings={userCredentials}
-							handleChange={handleChange}
-							setSettings={setCredentials}
-						/>
-					</div>
-				</div>
-				<div className='item'>
-					<div className='container'>
-						<h2>Categories</h2>
-						<Categories
-							settings={userCredentials}
-							setSettings={setCredentials}
-						/>
-					</div>
-				</div>
-			</Carousel>
+			</form>
 			{
 				isLoadingUser &&
 				<Loader />

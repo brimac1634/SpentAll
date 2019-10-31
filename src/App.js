@@ -20,8 +20,7 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import './App.scss';
 
-const SignIn = lazy(() => import('./pages/sign-in/sign-in.component'))
-const SignUp = lazy(() => import('./pages/sign-up/sign-up.component'))
+const Welcome = lazy(() => import('./pages/welcome/welcome.component'))
 const Analytics = lazy(() => import('./pages/analytics/analytics.component'))
 const Expenses = lazy(() => import('./pages/expenses/expenses.component'))
 const ProfileSettings = lazy(() => import('./pages/profile-settings/profile-settings.component'))
@@ -40,14 +39,15 @@ const mapDispatchToProps = dispatch => ({
   setAlert: message => dispatch(setAlert(message))
 })
 
-const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, history, fetchExpenses, userError, showAddExpense }) => {
+const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, location, history, fetchExpenses, userError, showAddExpense }) => {
     useEffect(() => {
       checkUserSession();
     }, [checkUserSession])
 
     useEffect(()=>{
-      if (userError) history.push('/welcome');
-    }, [history, userError])
+      const current = location.pathname.split('/')[1];
+      if (userError && 'welcome' !== current) history.push('/welcome');
+    }, [history, location, userError])
 
     useEffect(() => {
         if (currentUser) {
@@ -68,26 +68,14 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                   <Route path='/expenditures' component={Expenses}/>
                   <Route path='/settings' component={ProfileSettings}/>
                   <Route 
-                      exact 
                       path='/welcome' 
                       render={() => 
                           currentUser ? (
                             <Redirect to={'/'}/>
                           ) : (
-                            <SignIn />
+                            <Welcome />
                           )
                       }
-                  />
-                  <Route 
-                    exact 
-                    path='/register' 
-                    render={() => 
-                        currentUser ? (
-                          <Redirect to={'/'}/>
-                        ) : (
-                          <SignUp />
-                        )
-                    }
                   />
                   <Redirect to='/' />
               </Switch>
