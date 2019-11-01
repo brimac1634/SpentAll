@@ -92,9 +92,6 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 				<div className='item'>
 					<div className='container'>
 						<h2>Settings</h2>
-						<span className='error show'>
-							all items must be filled
-						</span>
 						<Preferences 
 							settings={userCredentials}
 							handleChange={handleChange}
