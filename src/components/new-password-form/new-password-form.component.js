@@ -1,19 +1,35 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
-import NewPassword from '../new-password-form/new-password-form.component';
+import { registerStart } from '../../redux/user/user.actions';
 
-const NewPasswordForm = ({ location, history }) => {
+import NewPassword from '../new-password/new-password.component';
+import CustomButton from '../../components/custom-button/custom-button.component';
+
+import './new-password-form.styles.scss';
+
+const mapDispatchToProps = dispatch => ({
+	setNewPassword: (password, token) => dispatch(registerStart({ password, token }))
+})
+
+const NewPasswordForm = ({ location, history, setNewPassword }) => {
 	const [passwords, setPasswords] = useState({
 		firstPassword: '',
 		secondPassword: ''
 	})
 	const [passwordError, setPasswordError] = useState(null);
+	const { firstPassword } = passwords;
 
 	const parsed = queryString.parse(location.search);
 	const { token } = parsed;
 	if (!token) history.push('/welcome');
+
+	const handleSubmit = async event => {
+		event.preventDefault();
+		setNewPassword(firstPassword, token);
+	} 
 
 	const handleChange = event => {
 		const { value, name } = event.target;
@@ -28,8 +44,14 @@ const NewPasswordForm = ({ location, history }) => {
 				passwordError={passwordError}
 				setPasswordError={setPasswordError}
 			/>
+			<CustomButton 
+				selected 
+				onClick={handleSubmit}
+			> 
+				submit
+			</CustomButton>
 		</div>
 	)
 }
 
-export default withRouter(NewPasswordForm);
+export default withRouter(connect(null, mapDispatchToProps)(NewPasswordForm));

@@ -50,7 +50,9 @@ const Welcome = ({ match, history, isLoadingUser }) => (
 		/>
 		<Route
 			path={`${match.path}/reset-account`}
-			component={SignUpForm}
+			render={()=>(
+				<SignUpForm isReset />
+			)}
 		/>
 		<Route
 			path={`${match.path}/new-password`}

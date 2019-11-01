@@ -34,8 +34,13 @@ export const checkUserSession = () => ({
 	type: UserActionTypes.CHECK_USER_SESSION
 })
 
-export const setUserSettings = settings => ({
-	type: UserActionTypes.SET_USER_SETTINGS,
+export const updateSettingsSuccess = settings => ({
+	type: UserActionTypes.UPDATE_SETTINGS_SUCCESS,
+	payload: settings
+})
+
+export const updateSettingsStart = settings => ({
+	type: UserActionTypes.UPDATE_SETTINGS_START,
 	payload: settings
 })
 

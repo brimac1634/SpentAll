@@ -9,30 +9,52 @@ import {
 	userFailure,
 	signInSuccess,
 	signOutSuccess,
-	setUserSettings
+	updateSettingsSuccess
 } from './user.actions';
 
 import { setTimeFrame } from '../expenses/expenses.actions';
 import { setAlert } from '../alert/alert.actions';
 
-export function* handleSignIn(user) {
-	const { userName, userEmail, target, cycle, currency, categories } = user;
-	yield put(setUserSettings({ 
+export function* handleError(error) {
+	yield put(userFailure(error))
+	yield put(setAlert(error.title))
+}
+
+export function* setSettings({ target, cycle, currency, categories }) {
+	yield put(updateSettingsSuccess({ 
 		target, 
 		cycle, 
 		currency,
 		categories: categories ? categories.split(',') : []
 	}));
 	yield put(setTimeFrame({ timeFrame: cycle, isTarget: true }))
+}
+
+export function* updateSettings({ payload }) {
+	try {
+		const { data } =  yield axiosConfig('post', '/update-settings', payload)
+		if (data.error) {
+			yield handleError(data.error)
+			yield put(setAlert('unable to update settings'))
+		} else {
+			yield call(setSettings, data)
+			yield put(setAlert('settings updated!'))
+		}
+	} catch (err) {
+		yield put(userFailure(err))
+	}
+}
+
+export function* handleSignIn(user) {
+	const { userName, userEmail } = user;
+	yield call(setSettings, user)
 	yield put(signInSuccess({ userName, userEmail }));
 }
 
 export function* parseLoginWithToken(data) {
 	try {	
 		if (data.error) {
-			const { error } = data;
-			yield put(userFailure(error))
-			yield put(setAlert(error.title))
+			yield handleError(data.error)
 		} else {
 			const { user, token } = data;
 			const cookies = new Cookies();
@@ -62,11 +84,9 @@ export function* signUpWithEmail({ payload: { name, email }}) {
 	try {
 		const { data } = yield axiosConfig('post', '/register', {name, email})
 		if (data.error) {
-			const { error } = data;
-			yield put(userFailure(error))
-			yield put(setAlert(error.title))
+			yield handleError(data.error)
 		} else {
-			yield put(signUpSuccess('Please check your email for a verification line'))
+			yield put(signUpSuccess('Please check your email for a verification link'))
 		}
 	} catch (err) {
 		yield put(userFailure(err))
@@ -77,9 +97,7 @@ export function* register({ payload: { password, token, settings }}) {
 	try {
 		const { data } = yield axiosConfig('post', '/complete-register', {password, token, settings})
 		if (data.error) {
-			const { error } = data;
-			yield put(userFailure(error))
-			yield put(setAlert(error.title))
+			yield handleError(data.error)
 		} else {
 			yield call(parseLoginWithToken, data)
 		}
@@ -103,7 +121,11 @@ export function* isUserAuthenticated() {
     if (token) {
     	try {
 			const { data } = yield axiosConfig('get', '/check-user')
-			yield call(handleSignIn, data)
+			if (data.error) {
+				yield handleError(data.error)
+			} else {
+				yield call(handleSignIn, data)
+			}
 		} catch (err) {
 		    yield put(userFailure('no user'))
 		}
@@ -140,6 +162,11 @@ export function* onCheckUserSession() {
 	yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated)
 }
 
+export function* onUpdateSettings() {
+	yield takeLatest(UserActionTypes.UPDATE_SETTINGS_START, 
+		updateSettings)
+}
+
 export function* onSignOutStart() {
 	yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut)
 }
@@ -150,6 +177,7 @@ export function* userSagas() {
 		call(onEmailSignUpStart),
 		call(onRegisterStart),
 		call(onCheckUserSession),
+		call(onUpdateSettings),
 		call(onSignOutStart)
 	])
 }

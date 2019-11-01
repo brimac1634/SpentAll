@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 
@@ -23,11 +22,11 @@ const mapDispatchToProps = dispatch => ({
 	setSignUpMessage: message => dispatch(signUpSuccess(message))
 })
 
-const SignUpForm = ({ location, emailSignUpStart, signUpMessage, setSignUpMessage }) => {
+const SignUpForm = ({ isReset, emailSignUpStart, signUpMessage, setSignUpMessage }) => {
 	const [userCredentials, setCredentials] = useState({name: '', email: ''});
+	const [showMessage, setshowMessage] = useState(true);
 	const { name, email } = userCredentials;
 
-	console.log(location.pathname)
 
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -39,18 +38,27 @@ const SignUpForm = ({ location, emailSignUpStart, signUpMessage, setSignUpMessag
 		setCredentials({ ...userCredentials, [name]: value });
 	}
 
+	const handleMessage = () => {
+		setshowMessage(false);
+		setTimeout(()=>setSignUpMessage(null), 100)
+		setTimeout(()=>setshowMessage(true), 200)
+	}
+
 	return (
 		<div className='sign-up-form'>
-			<h2>Sign Up</h2>
+			<h2>{isReset ? 'Password Reset' : 'Sign Up'}</h2>
 			<form onSubmit={handleSubmit}>
-				<FormInput 
-					name='name' 
-					type='text' 
-					value={name} 
-					label='name'
-					handleChange={handleChange}
-					required 
-				/>
+				{
+					!isReset &&
+					<FormInput 
+						name='name' 
+						type='text' 
+						value={name} 
+						label='name'
+						handleChange={handleChange}
+						required 
+					/>
+				}
 				<FormInput 
 					name='email' 
 					type='email' 
@@ -64,20 +72,20 @@ const SignUpForm = ({ location, emailSignUpStart, signUpMessage, setSignUpMessag
 						selected
 						type='submit'
 					> 
-						sign up 
+						{isReset ? 'reset' : 'sign up'} 
 					</CustomButton>
 				</div>
 			</form>
-			<HoverBox show={!!signUpMessage}>
+			<HoverBox show={!!signUpMessage && showMessage}>
 				<MessageModal
 					title='success'
 					message={signUpMessage}
 					confirm='okay' 
-					confirmCallback={()=>setSignUpMessage(null)}
+					confirmCallback={handleMessage}
 				/>
 			</HoverBox>
 		</div>
 	)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUpForm));
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

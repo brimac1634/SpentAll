@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip'
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { ReactComponent as QuestionIcon } from '../../assets/question.svg'
+import LabelGroup from '../label-group/label-group.component';
 
 import './preferences.styles.scss';
 
@@ -13,14 +12,10 @@ const Preferences = ({ settings, handleChange, setSettings }) => {
 
 	return (
 		<div className='preferences'>
-			<div className='sub-group'>
-				<div className='info-group'>
-					<span className='label'>currency</span>
-					<div data-tip='This will be your default currency. (USD$/EUR€/HKD$/etc.)'>
-						<QuestionIcon />
-					</div>
-					<ReactTooltip effect='solid'/>
-				</div>
+			<LabelGroup
+				label='currency'
+				tooltip='This will be your default currency. (USD$/EUR€/HKD$/etc.)'
+			>
 				<FormInput 
 					name='currency' 
 					type='text' 
@@ -30,15 +25,11 @@ const Preferences = ({ settings, handleChange, setSettings }) => {
 					placeholder='USD$'
 					handleChange={handleChange}
 				/>
-			</div>
-			<div className='sub-group'>
-				<div className='info-group'>
-					<span className='label'>spending limit</span>
-					<div data-tip='This is the maximum amount you wish to spend per cycle. (Please omit commas)'>
-						<QuestionIcon />
-					</div>
-					<ReactTooltip effect='solid'/>
-				</div>
+			</LabelGroup>
+			<LabelGroup
+				label='spending limit'
+				tooltip='This is the maximum amount you wish to spend per cycle. (Please omit commas)'
+			>
 				<FormInput 
 					name='target' 
 					type='number' 
@@ -49,15 +40,11 @@ const Preferences = ({ settings, handleChange, setSettings }) => {
 					placeholder='2000'
 					handleChange={handleChange}
 				/>
-			</div>
-			<div className='sub-group'>
-				<div className='info-group'>
-					<span className='label'>spending cycle</span>
-					<div data-tip='This will be your default spending cycle in relation to your spending limit. (Default is monthly)'>
-						<QuestionIcon />
-					</div>
-					<ReactTooltip effect='solid'/>
-				</div>
+			</LabelGroup>
+			<LabelGroup
+				label='spending cycle'
+				tooltip='This will be your default spending cycle in relation to your spending limit. (Default is monthly)'
+			>
 				<div className='target-times'>
 					{
 						targetTimes.map(time=>(
@@ -73,7 +60,7 @@ const Preferences = ({ settings, handleChange, setSettings }) => {
 						))
 					}
 				</div>
-			</div>
+			</LabelGroup>
 		</div>
 	)
 }

@@ -24,7 +24,6 @@ const mapDispatchToProps = dispatch => ({
 const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency }) => {
 	const { target, cycle } = userSettings;
 	if (!target || !cycle) return <span>user settings not found</span>
-
 	let percent = totalTargetExpense
 		? 	totalTargetExpense * 100 / target
 		: 	0

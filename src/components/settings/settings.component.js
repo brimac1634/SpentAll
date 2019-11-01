@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import axiosConfig from '../../axios-config';
 import { numberWithCommas } from '../../utils';
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
-import { setAlert } from '../../redux/alert/alert.actions'; 
-import { setUserSettings } from '../../redux/user/user.actions'; 
-import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
+import { updateSettingsStart } from '../../redux/user/user.actions'; 
 
 import CustomButton from '../custom-button/custom-button.component';
 import Category from '../category/category.component';
@@ -21,13 +18,10 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-	setUserSettings: settings => dispatch(setUserSettings(settings)),
-	startLoading: message => dispatch(startLoading(message)),
-	stopLoading: () => dispatch(stopLoading()),
-	setAlert: alert => dispatch(setAlert(alert))
+	updateSettings: settings => dispatch(updateSettingsStart(settings)),
 })
 
-const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopLoading }) => {
+const Settings = ({ updateSettings, userSettings }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [settings, setSettings] = useState({
 		target: userSettings.target,
@@ -38,32 +32,17 @@ const Settings = ({ setUserSettings, userSettings, setAlert, startLoading, stopL
 
 	useEffect(()=>{
 		setSettings(userSettings);
+		setIsEditing(false)
 	}, [setSettings, userSettings])
 
 	let { target, cycle, currency, categories } = settings;
 
 	const updateProfile = async settings => {
-		startLoading('updating settings')
-		axiosConfig('post', '/update-settings', {
+		updateSettings({
 			...settings,
 			target: Number(target).toFixed(0),
 			categories: categories.join(',')
-		}).then(({ data })=>{
-			const { cycle, currency, target, categories } = data;
-			setUserSettings({ 
-				cycle,
-				currency,
-				target,
-				categories: categories.split(',') 
-			})
-			stopLoading();
-			setAlert('settings updated!')
-			setIsEditing(false);
-		}).catch(err => {
-			stopLoading();
-			setAlert('unable to update settings')
-			setIsEditing(false);
-		})
+		});
 	}
 
 	const handleChange = event => {

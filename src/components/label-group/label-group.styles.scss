@@ -1,0 +1,27 @@
+.label-group {
+	margin: 20px 0;
+	border: 1px solid transparent;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		.group {
+			margin-top: 0;
+		}
+
+		.info-group {
+			display: flex;
+			
+			.label {
+				display: block;
+				margin-bottom: 10px;
+			}
+			svg {
+				margin: 0 8px;
+				fill: var(--white);
+				width: 18px;
+				height: 18px;
+			}
+		}
+}

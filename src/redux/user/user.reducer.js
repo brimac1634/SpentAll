@@ -14,11 +14,12 @@ const userReducer = (state=initialState, action) => {
 		case UserActionTypes.EMAIL_SIGN_IN_START:
 		case UserActionTypes.EMAIL_SIGN_UP_START:
 		case UserActionTypes.REGISTER_START:
+		case UserActionTypes.UPDATE_SETTINGS_START:
 			return {
 				...state,
 				isFetching: true
 			}
-		case UserActionTypes.SET_USER_SETTINGS:
+		case UserActionTypes.UPDATE_SETTINGS_SUCCESS:
 			return {
 				...state,
 				userSettings: action.payload

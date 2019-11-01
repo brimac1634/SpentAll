@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 
+import LabelGroup from '../label-group/label-group.component';
+
 import { validatePassword } from '../../utils';
 
 import FormInput from '../form-input/form-input.component';
 
+import './new-password.styles.scss';
+
 const NewPassword = ({ passwords, handleChange, passwordError, setPasswordError }) => {
 	const { firstPassword, secondPassword } = passwords;
-
 	useEffect(()=>{
 		let error;
 		if (!validatePassword(firstPassword)) {
@@ -23,8 +26,10 @@ const NewPassword = ({ passwords, handleChange, passwordError, setPasswordError 
 		<div className='new-password'>
 			<h2>Password</h2>
 			<form>
-				<div className='input-group'>
-					<span className='label'>create a new password</span>
+				<LabelGroup
+					label='create a new password'
+					tooltip='The password must contain at least 8 characters'
+				>
 					<FormInput 
 						name='firstPassword' 
 						type='password' 
@@ -33,9 +38,10 @@ const NewPassword = ({ passwords, handleChange, passwordError, setPasswordError 
 						handleChange={handleChange}
 						required 
 					/>
-				</div>
-				<div className='input-group'>
-					<span className='label'>rewrite your new password</span>
+				</LabelGroup>
+				<LabelGroup
+					label='rewrite your new password'
+				>
 					<FormInput 
 						name='secondPassword' 
 						type='password' 
@@ -44,7 +50,7 @@ const NewPassword = ({ passwords, handleChange, passwordError, setPasswordError 
 						handleChange={handleChange}
 						required 
 					/>
-				</div>
+				</LabelGroup>
 				<span className={`error ${passwordError ? 'show' : 'hide'}`}>
 					{passwordError}
 				</span>
