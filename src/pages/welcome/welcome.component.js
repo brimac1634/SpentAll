@@ -1,7 +1,7 @@
-import React, { lazy, Switch, Redirect } from 'react';
+import React, { lazy } from 'react';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 
 import { selectIsUserFetching } from '../../redux/user/user.selectors';
 
@@ -21,43 +21,46 @@ const mapStateToProps = createStructuredSelector({
 
 const Welcome = ({ match, history, isLoadingUser }) => (
 	<div>
-		<Route
-			exact
-			path={match.path}
-			render={()=>(
-				<div className='welcome hover'>
-					<div className='info'>
-						<h2>New to SpentAll?</h2>
-						<p>SpentAll is a simple to use, spending tracker. Log your expenditures, categorize them, and track your spending habits with the analytics page. You can even set monthly, weekly, or daily spending limits to help you stay conscious of your spending! This app is perfect for those simply looking to keep an eye on their expenditures.</p>
-						<CustomButton 
-							selected 
-							onClick={()=>history.push(`${match.path}/sign-up`)}
-						> 
-							sign up
-						</CustomButton>
+		<Switch>
+			<Route
+				exact
+				path={match.path}
+				render={()=>(
+					<div className='welcome hover'>
+						<div className='info'>
+							<h2>New to SpentAll?</h2>
+							<p>SpentAll is a simple to use, spending tracker. Log your expenditures, categorize them, and track your spending habits with the analytics page. You can even set monthly, weekly, or daily spending limits to help you stay conscious of your spending! This app is perfect for those simply looking to keep an eye on their expenditures.</p>
+							<CustomButton 
+								selected 
+								onClick={()=>history.push(`${match.path}/sign-up`)}
+							> 
+								Sign Up
+							</CustomButton>
+						</div>
+						<SignInForm />
 					</div>
-					<SignInForm />
-				</div>
-			)}
-		/>
-		<Route
-			path={`${match.path}/sign-up`}
-			component={SignUpForm}
-		/>
-		<Route
-			path={`${match.path}/register`}
-			component={Register}
-		/>
-		<Route
-			path={`${match.path}/reset-account`}
-			render={()=>(
-				<SignUpForm isReset />
-			)}
-		/>
-		<Route
-			path={`${match.path}/new-password`}
-			component={NewPasswordForm}
-		/>
+				)}
+			/>
+			<Route
+				path={`${match.path}/sign-up`}
+				component={SignUpForm}
+			/>
+			<Route
+				path={`${match.path}/register`}
+				component={Register}
+			/>
+			<Route
+				path={`${match.path}/reset-account`}
+				render={()=>(
+					<SignUpForm isReset />
+				)}
+			/>
+			<Route
+				path={`${match.path}/new-password`}
+				component={NewPasswordForm}
+			/>
+			<Redirect to='/welcome' />
+		</Switch>
 		{
 			isLoadingUser &&
 			<Loader />

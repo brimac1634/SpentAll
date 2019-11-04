@@ -86,7 +86,7 @@ export function* signUpWithEmail({ payload: { name, email }}) {
 		if (data.error) {
 			yield handleError(data.error)
 		} else {
-			yield put(signUpSuccess('Please check your email for a verification link'))
+			yield put(signUpSuccess('Please check your email for a verification link!'))
 		}
 	} catch (err) {
 		yield put(userFailure(err))

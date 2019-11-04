@@ -134,16 +134,21 @@ export const selectExpenseToEdit = createSelector(
 )
 
 export const selectCategoriesTotals = createSelector(
-	[selectExpensesList],
-	expenses => {
+	selectTotalExpenses,
+	selectExpensesList,
+	(total, expenses) => {
 		if (!expenses) return null;
-		const categoryMap = expenses.reduce((accum, expense) => {
+		let categoryMap = expenses.reduce((accum, expense) => {
 			const { type, amount } = expense;
 			accum[type] = accum[type]
 				?	accum[type] + amount
 				: 	amount
 			return accum
 		}, {})
+
+		Object.keys(categoryMap).forEach(cat => {
+			categoryMap[cat] = Number(categoryMap[cat] * 100 / total).toFixed(2);
+		})
 		
 		const sortedArray = sortProperties(categoryMap).reduce((accum, array) => {
 			accum[array[0]] = array[1]

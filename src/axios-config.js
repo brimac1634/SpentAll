@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 
 const axiosConfig = (method, endpoint, data) => {
 	const url = (process.env.NODE_ENV === 'production') 
-		? ''
+		? 'https://spentall-server.herokuapp.com'
 		: 'http://localhost:5000'
 	const cookies = new Cookies();
 	const token = cookies.get('authToken')

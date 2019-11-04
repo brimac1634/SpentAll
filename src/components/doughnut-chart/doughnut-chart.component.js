@@ -5,14 +5,12 @@ import { createStructuredSelector } from 'reselect';
 import { lightenDarkenColor } from '../../utils';
 
 import { selectCategoriesTotals } from '../../redux/expenses/expenses.selectors';
-import { selectCurrency } from '../../redux/user/user.selectors';
 
 const mapStateToProps = createStructuredSelector({
-	categoryTotals: selectCategoriesTotals,
-	currency: selectCurrency
+	categoryTotals: selectCategoriesTotals
 })
 
-const DoughnutChart = ({ categoryTotals, currency }) => {
+const DoughnutChart = ({ categoryTotals }) => {
 	if (!categoryTotals) return <span>No data</span>
 
 	const categoryKeys = Object.keys(categoryTotals)
@@ -57,7 +55,7 @@ const DoughnutChart = ({ categoryTotals, currency }) => {
 
     return (
     	<div>
-    		<h4>amount spent per category ({currency})</h4>
+    		<h4>amount spent per category (% of total)</h4>
 		    <Doughnut data={data} options={options} />
 	    </div>
     );
