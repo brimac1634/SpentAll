@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
+import { validateEmail } from '../../utils';
 
 import { selectMessage } from '../../redux/user/user.selectors';
 
@@ -9,7 +10,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import MessageModal from '../../components/message-modal/message-modal.component';
 
-import { emailSignUpStart, signUpSuccess } from '../../redux/user/user.actions';
+import { resetStart, emailSignUpStart, signUpSuccess } from '../../redux/user/user.actions';
 
 import './sign-up-form.styles.scss';
 
@@ -19,10 +20,11 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
 	emailSignUpStart: (name, email) => dispatch(emailSignUpStart({ name, email })),
+	resetStart: email => dispatch(resetStart({ email })),
 	setSignUpMessage: message => dispatch(signUpSuccess(message))
 })
 
-const SignUpForm = ({ isReset, emailSignUpStart, signUpMessage, setSignUpMessage }) => {
+const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setSignUpMessage }) => {
 	const [userCredentials, setCredentials] = useState({name: '', email: ''});
 	const [showMessage, setshowMessage] = useState(true);
 	const { name, email } = userCredentials;
@@ -30,7 +32,11 @@ const SignUpForm = ({ isReset, emailSignUpStart, signUpMessage, setSignUpMessage
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		emailSignUpStart(name, email);
+		if (isReset) {
+			resetStart(email);
+		} else {
+			emailSignUpStart(name, email);
+		}
 	}
 
 	const handleChange = event => {
@@ -69,6 +75,7 @@ const SignUpForm = ({ isReset, emailSignUpStart, signUpMessage, setSignUpMessage
 				/>
 				<div className='buttons'>
 					<CustomButton 
+						disabled={!name || !validateEmail(email)}
 						selected
 						type='submit'
 					> 

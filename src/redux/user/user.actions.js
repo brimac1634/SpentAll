@@ -51,3 +51,13 @@ export const signOutStart = () => ({
 export const signOutSuccess = () => ({
 	type: UserActionTypes.SIGN_OUT_SUCCESS
 })
+
+export const resetStart = email => ({
+	type: UserActionTypes.RESET_START,
+	payload: email
+})
+
+export const resetSuccess = message => ({
+	type: UserActionTypes.RESET_SUCCESS,
+	payload: message
+})

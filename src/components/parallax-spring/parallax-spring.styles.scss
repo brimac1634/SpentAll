@@ -1,0 +1,43 @@
+.parallax-spring {
+	z-index: -1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.card1,
+	.card2,
+	.card3,
+	.card4 {
+		position: absolute;
+		border-radius: 5px;
+		background-size: auto;
+		background-position: center center;
+		background-repeat: no-repeat;
+		will-change: transform;
+		opacity: 0.8;
+		width: 50ch;
+		height: 25ch;
+		bottom: 0;
+	}
+
+	.card1 {
+		background-image: url('../../assets/1cloud.svg');
+	}
+	.card2 {
+		background-image: url('../../assets/2cloud.svg');
+	}
+	.card3 {
+		background-image: url('../../assets/3cloud.svg');
+	}
+	.card4 {
+		background-image: url('../../assets/4cloud.svg');
+	}
+	.card5 {
+		background-image: url('../../assets/5cloud.svg');
+	}
+}

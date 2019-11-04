@@ -15,6 +15,7 @@ const userReducer = (state=initialState, action) => {
 		case UserActionTypes.EMAIL_SIGN_UP_START:
 		case UserActionTypes.REGISTER_START:
 		case UserActionTypes.UPDATE_SETTINGS_START:
+		case UserActionTypes.RESET_START:
 			return {
 				...state,
 				isFetching: true
@@ -25,6 +26,7 @@ const userReducer = (state=initialState, action) => {
 				userSettings: action.payload
 			}
 		case UserActionTypes.SIGN_UP_SUCCESS:
+		case UserActionTypes.RESET_SUCCESS:
 			return {
 				...state,
 				message: action.payload,

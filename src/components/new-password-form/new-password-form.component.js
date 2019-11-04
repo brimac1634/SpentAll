@@ -45,6 +45,7 @@ const NewPasswordForm = ({ location, history, setNewPassword }) => {
 				setPasswordError={setPasswordError}
 			/>
 			<CustomButton 
+				disabled={!!passwordError}
 				selected 
 				onClick={handleSubmit}
 			> 

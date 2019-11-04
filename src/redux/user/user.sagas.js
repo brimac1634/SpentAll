@@ -9,7 +9,8 @@ import {
 	userFailure,
 	signInSuccess,
 	signOutSuccess,
-	updateSettingsSuccess
+	updateSettingsSuccess,
+	resetSuccess
 } from './user.actions';
 
 import { setTimeFrame } from '../expenses/expenses.actions';
@@ -93,6 +94,19 @@ export function* signUpWithEmail({ payload: { name, email }}) {
 	}
 }
 
+export function* resetAccount({ payload: { email }}) {
+	try {
+		const { data } = yield axiosConfig('post', '/reset', {email})
+		if (data.error) {
+			yield handleError(data.error)
+		} else {
+			yield put(resetSuccess('Please check your email for a reset link!'))
+		}
+	} catch (err) {
+		yield put(userFailure(err))
+	}
+}
+
 export function* register({ payload: { password, token, settings }}) {
 	try {
 		const { data } = yield axiosConfig('post', '/complete-register', {password, token, settings})
@@ -152,6 +166,12 @@ export function* onEmailSignUpStart() {
 	)
 }
 
+export function* onReset() {
+	yield takeLatest(UserActionTypes.RESET_START,
+		resetAccount
+	)
+}
+
 export function* onRegisterStart() {
 	yield takeLatest(UserActionTypes.REGISTER_START,
 		register
@@ -175,6 +195,7 @@ export function* userSagas() {
 	yield all([
 		call(onEmailSignInStart),
 		call(onEmailSignUpStart),
+		call(onReset),
 		call(onRegisterStart),
 		call(onCheckUserSession),
 		call(onUpdateSettings),
