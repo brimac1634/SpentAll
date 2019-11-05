@@ -27,12 +27,13 @@
 
 	.card1,
 	.card4 {
-		width: 45ch;
-		height: 25ch;
+		width: 50ch;
+		height: 30ch;
 	}
 
 	.card1 {
 		background-image: url('../../assets/1cloud.svg');
+		bottom: -20px;
 	}
 	.card2 {
 		background-image: url('../../assets/2cloud.svg');
@@ -42,5 +43,6 @@
 	}
 	.card4 {
 		background-image: url('../../assets/4cloud.svg');
+		bottom: 10px;
 	}
 }

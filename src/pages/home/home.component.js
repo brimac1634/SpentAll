@@ -10,7 +10,7 @@ const Home = () => {
 	const { x, y } = props;
 	return (
 		<div className='home' onMouseMove={({ clientX: x, clientY: y }) => set({ x, y })}>
-			<ParallaxSpring x={x} y={y} />
+			<ParallaxSpring x={x} y={y} /> 
 			<MeterContainer />
 		</div>
 	)
