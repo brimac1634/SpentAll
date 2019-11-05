@@ -20,6 +20,11 @@ export const emailSignInStart = emailAndPassword => ({
 	payload: emailAndPassword
 });
 
+export const signInWithFacebookStart = response => ({
+	type: UserActionTypes.SIGN_IN_WITH_FACEBOOK_START,
+	payload: response
+});
+
 export const signInSuccess = user => ({
 	type: UserActionTypes.SIGN_IN_SUCCESS,
 	payload: user

@@ -83,6 +83,12 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 					</CustomButton>
 				</div>
 			</form>
+			<div>
+				<div className='info'>
+					<h2>New to SpentAll?</h2>
+					<p>SpentAll is a simple to use, spending tracker. Log your expenditures, categorize them, and track your spending habits with the analytics page. You can even set monthly, weekly, or daily spending limits to help you stay conscious of your spending! This app is perfect for those simply looking to keep an eye on their expenditures.</p>
+				</div>
+			</div>
 			<HoverBox show={!!signUpMessage && showMessage}>
 				<MessageModal
 					title='success'

@@ -12,6 +12,7 @@ const userReducer = (state=initialState, action) => {
 	switch(action.type) {
 		case UserActionTypes.CHECK_USER_SESSION:
 		case UserActionTypes.EMAIL_SIGN_IN_START:
+		case UserActionTypes.SIGN_IN_WITH_FACEBOOK_START:
 		case UserActionTypes.EMAIL_SIGN_UP_START:
 		case UserActionTypes.REGISTER_START:
 		case UserActionTypes.UPDATE_SETTINGS_START:

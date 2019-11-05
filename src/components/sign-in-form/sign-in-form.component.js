@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { emailSignInStart } from '../../redux/user/user.actions';
+import { emailSignInStart, signInWithFacebookStart } from '../../redux/user/user.actions';
 
 import './sign-in-form.styles.scss';
 
 const mapDispatchToProps = dispatch => ({
-	emailSignInStart: (email, password) => dispatch(emailSignInStart({ email, password}))
+	emailSignInStart: (email, password) => dispatch(emailSignInStart({ email, password})),
+	signInWithFacebookStart: response => dispatch(signInWithFacebookStart(response))
 })
 
-const SignInForm = ({ match, emailSignInStart }) => {
+const SignInForm = ({ match, emailSignInStart, signInWithFacebookStart }) => {
 	const [userCredentials, setCredentials] = useState({email: '', password: ''});
 	const { email, password } = userCredentials;
 
@@ -48,13 +50,21 @@ const SignInForm = ({ match, emailSignInStart }) => {
 					required 
 				/>
 				<Link to={`${match.path}/reset-account`} className='forgot'>forgot password?</Link>
-				<div className='buttons'>
+				<div className='column'>
 					<CustomButton 
 						selected
 						type='submit'
 					> 
 						Sign In 
 					</CustomButton>
+					<span className='or-span'>OR</span>
+					<FacebookLogin
+				        appId='1337514576424164'
+				        fields='name,email,picture'
+				        cssClass='custom-fb-button'
+				        callback={signInWithFacebookStart}
+				        disableMobileRedirect={true}
+				    />
 				</div>
 			</form>
 		</div>

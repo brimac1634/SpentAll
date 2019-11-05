@@ -132,14 +132,15 @@ export function* register({ payload: { password, token, settings }}) {
 	}
 }
 
-// export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
-// 	try {
-// 		const data = yield apiRequest('POST', '/api/v1/auth/facebook', {accessToken, id, email, name})
-// 		yield call(handleSignIn, data)
-// 	} catch (err) {
-// 		yield put(userFailure(err))
-// 	}
-// }
+export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
+	try {
+		const data = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
+		console.log(data)
+		// yield call(handleSignIn, data)
+	} catch (err) {
+		yield put(userFailure(err))
+	}
+}
 
 export function* isUserAuthenticated() {
 	const cookies = new Cookies();
@@ -169,6 +170,12 @@ export function* signOut() {
 export function* onEmailSignInStart() {
 	yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START,
 		signInWithEmail
+	)
+}
+
+export function* onSignInWithFacebookStart() {
+	yield takeLatest(UserActionTypes.SIGN_IN_WITH_FACEBOOK_START,
+		signInWithFacebook
 	)
 }
 
