@@ -60,7 +60,7 @@ const SignInForm = ({ match, emailSignInStart, signInWithFacebookStart }) => {
 					<span className='or-span'>OR</span>
 					<FacebookLogin
 				        appId='1337514576424164'
-				        fields='name,email,picture'
+				        fields='name,email'
 				        cssClass='custom-fb-button'
 				        callback={signInWithFacebookStart}
 				        disableMobileRedirect={true}

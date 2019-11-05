@@ -133,9 +133,10 @@ export function* register({ payload: { password, token, settings }}) {
 }
 
 export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
+	console.log(accessToken, id, email, name)
 	try {
 		const data = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
-		console.log(data)
+		yield put(userFailure('err'))
 		// yield call(handleSignIn, data)
 	} catch (err) {
 		yield put(userFailure(err))
@@ -213,6 +214,7 @@ export function* onSignOutStart() {
 export function* userSagas() {
 	yield all([
 		call(onEmailSignInStart),
+		call(onSignInWithFacebookStart),
 		call(onEmailSignUpStart),
 		call(onReset),
 		call(onRegisterStart),
