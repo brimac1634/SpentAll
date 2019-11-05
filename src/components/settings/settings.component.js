@@ -38,11 +38,7 @@ const Settings = ({ updateSettings, userSettings }) => {
 	let { target, cycle, currency, categories } = settings;
 
 	const updateProfile = async settings => {
-		updateSettings({
-			...settings,
-			target: Number(target).toFixed(0),
-			categories: categories.join(',')
-		});
+		updateSettings(settings);
 	}
 
 	const handleChange = event => {

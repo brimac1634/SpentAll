@@ -21,6 +21,15 @@ export function* handleError(error) {
 	yield put(setAlert(error.title))
 }
 
+export function* correctSettings(settings) {
+	const { target, categories } = settings;
+	return yield {
+		...settings,
+		target: Number(target).toFixed(0),
+		categories: categories.join(',')
+	}
+}
+
 export function* setSettings({ target, cycle, currency, categories }) {
 	yield put(updateSettingsSuccess({ 
 		target, 
@@ -29,11 +38,13 @@ export function* setSettings({ target, cycle, currency, categories }) {
 		categories: categories ? categories.split(',') : []
 	}));
 	yield put(setTimeFrame({ timeFrame: cycle, isTarget: true }))
+	yield put(setTimeFrame({ timeFrame: cycle, isTarget: false }))
 }
 
 export function* updateSettings({ payload }) {
 	try {
-		const { data } =  yield axiosConfig('post', '/update-settings', payload)
+		const settings = yield correctSettings(payload);
+		const { data } =  yield axiosConfig('post', '/update-settings', settings)
 		if (data.error) {
 			yield handleError(data.error)
 			yield put(setAlert('unable to update settings'))
@@ -109,7 +120,8 @@ export function* resetAccount({ payload: { email }}) {
 
 export function* register({ payload: { password, token, settings }}) {
 	try {
-		const { data } = yield axiosConfig('post', '/complete-register', {password, token, settings})
+		const correctedSettings = yield correctSettings(settings);
+		const { data } = yield axiosConfig('post', '/complete-register', {password, token, settings: correctedSettings})
 		if (data.error) {
 			yield handleError(data.error)
 		} else {

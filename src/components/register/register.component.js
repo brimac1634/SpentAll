@@ -40,15 +40,11 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 	const { token } = parsed;
 	if (!token) history.push('/welcome');
 
-	const { firstPassword, target, categories } = userCredentials;
+	const { firstPassword, categories } = userCredentials;
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		registerStart(firstPassword, token, {
-			...userCredentials,
-			target: target.toFixed(0),
-			categories: categories.join(',')
-		});
+		registerStart(firstPassword, token, userCredentials);
 	}
 
 	const handleChange = event => {

@@ -19,10 +19,16 @@
 		background-position: center center;
 		background-repeat: no-repeat;
 		will-change: transform;
-		opacity: 0.8;
-		width: 50ch;
+		opacity: 1;
+		width: 35ch;
 		height: 25ch;
 		bottom: 0;
+	}
+
+	.card1,
+	.card4 {
+		width: 45ch;
+		height: 25ch;
 	}
 
 	.card1 {
@@ -36,8 +42,5 @@
 	}
 	.card4 {
 		background-image: url('../../assets/4cloud.svg');
-	}
-	.card5 {
-		background-image: url('../../assets/5cloud.svg');
 	}
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -19,14 +19,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const ExpenseList = ({ setTimeFrame, timeFrame, confirm }) => {
-	const timeFrames = ['today', 'this week', 'this month', 'this year']
-
-	useEffect(()=>{
-		setTimeFrame({
-			timeFrame: 'this month',
-			isTarget: false
-		})
-	}, [setTimeFrame])
+	const timeFrames = ['today', 'this week', 'this month', 'this year'];
 
 	return (
 		<div className='time-filter'>
