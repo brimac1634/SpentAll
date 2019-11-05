@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
+import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
 import { ReactComponent as AnalyticsIcon } from '../../assets/analytics.svg'
 import { ReactComponent as ListIcon } from '../../assets/list.svg'
@@ -18,9 +19,11 @@ const mapStateToProps = createStructuredSelector({
 
 const Header = ({ currentUser }) => (
 	<div className='header'>
-		<Link to={'/'}>
-			<h3 className='title'>SpentAll</h3>
-		</Link>
+		<div className='logo-container'>
+			<Link to={'/'}>
+				<Logo className='logo'/>
+			</Link>
+		</div>
 		<div className={`icon-set ${currentUser ? 'show' : 'hide'}`}>
 			<Link to='/account' className='icon'>
 				<HomeIcon />
