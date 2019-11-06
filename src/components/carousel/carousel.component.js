@@ -4,7 +4,7 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import './carousel.styles.scss';
 
-const Carousel = ({ children, showIndicator, submit, handleIndex, disableNext }) => {
+const Carousel = ({ children, showIndicator, submit, cancel, handleIndex, disableNext }) => {
 	const [index, setIndex] = useState(0);
 	const [translateValue, setTranslation] = useState(0);
 	const galleryItem = useRef(null);
@@ -48,8 +48,8 @@ const Carousel = ({ children, showIndicator, submit, handleIndex, disableNext })
 	            {children}
 	        </div>
 	        <div className='bottom-bar'>
-				<CustomButton hide={index === 0} onClick={previousItem}> 
-					back 
+				<CustomButton onClick={index === 0 ? cancel : previousItem}> 
+					{index === 0 ? 'cancel' : 'back'} 
 				</CustomButton>
 				{
 					showIndicator &&
@@ -72,7 +72,7 @@ const Carousel = ({ children, showIndicator, submit, handleIndex, disableNext })
 					disabled={disableNext}
 					onClick={isFinalItem ? submit : nextItem}
 				> 
-					{isFinalItem ? 'register' : 'continue'}
+					{isFinalItem ? 'submit' : 'continue'}
 				</CustomButton>
 			</div>
 		</div>

@@ -75,7 +75,7 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 				/>
 				<div className='buttons'>
 					<CustomButton 
-						disabled={!name || !validateEmail(email)}
+						disabled={(!isReset && !name) || !validateEmail(email)}
 						selected
 						type='submit'
 					> 

@@ -24,7 +24,8 @@ const userReducer = (state=initialState, action) => {
 		case UserActionTypes.UPDATE_SETTINGS_SUCCESS:
 			return {
 				...state,
-				userSettings: action.payload
+				userSettings: action.payload,
+				isFetching: false
 			}
 		case UserActionTypes.SET_SUCCESS_MESSAGE:
 			return {

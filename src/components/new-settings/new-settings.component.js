@@ -5,15 +5,16 @@ import Carousel from '../carousel/carousel.component';
 import Preferences from '../preferences/preferences.component';
 import Categories from '../categories/categories.component';
 
-import { updateSettingsStart } from '../../redux/user/user.actions';
+import { updateSettingsStart, signOutStart } from '../../redux/user/user.actions';
 
 import './new-settings.styles.scss';
 
 const mapDispatchToProps = dispatch => ({
-	updateSettings: settings => dispatch(updateSettingsStart(settings))
+	updateSettings: settings => dispatch(updateSettingsStart(settings)),
+	logout: () => dispatch(signOutStart())
 })
 
-const NewSettings = ({ updateSettings }) => {
+const NewSettings = ({ updateSettings, logout }) => {
 	const [userCredentials, setCredentials] = useState({
 		currency: '',
 		target: '',
@@ -51,6 +52,7 @@ const NewSettings = ({ updateSettings }) => {
 		<div className='new-settings'>
 			<Carousel 
 				showIndicator 
+				cancel={logout}
 				submit={handleSubmit}
 				handleIndex={setIndex}
 				disableNext={disableNext(index)}

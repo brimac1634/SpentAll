@@ -20,15 +20,6 @@ export function* handleError(error) {
 	yield put(setAlert(error.title))
 }
 
-export function* correctSettings(settings) {
-	const { target, categories } = settings;
-	return yield {
-		...settings,
-		target: Number(target).toFixed(0),
-		categories: categories.join(',')
-	}
-}
-
 export function* setSettings({ target, cycle, currency, categories }) {
 	yield put(updateSettingsSuccess({ 
 		target, 
@@ -42,7 +33,12 @@ export function* setSettings({ target, cycle, currency, categories }) {
 
 export function* updateSettings({ payload }) {
 	try {
-		const settings = yield correctSettings(payload);
+		const { target, categories } = payload;
+		const settings = {
+			...payload,
+			target: Number(target).toFixed(0),
+			categories: categories.join(',')
+		}
 		const { data } =  yield axiosConfig('post', '/update-settings', settings)
 		if (data.error) {
 			yield handleError(data.error)
@@ -117,10 +113,9 @@ export function* resetAccount({ payload: { email }}) {
 	}
 }
 
-export function* register({ payload: { password, token, settings }}) {
+export function* register({ payload: { password, token }}) {
 	try {
-		const correctedSettings = yield correctSettings(settings);
-		const { data } = yield axiosConfig('post', '/complete-register', {password, token, settings: correctedSettings})
+		const { data } = yield axiosConfig('post', '/complete-register', {password, token})
 		if (data.error) {
 			yield handleError(data.error)
 		} else {
@@ -134,6 +129,7 @@ export function* register({ payload: { password, token, settings }}) {
 export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
 	try {
 		const { data } = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
+		console.log(data)
 		if (data) {
 			yield call(parseLoginWithToken, data)
 		} else {
