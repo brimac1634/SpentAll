@@ -1,17 +1,17 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense, useState } from 'react';
 import { connect } from 'react-redux'; 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 import Header from './components/header/header.component';
-import Account from './pages/account/account.component';
+import User from './pages/user/user.component';
 import HoverBox from './components/hover-box/hover-box.component';
 import ExpenseInputContainer from './components/expense-input/expense-input.container';
 import Loader from './components/loader/loader.component';
 import Alert from './components/alert/alert.component';
 
-import { selectCurrentUser } from './redux/user/user.selectors';
+import { selectCurrentUser, selectIsUserFetching } from './redux/user/user.selectors';
 import { setAlert } from './redux/alert/alert.actions'; 
 import { selectIsLoading, selectLoadingMessage } from './redux/loading/loading.selectors';
 import { fetchExpensesStart } from './redux/expenses/expenses.actions';
@@ -25,6 +25,7 @@ const PrivacyPolicy = lazy(() => import('./pages/privacy-policy/privacy-policy.c
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
+  isUserLoading: selectIsUserFetching,
   isLoading: selectIsLoading,
   loadingMessage: selectLoadingMessage,
   showAddExpense: selectShowAddExpense
@@ -36,61 +37,73 @@ const mapDispatchToProps = dispatch => ({
   setAlert: message => dispatch(setAlert(message))
 })
 
-const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, fetchExpenses, showAddExpense }) => {
-    useEffect(() => {
-      checkUserSession();
-    }, [checkUserSession])
+const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, fetchExpenses, showAddExpense, isUserLoading }) => {
+  const [isFetchingUser, setIsFetchingUser] = useState(true);
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession])
 
-    useEffect(() => {
-        if (currentUser) {
-          fetchExpenses();
-          const { userName } = currentUser;
-          setAlert(`Welcome, ${userName}`)
-        }
-    }, [currentUser, fetchExpenses, setAlert])
-    
-    return (
-      <div>
-        <ErrorBoundary>
-          <Header />
-          <Suspense fallback={<Loader />}>
-            <Switch>
-                <Route 
-                  path='/account' 
-                  render={()=>
-                    currentUser ? (
-                      <Account />
-                    ) : (
-                      <Redirect to={'/welcome'}/>
-                    )
-                  }/>
-                <Route path='/privacy-policy' component={PrivacyPolicy}/>
-                <Route 
-                    path='/welcome' 
-                    render={() => 
-                        currentUser ? (
-                          <Redirect to={'/account'}/>
-                        ) : (
-                          <Welcome />
-                        )
-                    }
-                />
-                <Redirect to='/welcome' />
-            </Switch>
-            {
-              currentUser &&
-              <HoverBox show={showAddExpense}>
-                <ExpenseInputContainer />
-              </HoverBox>
-            }
-          </Suspense>
-        </ErrorBoundary>
-        {isLoading &&
-            <Loader fixed message={loadingMessage} />
-        }
-        <Alert />
-      </div>
-    )
+  useEffect(() => {
+    if (currentUser) {
+      fetchExpenses();
+      const { userName } = currentUser;
+      setAlert(`Welcome, ${userName}`)
+    }
+  }, [currentUser, fetchExpenses, setAlert])
+
+  useEffect(()=>{
+    if (!isUserLoading) setIsFetchingUser(false);
+  }, [isUserLoading, setIsFetchingUser])
+  
+  return (
+    <div>
+      {
+        isFetchingUser
+          ? <Loader fixed />
+          : <div>
+              <ErrorBoundary>
+                <Header />
+                <Suspense fallback={<Loader />}>
+                  <Switch>
+                      <Route 
+                        path='/user' 
+                        render={()=>
+                          currentUser ? (
+                            <User />
+                          ) : (
+                            <Redirect to={'/welcome'}/>
+                          )
+                        }/>
+                      <Route path='/privacy-policy' component={PrivacyPolicy}/>
+                      <Route 
+                          path='/welcome' 
+                          render={() => 
+                              currentUser ? (
+                                <Redirect to={'/account'}/>
+                              ) : (
+                                <Welcome />
+                              )
+                          }
+                      />
+                      <Redirect to='/user' />
+                  </Switch>
+                  {
+                    currentUser &&
+                    <HoverBox show={showAddExpense}>
+                      <ExpenseInputContainer />
+                    </HoverBox>
+                  }
+                </Suspense>
+              </ErrorBoundary>
+              {isLoading || isUserLoading
+                ?  <Loader fixed message={loadingMessage} />
+                :  null
+              }
+              <Alert />
+            </div>
+      }
+    </div>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

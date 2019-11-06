@@ -13,7 +13,6 @@ import './welcome.styles.scss';
 
 const SignUpForm = lazy(() => import('../../components/sign-up-form/sign-up-form.component'))
 const NewPasswordForm = lazy(() => import('../../components/new-password-form/new-password-form.component'))
-const Register = lazy(() => import('../../components/register/register.component'))
 
 const mapStateToProps = createStructuredSelector({
 	isLoadingUser: selectIsUserFetching
@@ -37,10 +36,6 @@ const Welcome = ({ match, isLoadingUser }) => {
 				<Route
 					path={`${match.path}/sign-up`}
 					component={SignUpForm}
-				/>
-				<Route
-					path={`${match.path}/register`}
-					component={Register}
 				/>
 				<Route
 					path={`${match.path}/reset-account`}

@@ -5,8 +5,8 @@ export const emailSignUpStart = nameAndEmail => ({
 	payload: nameAndEmail
 });
 
-export const signUpSuccess = message => ({
-	type: UserActionTypes.SIGN_UP_SUCCESS,
+export const setSuccessMessage = message => ({
+	type: UserActionTypes.SET_SUCCESS_MESSAGE,
 	payload: message
 })
 
@@ -60,9 +60,4 @@ export const signOutSuccess = () => ({
 export const resetStart = email => ({
 	type: UserActionTypes.RESET_START,
 	payload: email
-})
-
-export const resetSuccess = message => ({
-	type: UserActionTypes.RESET_SUCCESS,
-	payload: message
 })

@@ -26,8 +26,7 @@ const userReducer = (state=initialState, action) => {
 				...state,
 				userSettings: action.payload
 			}
-		case UserActionTypes.SIGN_UP_SUCCESS:
-		case UserActionTypes.RESET_SUCCESS:
+		case UserActionTypes.SET_SUCCESS_MESSAGE:
 			return {
 				...state,
 				message: action.payload,

@@ -5,12 +5,11 @@ import axiosConfig from '../../axios-config';
 import UserActionTypes from './user.types';
 
 import { 
-	signUpSuccess,
+	setSuccessMessage,
 	userFailure,
 	signInSuccess,
 	signOutSuccess,
-	updateSettingsSuccess,
-	resetSuccess
+	updateSettingsSuccess
 } from './user.actions';
 
 import { setTimeFrame } from '../expenses/expenses.actions';
@@ -98,7 +97,7 @@ export function* signUpWithEmail({ payload: { name, email }}) {
 		if (data.error) {
 			yield handleError(data.error)
 		} else {
-			yield put(signUpSuccess('Please check your email for a verification link!'))
+			yield put(setSuccessMessage('Please check your email for a verification link!'))
 		}
 	} catch (err) {
 		yield put(userFailure(err))
@@ -111,7 +110,7 @@ export function* resetAccount({ payload: { email }}) {
 		if (data.error) {
 			yield handleError(data.error)
 		} else {
-			yield put(resetSuccess('Please check your email for a reset link!'))
+			yield put(setSuccessMessage('Please check your email for a reset link!'))
 		}
 	} catch (err) {
 		yield put(userFailure(err))
@@ -133,11 +132,13 @@ export function* register({ payload: { password, token, settings }}) {
 }
 
 export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
-	console.log(accessToken, id, email, name)
 	try {
-		const data = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
-		yield put(userFailure('err'))
-		// yield call(handleSignIn, data)
+		const { data } = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
+		if (data) {
+			yield call(parseLoginWithToken, data)
+		} else {
+			yield put(userFailure('unable to login'))
+		}
 	} catch (err) {
 		yield put(userFailure(err))
 	}

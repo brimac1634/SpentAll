@@ -1,50 +1,32 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect';
-import queryString from 'query-string';
 
 import Carousel from '../carousel/carousel.component';
-import Loader from '../loader/loader.component';
 import Preferences from '../preferences/preferences.component';
-import NewPassword from '../new-password/new-password.component';
 import Categories from '../categories/categories.component';
 
-import { registerStart } from '../../redux/user/user.actions';
-import { selectIsUserFetching, selectUserError } from '../../redux/user/user.selectors';
+import { updateSettingsStart } from '../../redux/user/user.actions';
 
-import './register.styles.scss';
-
-const mapStateToProps = createStructuredSelector({
-	isLoadingUser: selectIsUserFetching,
-	userError: selectUserError
-})
+import './new-settings.styles.scss';
 
 const mapDispatchToProps = dispatch => ({
-	registerStart: (password, token, settings) => dispatch(registerStart({ password, token, settings }))
+	updateSettings: settings => dispatch(updateSettingsStart(settings))
 })
 
-const Register = ({ history, location, registerStart, isLoadingUser, userError }) => {
+const NewSettings = ({ updateSettings }) => {
 	const [userCredentials, setCredentials] = useState({
-		firstPassword: '',
-		secondPassword: '',
 		currency: '',
 		target: '',
 		cycle: 'monthly',
 		categories: ['food', 'housing', 'transportation', 'travel', 'entertainment', 'clothing', 'groceries', 'utilities', 'health', 'education', 'work']
 	});
 	const [index, setIndex] = useState(0);
-	const [passwordError, setPasswordError] = useState(null);
 
-	const parsed = queryString.parse(location.search);
-	const { token } = parsed;
-	if (!token) history.push('/welcome');
-
-	const { firstPassword, categories } = userCredentials;
+	const { categories } = userCredentials;
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		registerStart(firstPassword, token, userCredentials);
+		updateSettings(userCredentials);
 	}
 
 	const handleChange = event => {
@@ -55,12 +37,10 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 	const disableNext = index => {
 		switch (index) {
 			case 0:
-				return !!passwordError
-			case 1:
 				return Object.values(userCredentials).some(item => {
 					return !item || item === '';
 				})
-			case 2:
+			case 1:
 				return !!!categories.length
 			default:
 				return true
@@ -68,23 +48,13 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 	}
 
 	return (
-		<div className='register'>
+		<div className='new-settings'>
 			<Carousel 
 				showIndicator 
 				submit={handleSubmit}
 				handleIndex={setIndex}
 				disableNext={disableNext(index)}
 			>
-				<div className='item'>
-					<div className='container'>
-						<NewPassword
-							passwords={userCredentials}
-							handleChange={handleChange}
-							passwordError={passwordError}
-							setPasswordError={setPasswordError}
-						/>
-					</div>
-				</div>
 				<div className='item'>
 					<div className='container'>
 						<h2>Settings</h2>
@@ -105,12 +75,8 @@ const Register = ({ history, location, registerStart, isLoadingUser, userError }
 					</div>
 				</div>
 			</Carousel>
-			{
-				isLoadingUser &&
-				<Loader />
-			}
 		</div>
 	)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));
+export default connect(null, mapDispatchToProps)(NewSettings);

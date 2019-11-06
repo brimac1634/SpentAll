@@ -10,7 +10,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import MessageModal from '../../components/message-modal/message-modal.component';
 
-import { resetStart, emailSignUpStart, signUpSuccess } from '../../redux/user/user.actions';
+import { resetStart, emailSignUpStart, setSuccessMessage } from '../../redux/user/user.actions';
 
 import './sign-up-form.styles.scss';
 
@@ -21,10 +21,10 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
 	emailSignUpStart: (name, email) => dispatch(emailSignUpStart({ name, email })),
 	resetStart: email => dispatch(resetStart({ email })),
-	setSignUpMessage: message => dispatch(signUpSuccess(message))
+	setSuccessMessage: message => dispatch(setSuccessMessage(message))
 })
 
-const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setSignUpMessage }) => {
+const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setSuccessMessage }) => {
 	const [userCredentials, setCredentials] = useState({name: '', email: ''});
 	const [showMessage, setshowMessage] = useState(true);
 	const { name, email } = userCredentials;
@@ -46,7 +46,7 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 
 	const handleMessage = () => {
 		setshowMessage(false);
-		setTimeout(()=>setSignUpMessage(null), 100)
+		setTimeout(()=>setSuccessMessage(null), 100)
 		setTimeout(()=>setshowMessage(true), 200)
 	}
 

@@ -25,16 +25,16 @@ const Header = ({ currentUser }) => (
 			</Link>
 		</div>
 		<div className={`icon-set ${currentUser ? 'show' : 'hide'}`}>
-			<Link to='/account' className='icon'>
+			<Link to='/user' className='icon'>
 				<HomeIcon />
 			</Link>
-			<Link to='/account/analytics' className='icon'>
+			<Link to='/user/analytics' className='icon'>
 				<AnalyticsIcon />
 			</Link>
-			<Link to='/account/expenditures' className='icon'>
+			<Link to='/user/expenditures' className='icon'>
 				<ListIcon />
 			</Link>
-			<Link to='/account/settings' className='icon'>
+			<Link to='/user/settings' className='icon'>
 				<SettingsIcon />
 			</Link>
 		</div>
