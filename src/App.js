@@ -13,9 +13,8 @@ import Alert from './components/alert/alert.component';
 
 import { selectCurrentUser, selectIsUserFetching } from './redux/user/user.selectors';
 import { setAlert } from './redux/alert/alert.actions'; 
-import { selectIsLoading, selectLoadingMessage } from './redux/loading/loading.selectors';
 import { fetchExpensesStart } from './redux/expenses/expenses.actions';
-import { selectShowAddExpense } from './redux/expenses/expenses.selectors';
+import { selectShowAddExpense, selectExpenseIsLoading } from './redux/expenses/expenses.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
 import './App.scss';
@@ -26,8 +25,7 @@ const PrivacyPolicy = lazy(() => import('./pages/privacy-policy/privacy-policy.c
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   isUserLoading: selectIsUserFetching,
-  isLoading: selectIsLoading,
-  loadingMessage: selectLoadingMessage,
+  isExpenseLoading: selectExpenseIsLoading,
   showAddExpense: selectShowAddExpense
 })
 
@@ -37,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
   setAlert: message => dispatch(setAlert(message))
 })
 
-const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessage, fetchExpenses, showAddExpense, isUserLoading }) => {
+const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchExpenses, showAddExpense, isUserLoading }) => {
   const [isFetchingUser, setIsFetchingUser] = useState(true);
   useEffect(() => {
     checkUserSession();
@@ -95,8 +93,8 @@ const App = ({ setAlert, checkUserSession, currentUser, isLoading, loadingMessag
                   }
                 </Suspense>
               </ErrorBoundary>
-              {isLoading || isUserLoading
-                ?  <Loader fixed message={loadingMessage} />
+              {isExpenseLoading || isUserLoading
+                ?  <Loader fixed />
                 :  null
               }
               <Alert />

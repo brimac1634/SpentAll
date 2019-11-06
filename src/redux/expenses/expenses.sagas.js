@@ -4,10 +4,13 @@ import moment from 'moment';
 
 import {
 	fetchExpensesSuccess,
-	fetchExpensesFailure,
+	setExpensesFailure,
 	setDateRange,
-	setCycleDateRange
+	setCycleDateRange,
+	setExpenseToEdit
 } from './expenses.actions';
+
+import { setAlert } from '../alert/alert.actions';
 
 import ExpensesActionTypes from './expenses.types';
 
@@ -16,7 +19,7 @@ export function* fetchExpensesAsync() {
 		const { data } = yield axiosConfig('get', '/get-expenditures');
 		yield put(fetchExpensesSuccess(data));
 	} catch (err) {
-		yield put(fetchExpensesFailure(err.message))
+		yield put(setExpensesFailure(err.message))
 	}
 }
 
@@ -47,14 +50,52 @@ export function* transformTimeFrame({payload}) {
 	
 }
 
-export function* getCycleDates({payload}) {
+export function* addExpenditureStart({payload}) {
+	try {
+		const { data } = yield axiosConfig('post', '/add-expenditure', payload);
+		if (data.error) {
+			const { message } = data.error;
+			yield put(setExpensesFailure(message))
+			yield put(setAlert('error'));
+		} else {
+			yield put(fetchExpensesSuccess(data));
+			yield put(setAlert(payload.expenditure_id ? 'updated!' : 'spent!'));
+			yield put(setExpenseToEdit(null));
+		}
+	} catch (err) {
+		yield put(setExpensesFailure(err.message))
+		yield put(setAlert('unable to update expenditures'))
+	}
+}
 
+export function* deleteExpenseStart({payload}) {
+	try {
+		const { data } = yield axiosConfig('post', '/delete-expenditure', payload);
+		if (data.error) {
+			const { message } = data.error;
+			yield put(setExpensesFailure(message))
+			yield put(setAlert('error'));
+		} else {
+			yield put(fetchExpensesSuccess(data));
+			yield put(setAlert('deleted'));
+		}
+	} catch (err) {
+		yield put(setExpensesFailure(err.message))
+		yield put(setAlert('failed to delete'))
+	}
 }
 
 export function* fetchExpensesStart() {
 	yield takeLatest(
 		ExpensesActionTypes.FETCH_EXPENSES_START, 
 		fetchExpensesAsync
+	)
+}
+
+export function* onAddExpenditureStart() {
+	yield takeLatest(
+		ExpensesActionTypes.NEW_EXPENSE_START, 
+		addExpenditureStart
 	)
 }
 
@@ -65,9 +106,18 @@ export function* setTimeFrame() {
 	)
 }
 
+export function* onDeleteExpenseStart() {
+	yield takeLatest(
+		ExpensesActionTypes.DELETE_EXPENSE_START, 
+		deleteExpenseStart
+	)
+}
+
 export function* expensesSagas() {
 	yield all([
 		call(fetchExpensesStart),
-		call(setTimeFrame)
+		call(onAddExpenditureStart),
+		call(setTimeFrame),
+		call(onDeleteExpenseStart)
 	])
 }

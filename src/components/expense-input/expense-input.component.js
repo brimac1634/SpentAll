@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import axiosConfig from '../../axios-config';
 
-import { fetchExpensesSuccess, setExpenseToEdit } from '../../redux/expenses/expenses.actions';
+import { newExpenseStart, setExpenseToEdit } from '../../redux/expenses/expenses.actions';
 import { selectExpenseToEdit } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
-import { setAlert } from '../../redux/alert/alert.actions'; 
-import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -21,14 +18,11 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses)),
-	setAlert: alert => dispatch(setAlert(alert)),
-	setExpenseToEdit: expense => dispatch(setExpenseToEdit(expense)),
-	startLoading: message => dispatch(startLoading(message)),
-	stopLoading: () => dispatch(stopLoading()),
+	newExpenseStart: expense => dispatch(newExpenseStart(expense)),
+	setExpenseToEdit: () => dispatch(setExpenseToEdit(null))
 })
 
-const ExpenseInput = ({ expenseToEdit, updateExpenses, setAlert, userSettings, startLoading, stopLoading, setExpenseToEdit }) => {
+const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpenseStart }) => {
 	const [expense, setExpense] = useState({
 		amount: '', 
 		type: ''
@@ -48,21 +42,11 @@ const ExpenseInput = ({ expenseToEdit, updateExpenses, setAlert, userSettings, s
 	const handleSubmit = async event => {
 		event.preventDefault();
 		if (!amount || !type) return setIncomplete(true);
-		startLoading()
-		axiosConfig('post', '/add-expenditure', {
+		newExpenseStart({
 			expenditure_id,
 			type, 
 			amount, 
 			timestamp: new Date()
-		}).then(({ data }) => {
-			updateExpenses(data)
-			stopLoading();
-			setAlert(expenditure_id ? 'updated!' : 'spent!')
-			setExpense({amount: '', type: ''})
-			setExpenseToEdit(null);
-		}).catch(() => {
-			stopLoading();
-			setAlert('unable to update expenditures')
 		})
 	}
 
@@ -72,7 +56,7 @@ const ExpenseInput = ({ expenseToEdit, updateExpenses, setAlert, userSettings, s
 	}
 
 	const cancel = () => {
-		setExpenseToEdit(null);
+		setExpenseToEdit();
 		setExpense({amount: '', type: ''})
 	}
 

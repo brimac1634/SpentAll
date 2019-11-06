@@ -16,6 +16,11 @@ const filterList = (list, dates) => {
 	})
 }
 
+export const selectExpenseIsLoading = createSelector(
+	[selectExpenses],
+	expenses => expenses.isFetching
+)
+
 export const selectExpensesList = createSelector(
 	[selectExpenses],
 	({ expenses, dateRange }) => filterList(expenses, dateRange)

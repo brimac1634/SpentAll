@@ -13,9 +13,14 @@ export const fetchExpensesSuccess = expenses => ({
 	payload: expenses
 })
 
-export const fetchExpensesFailure = errorMessage => ({
-	type: ExpensesActionTypes.FETCH_EXPENSES_FAILURE,
+export const setExpensesFailure = errorMessage => ({
+	type: ExpensesActionTypes.EXPENSES_FAILURE,
 	payload: errorMessage
+})
+
+export const newExpenseStart = expense => ({
+	type: ExpensesActionTypes.NEW_EXPENSE_START,
+	payload: expense
 })
 
 export const setTimeFrame = timeFrameAndType => ({
@@ -41,4 +46,9 @@ export const setSelectedExpense = selectedExpense => ({
 export const setExpenseToEdit = expenseToEdit => ({
 	type: ExpensesActionTypes.SET_EXPENSE_TO_EDIT,
 	payload: expenseToEdit
+})
+
+export const deleteExpenseStart = expenseID => ({
+	type: ExpensesActionTypes.DELETE_EXPENSE_START,
+	payload: expenseID
 })

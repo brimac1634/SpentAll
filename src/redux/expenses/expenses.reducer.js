@@ -26,6 +26,8 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 				showAddExpense: !state.showAddExpense
 			}
 		case ExpensesActionTypes.FETCH_EXPENSES_START:
+		case ExpensesActionTypes.NEW_EXPENSE_START:
+		case ExpensesActionTypes.DELETE_EXPENSE_START:
 			return {
 				...state,
 				isFetching: true
@@ -36,7 +38,7 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 				isFetching: false,
 				expenses: action.payload
 			}
-		case ExpensesActionTypes.FETCH_EXPENSES_FAILURE:
+		case ExpensesActionTypes.EXPENSES_FAILURE:
 			return {
 				...state,
 				isFetching: false,

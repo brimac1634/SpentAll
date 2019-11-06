@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { numberWithCommas, dateAndTime } from '../../utils';
-import axiosConfig from '../../axios-config';
 
 import { selectSelectedExpense } from '../../redux/expenses/expenses.selectors';
-import { setExpenseToEdit, fetchExpensesSuccess } from '../../redux/expenses/expenses.actions';
-import { setAlert } from '../../redux/alert/alert.actions'; 
-import { startLoading, stopLoading } from '../../redux/loading/loading.actions'; 
+import { setExpenseToEdit, deleteExpenseStart } from '../../redux/expenses/expenses.actions';
 
 import CustomButton from '../../components/custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
@@ -21,30 +18,17 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
 	setExpenseToEdit: expense => dispatch(setExpenseToEdit(expense)),
-	setAlert: alert => dispatch(setAlert(alert)),
-	startLoading: message => dispatch(startLoading(message)),
-	stopLoading: () => dispatch(stopLoading()),
-	updateExpenses: expenses => dispatch(fetchExpensesSuccess(expenses)),
+	deleteExpenseStart: expenseID => dispatch(deleteExpenseStart(expenseID)),
 })
 
-const ExpenditureDetails = ({ updateExpenses, selectedExpense, setExpenseToEdit, setAlert, startLoading, stopLoading }) => {
+const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseStart }) => {
 	const [showModal, setShowModal] = useState(false);
 	if (!selectedExpense) return <div className='expenditure-details'/>
 	const { expenditure_id, amount, timestamp, type } = selectedExpense;
 
 	const deleteExpense = async expenditure_id => {
-		startLoading();
-		axiosConfig('post', '/delete-expenditure', { 
-			expenditure_id 
-		}).then(({ data }) => {
-			updateExpenses(data);
-			setAlert('deleted');
-			stopLoading();
-			setShowModal(false);
-		}).catch(() => {
-			stopLoading()
-			setShowModal(false);
-		})
+		setShowModal(false);
+		deleteExpenseStart({ expenditure_id });
 	}
 	
 	return (
