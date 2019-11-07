@@ -3,8 +3,8 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100vw;
-	height: 100vh;
+	right: 0;
+	bottom: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -23,12 +23,22 @@
 		width: 35ch;
 		height: 25ch;
 		bottom: 0;
+
+		@media screen and (max-width: 990px) {
+			width: 25ch;
+			height: 15ch;
+		}
 	}
 
 	.card1,
 	.card4 {
 		width: 50ch;
 		height: 30ch;
+
+		@media screen and (max-width: 990px) {
+			width: 40ch;
+			height: 20ch;
+		}
 	}
 
 	.card1 {

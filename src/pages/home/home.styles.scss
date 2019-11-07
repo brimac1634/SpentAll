@@ -3,4 +3,12 @@
 	flex-direction: column;
 	align-items: center;
 	margin: 40px 0;
+	position: relative;
+	overflow: hidden;
+	min-height: calc(100vh - 70px);
+
+	@media screen and (max-width: 780px) {
+		margin: 10px 0;
+		padding-bottom: 80px;
+	}
 }

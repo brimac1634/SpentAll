@@ -1,6 +1,8 @@
 .expense-input {
+	position: relative;
 	text-align: center;
-	
+	max-width: 500px;
+		
 	.form {
 		display: flex;
 		flex-direction: column;
@@ -18,6 +20,10 @@
 				top: 50%;
 				transform: translateY(-50%);
 				margin: 0;
+			}
+
+			> :last-child {
+				margin: 10px 0;
 			}
 
 			.categories-container {

@@ -29,7 +29,6 @@ const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpens
 		notes: ''
 	});
 	const [incomplete, setIncomplete] = useState(false);
-	const [showNotes, setShowNotes] = useState(false);
 	let { amount, type, notes } = expense;
 	const expenditure_id = expenseToEdit ? expenseToEdit.expenditure_id : null;
 	const { categories, currency } = userSettings;
@@ -61,75 +60,71 @@ const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpens
 	const cancel = () => {
 		setExpenseToEdit();
 		setExpense({amount: '', type: ''});
-		setShowNotes(false);
 	}
 
 	return (
 		<div className='expense-input'>
-			<h3>Add Expenditure</h3>
-			<form onSubmit={handleSubmit}>
-				<div className='form'>
-					<div className='row'>
-						<h3>1.</h3>
-						<FormInput 
-							name='amount' 
-							type='number' 
-							min='0'
-							value={amount} 
-							label={currency}
-							placeholder='125.50'
-							handleChange={handleChange}
-							required 
-						/>
-					</div>
-					<div className='row'>
-						<h3>2.</h3>
-						<div className='categories-container'>
-							{
-								categories &&
-								categories.map((category, i)=>(
-									<Category 
-										key={i}
-										selected={type === category}
-										category={category}
-										onClick={()=>setExpense({
-											...expense,
-											type: category
-										})}
-									/>
-								))
-							}
+			<div className='inner-input'>
+				<h3>Add Expenditure</h3>
+				<form onSubmit={handleSubmit}>
+					<div className='form'>
+						<div className='row'>
+							<h3>1.</h3>
+							<FormInput 
+								name='amount' 
+								type='number' 
+								min='0'
+								value={amount} 
+								label={currency}
+								placeholder='125.50'
+								handleChange={handleChange}
+								required 
+							/>
 						</div>
+						<div className='row'>
+							<h3>2.</h3>
+							<div className='categories-container'>
+								{
+									categories &&
+									categories.map((category, i)=>(
+										<Category 
+											key={i}
+											selected={type === category}
+											category={category}
+											onClick={()=>setExpense({
+												...expense,
+												type: category
+											})}
+										/>
+									))
+								}
+							</div>
+						</div>
+						<div className='row'>
+							<h3>3.</h3>
+							<FormInput 
+								name='notes' 
+								type='text' 
+								value={notes} 
+								label='notes'
+								placeholder='(Optional)'
+								handleChange={handleChange} 
+							/>
+						</div>
+						<span className={`error ${incomplete ? 'show' : 'hide'}`}>*You must add a valid amount and choose a spending category*</span>
 					</div>
-					<div className='row'>
-						<h3>3.</h3>
-						{
-							showNotes
-							? 	<FormInput 
-									name='notes' 
-									type='text' 
-									value={notes} 
-									label='notes'
-									handleChange={handleChange} 
-								/>
-							: 	<CustomButton onClick={()=>setShowNotes(true)}> 
-									add note (optional) 
-								</CustomButton>
-						}
-					</div>
-					<span className={`error ${incomplete ? 'show' : 'hide'}`}>*You must add a valid amount and choose a spending category*</span>
+				</form>
+				<div className='button-container'>
+					<CustomButton onClick={cancel}> 
+						cancel 
+					</CustomButton>
+					<CustomButton 
+						selected
+						onClick={handleSubmit}
+					> 
+						spent 
+					</CustomButton>
 				</div>
-			</form>
-			<div className='button-container'>
-				<CustomButton onClick={cancel}> 
-					cancel 
-				</CustomButton>
-				<CustomButton 
-					selected
-					onClick={handleSubmit}
-				> 
-					spent 
-				</CustomButton>
 			</div>
 		</div>
 	)

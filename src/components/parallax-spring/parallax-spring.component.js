@@ -11,10 +11,10 @@ const ParallaxSpring = ({ x, y }) => {
 	}, [set, x, y])
 	const halfWidth = window.innerWidth / 2;
 	const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2]
-	const trans1 = (x, y) => `translate3d(${x / 5 - halfWidth * 0.7}px,${y / 8}px,0)`
-	const trans2 = (x, y) => `translate3d(${x / 10 - halfWidth * 0.4}px,${y / 12}px,0)`
-	const trans3 = (x, y) => `translate3d(${x / 10 + halfWidth *0.4}px,${y / 12}px,0)`
-	const trans4 = (x, y) => `translate3d(${x / 5 + halfWidth * 0.7}px,${y / 8}px,0)`
+	const trans1 = (x, y) => `translate3d(${x / 5 - halfWidth * 0.7}px,${y / 7}px,0)`
+	const trans2 = (x, y) => `translate3d(${x / 10 - halfWidth * 0.4}px,${y / 10}px,0)`
+	const trans3 = (x, y) => `translate3d(${x / 10 + halfWidth *0.4}px,${y / 10}px,0)`
+	const trans4 = (x, y) => `translate3d(${x / 5 + halfWidth * 0.7}px,${y / 7}px,0)`
 
 	return (
 		<div 

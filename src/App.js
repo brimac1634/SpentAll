@@ -13,7 +13,7 @@ import Alert from './components/alert/alert.component';
 
 import { selectCurrentUser, selectIsUserFetching } from './redux/user/user.selectors';
 import { setAlert } from './redux/alert/alert.actions'; 
-import { fetchExpensesStart } from './redux/expenses/expenses.actions';
+import { fetchExpensesStart, toggleAddExpense } from './redux/expenses/expenses.actions';
 import { selectShowAddExpense, selectExpenseIsLoading } from './redux/expenses/expenses.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
@@ -32,10 +32,11 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   checkUserSession: () => dispatch(checkUserSession()),
   fetchExpenses: () => dispatch(fetchExpensesStart()),
-  setAlert: message => dispatch(setAlert(message))
+  setAlert: message => dispatch(setAlert(message)),
+  toggleAddExpense: () => dispatch(toggleAddExpense())
 })
 
-const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchExpenses, showAddExpense, isUserLoading }) => {
+const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchExpenses, showAddExpense, isUserLoading, toggleAddExpense }) => {
   const [isFetchingUser, setIsFetchingUser] = useState(true);
   useEffect(() => {
     checkUserSession();
@@ -87,7 +88,7 @@ const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchE
                   </Switch>
                   {
                     currentUser &&
-                    <HoverBox show={showAddExpense}>
+                    <HoverBox show={showAddExpense} backgroundClick={toggleAddExpense}>
                       <ExpenseInputContainer />
                     </HoverBox>
                   }
