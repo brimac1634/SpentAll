@@ -1,3 +1,45 @@
+@mixin on-circle($item-count, $circle-size, $item-size) {
+  position: relative;
+  width:  $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;       
+  
+  > * {
+    display: block;
+    position: absolute;
+    top:  50%; 
+    left: 50%;
+    width:  $item-size;
+    height: $item-size;
+    margin-top: -($item-size / 2);
+    margin-left: -($item-size / 2);
+  
+    $angle: (90 / $item-count);
+    $rot: 0;
+
+    @for $i from $item-count through 1 {
+      &:nth-of-type(#{$i}) {
+        transform: 
+          rotate($rot * 1deg + 102deg) 
+          translate($circle-size / 2) 
+          rotate($rot * -1deg - 102deg);
+
+        &:hover {
+          transform: 
+            rotate($rot * 1deg + 102deg) 
+            translate($circle-size / 2) 
+            rotate($rot * -1deg - 102deg)
+            scale(1.04);
+        }
+      }
+
+      $rot: $rot + $angle;
+    }
+  }
+}
+
 .header {
   position: relative;
   height: 70px;
@@ -7,10 +49,11 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  overflow-x: hidden;
+  overflow: hidden;
   z-index: 5;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 780px) {
+    overflow: unset;
     padding: 10px 20px;
   }
 
@@ -22,7 +65,7 @@
     display: flex;
     align-items: center;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 780px) {
       left: 20px;
     }
 
@@ -42,6 +85,18 @@
     display: flex;
     transition: all 300ms ease-in-out;
 
+    > * {
+      margin: 0 10px;
+    }
+
+    @media screen and (max-width: 780px) {
+      @include on-circle($item-count: 4, $circle-size: 340px, $item-size: 48px); 
+      display: unset;
+      position: absolute;
+      right: -170px;
+      top: -170px;
+    }
+
     &.show {
       opacity: 1;
     }
@@ -55,7 +110,7 @@
       height: 48px;
       padding: 10px;
       fill: var(--white);
-      margin: 0 10px;
+      // margin: 0 10px;
       background-color: var(--pink);
       border-radius: 50%;
       outline: none;
@@ -64,9 +119,13 @@
       transition: all 200ms ease-in-out;
       box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
 
-      &:hover {
-        transform: scale(1.04);
-      }
+      // &:hover {
+      //   transform: scale(1.04);
+      // }
     }
+  }
+
+  .menu {
+
   }
 }
