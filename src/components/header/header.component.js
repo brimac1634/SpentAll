@@ -22,7 +22,7 @@ const mapStateToProps = createStructuredSelector({
 
 const Header = ({ userSettings }) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
-	const { cycle } = userSettings;
+	const accountComplete = userSettings ? !!userSettings.cycle : false;
 	return (
 		<div className='header'>
 			<div className='logo-container'>
@@ -31,7 +31,7 @@ const Header = ({ userSettings }) => {
 				</Link>
 			</div>
 			<div 
-				className={`icon-set ${cycle ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
+				className={`icon-set ${accountComplete ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
 				onClick={()=>setMenuIsOpen(!menuIsOpen)}
 			>
 				<Link to='/user/account' className='icon'>
