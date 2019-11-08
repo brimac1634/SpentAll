@@ -24,8 +24,7 @@ const mapDispatchToProps = dispatch => ({
 const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseStart }) => {
 	const [showModal, setShowModal] = useState(false);
 	if (!selectedExpense) return <div className='expenditure-details'/>
-	const { expenditure_id, amount, timestamp, type } = selectedExpense;
-
+	const { expenditure_id, amount, timestamp, notes, type } = selectedExpense;
 	const deleteExpense = async expenditure_id => {
 		setShowModal(false);
 		deleteExpenseStart({ expenditure_id });
@@ -35,7 +34,17 @@ const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseSt
 		<div className='expenditure-details hover'>
 			<span>{dateAndTime(timestamp)}</span>
 			<h1>${numberWithCommas(amount)}</h1>
-			<span>{type}</span>
+			<div className='sub-group'>
+				<span className='label'>category: </span>
+				<span>{type}</span>
+			</div>
+			{
+				notes &&
+				<div className='sub-group'>
+					<span className='label'>notes: </span>
+					<span>{notes}</span>
+				</div>
+			}
 			<div className='button-container'>
 				<CustomButton onClick={()=>setShowModal(true)}> 
 					delete 

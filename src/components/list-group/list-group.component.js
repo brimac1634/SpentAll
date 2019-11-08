@@ -23,15 +23,17 @@ const ListGroup = ({ toggleAddExpense }) => {
 		<div className='list-group'>
 			<div className='summary-panel'>
 				<Summary />
-				<CustomButton onClick={()=>setShowFilter(true)}>
-					time filter
-				</CustomButton>
-				<CustomButton 
-					selected
-					onClick={toggleAddExpense}
-				> 
-					add expenditure 
-				</CustomButton>
+				<div className='buttons'>
+					<CustomButton onClick={()=>setShowFilter(true)}>
+						time filter
+					</CustomButton>
+					<CustomButton 
+						selected
+						onClick={toggleAddExpense}
+					> 
+						add expenditure 
+					</CustomButton>
+				</div>
 			</div>
 			<div className='list'>
 				<ExpenseList />

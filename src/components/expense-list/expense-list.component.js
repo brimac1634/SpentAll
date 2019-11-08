@@ -20,6 +20,8 @@ const mapDispatchToProps = dispatch => ({
 
 const ExpenseList = ({ expenseList, selectExpense, selectedExpense }) => (
 	<div className='expense-list'>
+		<h4>Expense List</h4>
+		<div className='list'>
 			{
 				expenseList &&
 				expenseList.map((expense, i) => (
@@ -31,6 +33,7 @@ const ExpenseList = ({ expenseList, selectExpense, selectedExpense }) => (
 					/>
 				))
 			}
+		</div>
 	</div>
 )
 
