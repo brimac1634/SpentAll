@@ -1,41 +1,9 @@
-@mixin on-circle($item-count, $circle-size, $item-size) {
-  position: relative;
-  width:  $circle-size;
-  height: $circle-size;
-  padding: 0;
-  border-radius: 50%;
-  list-style: none;       
-  
+@mixin stagger($item-count, $item-size) {       
   > * {
-    display: block;
-    position: absolute;
-    top:  50%; 
-    left: 50%;
-    width:  $item-size;
-    height: $item-size;
-    margin-top: -($item-size / 2);
-    margin-left: -($item-size / 2);
-  
-    $angle: (90 / $item-count);
-    $rot: 0;
-
-    @for $i from $item-count through 1 {
-      &:nth-of-type(#{$i}) {
-        transform: 
-          rotate($rot * 1deg + 102deg) 
-          translate($circle-size / 2) 
-          rotate($rot * -1deg - 102deg);
-
-        &:hover {
-          transform: 
-            rotate($rot * 1deg + 102deg) 
-            translate($circle-size / 2) 
-            rotate($rot * -1deg - 102deg)
-            scale(1.04);
-        }
+    @for $i from 1 through $item-count - 1 {
+      &:nth-child(#{$i}) {
+        transform: translateY(($i * $item-size) + ($i * 20px));
       }
-
-      $rot: $rot + $angle;
     }
   }
 }
@@ -90,11 +58,32 @@
     }
 
     @media screen and (max-width: 780px) {
-      @include on-circle($item-count: 4, $circle-size: 340px, $item-size: 48px); 
-      display: unset;
       position: absolute;
-      right: -170px;
-      top: -170px;
+      top: 0;
+      right: 0;
+
+      &.drop-in {
+        @include stagger($item-count: 5, $item-size: 48px)
+      }
+
+      &.drop-out {
+        > * {
+          transform: translateY(0);
+
+          &:last-child {
+            opacity: 1;
+          }
+        }
+      }
+
+      .icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 10px 20px;
+        transition: transform 500ms cubic-bezier(0.7, 0, 0.3, 1);
+      }
+
     }
 
     &.show {
@@ -104,28 +93,23 @@
     &.hide {
       opacity: 0;
     }
-
-    .icon {
-      width: 48px;
-      height: 48px;
-      padding: 10px;
-      fill: var(--white);
-      // margin: 0 10px;
-      background-color: var(--pink);
-      border-radius: 50%;
-      outline: none;
-      cursor: pointer;
-      border: none;
-      transition: all 200ms ease-in-out;
-      box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
-
-      // &:hover {
-      //   transform: scale(1.04);
-      // }
-    }
   }
 
-  .menu {
+  .icon {
+    width: 48px;
+    height: 48px;
+    padding: 10px;
+    fill: var(--white);
+    background-color: var(--pink);
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    transition: all 200ms ease-in-out;
+    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
 
+    &:hover {
+      transform: scale(1.04);
+    }
   }
 }

@@ -31,9 +31,9 @@ const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency })
 	percent = Math.ceil(percent);
 
 	const screenWidth = window.innerWidth;
-	const diameter = screenWidth > 890 ? 320 : 250;
+	const diameter = screenWidth > 890 ? 320 : 220;
 	const strokeWidth = 22;
-	const radius = diameter / 2 - strokeWidth * 2;
+	const radius = diameter / 2 - strokeWidth;
 	const circumference = radius * 2 * Math.PI;
 	const offset = circumference - percent / 100 * circumference;
 

@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
+import MenuButton from '../menu-button/menu-button.component';
+
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
 import { ReactComponent as AnalyticsIcon } from '../../assets/analytics.svg'
 import { ReactComponent as ListIcon } from '../../assets/list.svg'
 import { ReactComponent as HomeIcon } from '../../assets/home.svg'
-import { ReactComponent as MenuIcon } from '../../assets/menu.svg'
 
 import './header.styles.scss';
 
@@ -20,7 +21,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const Header = ({ currentUser }) => {
-	const [menuIsOpen, setMenuIsOpen] = useState(false);
+	const [menuIsOpen, setMenuIsOpen] = useState(true);
 
 	return (
 		<div className='header'>
@@ -29,7 +30,10 @@ const Header = ({ currentUser }) => {
 					<Logo className='logo'/>
 				</Link>
 			</div>
-			<div className={`icon-set ${currentUser ? 'show' : 'hide'}`}>
+			<div 
+				className={`icon-set ${currentUser ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
+				onClick={()=>setMenuIsOpen(!menuIsOpen)}
+			>
 				<Link to='/user/account' className='icon'>
 					<HomeIcon />
 				</Link>
@@ -42,15 +46,15 @@ const Header = ({ currentUser }) => {
 				<Link to='/user/account/settings' className='icon'>
 					<SettingsIcon />
 				</Link>
+				<MediaQuery maxWidth={780}>
+					<div 
+						className='icon' 
+						onClick={()=>setMenuIsOpen(!menuIsOpen)} 
+					>
+						<MenuButton showMenu={menuIsOpen} />
+					</div>
+				</MediaQuery>
 			</div>
-			<MediaQuery maxWidth={780}>
-				<div 
-					className='icon menu' 
-					onClick={()=>setMenuIsOpen(!menuIsOpen)} 
-				>
-					<MenuIcon />
-				</div>
-			</MediaQuery>
 		</div>
 	)
 }
