@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
 
-import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { selectUserSettings } from '../../redux/user/user.selectors';
 
 import MenuButton from '../menu-button/menu-button.component';
 
@@ -17,12 +17,12 @@ import { ReactComponent as HomeIcon } from '../../assets/home.svg'
 import './header.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	currentUser: selectCurrentUser
+	userSettings: selectUserSettings
 })
 
-const Header = ({ currentUser }) => {
+const Header = ({ userSettings }) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
-
+	const { cycle } = userSettings;
 	return (
 		<div className='header'>
 			<div className='logo-container'>
@@ -31,7 +31,7 @@ const Header = ({ currentUser }) => {
 				</Link>
 			</div>
 			<div 
-				className={`icon-set ${currentUser ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
+				className={`icon-set ${cycle ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
 				onClick={()=>setMenuIsOpen(!menuIsOpen)}
 			>
 				<Link to='/user/account' className='icon'>
