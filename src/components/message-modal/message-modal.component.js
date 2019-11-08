@@ -6,7 +6,7 @@ import './message-modal.styles.scss';
 
 const MessageModal = ({ title, message, confirm, cancel, confirmCallback, cancelCallback }) => (
 	<div className='message-modal'>
-		<h2>{title}</h2>
+		<h1>{title}</h1>
 		<span className='message'>{message}</span>
 		<div className='button-container'>
 			{

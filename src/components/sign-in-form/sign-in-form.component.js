@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
 	signInWithFacebookStart: response => dispatch(signInWithFacebookStart(response))
 })
 
-const SignInForm = ({ match, emailSignInStart, signInWithFacebookStart }) => {
+const SignInForm = ({ match, history, emailSignInStart, signInWithFacebookStart }) => {
 	const [userCredentials, setCredentials] = useState({email: '', password: ''});
 	const { email, password } = userCredentials;
 
@@ -67,6 +67,14 @@ const SignInForm = ({ match, emailSignInStart, signInWithFacebookStart }) => {
 				    />
 				</div>
 			</form>
+			<div className='new'>
+			    <CustomButton 
+					selected
+					onClick={()=>history.push(`${match.path}/sign-up`)}
+				> 
+					I'm new! 
+				</CustomButton>
+			</div>
 		</div>
 	)
 }

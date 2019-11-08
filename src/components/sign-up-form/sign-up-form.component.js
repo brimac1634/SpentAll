@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 import { validateEmail } from '../../utils';
@@ -24,9 +25,10 @@ const mapDispatchToProps = dispatch => ({
 	setSuccessMessage: message => dispatch(setSuccessMessage(message))
 })
 
-const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setSuccessMessage }) => {
+const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setSuccessMessage, history }) => {
 	const [userCredentials, setCredentials] = useState({name: '', email: ''});
-	const [showMessage, setshowMessage] = useState(true);
+	const [showMessasge, setshowMessage] = useState(true);
+	const [showAbout, setShowAbout] = useState(false);
 	const { name, email } = userCredentials;
 
 
@@ -52,44 +54,62 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 
 	return (
 		<div className='sign-up-form'>
-			<h2>{isReset ? 'Password Reset' : 'Sign Up'}</h2>
-			<form onSubmit={handleSubmit}>
-				{
-					!isReset &&
+			<div className='panel'>
+				<h2>{isReset ? 'Password Reset' : 'Sign Up'}</h2>
+				<form onSubmit={handleSubmit}>
+					{
+						!isReset &&
+						<FormInput 
+							name='name' 
+							type='text' 
+							value={name} 
+							label='name'
+							handleChange={handleChange}
+							required 
+						/>
+					}
 					<FormInput 
-						name='name' 
-						type='text' 
-						value={name} 
-						label='name'
+						name='email' 
+						type='email' 
+						value={email} 
+						label='email'
 						handleChange={handleChange}
 						required 
 					/>
-				}
-				<FormInput 
-					name='email' 
-					type='email' 
-					value={email} 
-					label='email'
-					handleChange={handleChange}
-					required 
-				/>
-				<div className='buttons'>
-					<CustomButton 
-						disabled={(!isReset && !name) || !validateEmail(email)}
-						selected
-						type='submit'
-					> 
-						{isReset ? 'reset' : 'sign up'} 
-					</CustomButton>
-				</div>
-			</form>
-			<div>
-				<div className='info'>
-					<h2>New to SpentAll?</h2>
-					<p>SpentAll is a simple to use, spending tracker. Log your expenditures, categorize them, and track your spending habits with the analytics page. You can even set monthly, weekly, or daily spending limits to help you stay conscious of your spending! This app is perfect for those simply looking to keep an eye on their expenditures.</p>
-				</div>
+					<div className='button'>
+						<CustomButton 
+							disabled={(!isReset && !name) || !validateEmail(email)}
+							selected
+							type='submit'
+						> 
+							{isReset ? 'reset' : 'sign up'} 
+						</CustomButton>
+						{
+							!isReset &&
+							<span className='but'>BUT WAIT...</span>
+						}
+						{
+							!isReset &&
+							<CustomButton 
+								selected={(!name && !email)}
+								onClick={()=>setShowAbout(!showAbout)}
+								type='button'
+							> 
+								What is SpentAll?
+							</CustomButton>
+						}
+					</div>
+				</form>
 			</div>
-			<HoverBox show={!!signUpMessage && showMessage}>
+			<div className='login'>
+			    <CustomButton 
+					selected
+					onClick={()=>history.push('/welcome')}
+				> 
+					Login 
+				</CustomButton>
+			</div>
+			<HoverBox show={!!signUpMessage && showMessasge}>
 				<MessageModal
 					title='success'
 					message={signUpMessage}
@@ -97,8 +117,28 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 					confirmCallback={handleMessage}
 				/>
 			</HoverBox>
+			{
+				!isReset &&
+				<HoverBox 
+					show={showAbout} 
+					backgroundClick={()=>setShowAbout(!showAbout)}
+				>
+					<div className='info-container'>
+						<h2>What is SpentAll?</h2>
+						<p className='info'>
+						SpentAll is a simple-to-use spending tracker. Log your expenditures, categorize them, and track your spending habits. Customize your account by selecting your local currency, setting spending limits, and personalizing spending categories. Keep an eye on the spending guage on the home dashboard to help you stay conscious of your spending! Make use of the analytics page to see more detailed metrics into where your money goes, and when. This app is perfect for those simply looking to keep an eye on their expenditures. More functionalities coming soon! 
+						</p>
+						<CustomButton 
+							selected
+							onClick={()=>setShowAbout(!showAbout)}
+						> 
+							I'm Ready! 
+						</CustomButton>
+					</div>
+				</HoverBox>
+			}
 		</div>
 	)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUpForm));
