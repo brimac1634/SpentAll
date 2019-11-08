@@ -21,7 +21,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const Header = ({ currentUser }) => {
-	const [menuIsOpen, setMenuIsOpen] = useState(true);
+	const [menuIsOpen, setMenuIsOpen] = useState(false);
 
 	return (
 		<div className='header'>

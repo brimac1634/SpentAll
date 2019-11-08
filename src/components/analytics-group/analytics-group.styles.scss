@@ -1,14 +1,25 @@
 .analytics-group {
 	padding: 15px 30px 30px 30px;
 	width: 100%;
-	height: calc(100vh - 100px);
+	min-height: calc(100vh - 90px);
 	display: grid;
 	grid-template-areas: 
 		'summary summary summary summary'
 		'bar bar doughnut doughnut';
 	grid-column-gap: 30px;
 	grid-row-gap: 10px;
+	grid-template-rows: auto 1fr;
 	grid-template-columns: repeat(4, 1fr);
+
+	@media screen and (max-width: 780px) {
+	    grid-template-areas: 
+		'summary'
+		'bar'
+		'doughnut';
+		grid-template-rows: auto  1fr 1fr;
+		grid-template-columns: 1fr;
+		grid-row-gap: 30px;
+	}
 
 	.summary-panel { 
 		grid-area: summary; 

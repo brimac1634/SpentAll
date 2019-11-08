@@ -3,8 +3,16 @@
 	flex-direction: column;
 	text-align: center;
 
+	@media screen and (max-width: 900px) {
+	    font-size: 70%;
+	}
+
 	h1 {
 		margin: 5px 0;
 		font-size: 350%;
+
+		@media screen and (max-width: 500px) {
+		    font-size: 260%;
+		}
 	}
 }

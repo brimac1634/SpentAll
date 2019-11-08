@@ -26,7 +26,13 @@ const AnalyticsGroup = () => {
 			<div className='chart doughnut'>
 				<DoughnutChart />
 			</div>
-			<HoverBox show={showFilter}>
+			<HoverBox 
+				show={showFilter} 
+				backgroundClick={e=>{
+					e.stopPropagation();
+					setShowFilter(false);
+				}}
+			>
 				<TimeFilter confirm={()=>setShowFilter(false)} />
 			</HoverBox>
 		</div>
