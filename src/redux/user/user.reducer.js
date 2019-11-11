@@ -17,6 +17,7 @@ const userReducer = (state=initialState, action) => {
 		case UserActionTypes.REGISTER_START:
 		case UserActionTypes.UPDATE_SETTINGS_START:
 		case UserActionTypes.RESET_START:
+		case UserActionTypes.DELETE_ACCOUNT_START:
 			return {
 				...state,
 				isFetching: true

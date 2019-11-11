@@ -6,6 +6,7 @@ import BarChart from '../../components/bar-chart/bar-chart.component';
 import DoughnutChart from '../../components/doughnut-chart/doughnut-chart.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
+import SectionBox from '../../components/section-box/section-box.component';
 
 import './analytics-group.styles.scss';
 
@@ -21,10 +22,14 @@ const AnalyticsGroup = () => {
 				</CustomButton>
 			</div>
 			<div className='chart bar'>
-				<BarChart />
+				<SectionBox>
+					<BarChart />
+				</SectionBox>
 			</div>
 			<div className='chart doughnut'>
-				<DoughnutChart />
+				<SectionBox>
+					<DoughnutChart />
+				</SectionBox>
 			</div>
 			<HoverBox 
 				show={showFilter} 

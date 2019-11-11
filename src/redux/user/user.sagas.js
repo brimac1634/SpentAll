@@ -129,7 +129,6 @@ export function* register({ payload: { password, token }}) {
 export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
 	try {
 		const { data } = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
-		console.log(data)
 		if (data) {
 			yield call(parseLoginWithToken, data)
 		} else {
@@ -163,6 +162,20 @@ export function* signOut() {
 	const cookies = new Cookies();
     cookies.remove('authToken', { path: '/' });
     yield put(signOutSuccess())
+}
+
+export function* deleteAccount() {
+	try {
+		const { data } = yield axiosConfig('get', '/delete-account')
+		console.log(data)
+		if (data === 'user deleted') {
+			yield call(signOut)
+		} else {
+			yield put(userFailure('unable to delete account'))
+		}
+	} catch (err) {
+		yield put(userFailure(err))
+	}
 }
 
 export function* onEmailSignInStart() {
@@ -208,6 +221,10 @@ export function* onSignOutStart() {
 	yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut)
 }
 
+export function* onDeleteAccountStart() {
+	yield takeLatest(UserActionTypes.DELETE_ACCOUNT_START, deleteAccount)
+}
+
 export function* userSagas() {
 	yield all([
 		call(onEmailSignInStart),
@@ -217,7 +234,8 @@ export function* userSagas() {
 		call(onRegisterStart),
 		call(onCheckUserSession),
 		call(onUpdateSettings),
-		call(onSignOutStart)
+		call(onSignOutStart),
+		call(onDeleteAccountStart)
 	])
 }
 

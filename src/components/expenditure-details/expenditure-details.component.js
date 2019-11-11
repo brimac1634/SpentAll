@@ -57,7 +57,8 @@ const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseSt
 			</div>
 			<HoverBox show={showModal}>
 				<MessageModal
-					message='are you sure?'
+					title='Delete Expense'
+					message='Are you sure?'
 					confirm='delete' 
 					cancel='cancel'
 					confirmCallback={()=>deleteExpense(expenditure_id)} 

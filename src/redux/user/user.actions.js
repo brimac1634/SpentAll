@@ -61,3 +61,7 @@ export const resetStart = email => ({
 	type: UserActionTypes.RESET_START,
 	payload: email
 })
+
+export const deleteAccountStart = () => ({
+	type: UserActionTypes.DELETE_ACCOUNT_START
+})

@@ -3,6 +3,7 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 
 import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 import ParallaxSpring from '../../components/parallax-spring/parallax-spring.component';
+import SectionBox from '../../components/section-box/section-box.component';
 
 import './welcome.styles.scss';
 
