@@ -46,6 +46,7 @@ const userReducer = (state=initialState, action) => {
 				...state,
 				currentUser: null,
 				isFetching: false,
+				userSettings: null,
 				error: 'signed out'
 			}
 		case UserActionTypes.USER_FAILURE:

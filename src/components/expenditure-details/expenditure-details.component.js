@@ -9,6 +9,7 @@ import { setExpenseToEdit, deleteExpenseStart } from '../../redux/expenses/expen
 import CustomButton from '../../components/custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import MessageModal from '../../components/message-modal/message-modal.component';
+import SectionBox from '../../components/section-box/section-box.component';
 
 import './expenditure-details.styles.scss';
 
@@ -31,40 +32,42 @@ const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseSt
 	}
 	
 	return (
-		<div className='expenditure-details hover'>
-			<span>{dateAndTime(timestamp)}</span>
-			<h1>${numberWithCommas(amount)}</h1>
-			<div className='sub-group'>
-				<span className='label'>category: </span>
-				<span>{type}</span>
-			</div>
-			{
-				notes &&
+		<div className='expenditure-details'>
+			<SectionBox>
+				<span>{dateAndTime(timestamp)}</span>
+				<h1>${numberWithCommas(amount)}</h1>
 				<div className='sub-group'>
-					<span className='label'>notes: </span>
-					<span>{notes}</span>
+					<span className='label'>category: </span>
+					<span>{type}</span>
 				</div>
-			}
-			<div className='button-container'>
-				<CustomButton onClick={()=>setShowModal(true)}> 
-					delete 
-				</CustomButton>
-				<CustomButton 
-					onClick={()=>setExpenseToEdit(selectedExpense)}
-				> 
-					edit 
-				</CustomButton>
-			</div>
-			<HoverBox show={showModal}>
-				<MessageModal
-					title='Delete Expense'
-					message='Are you sure?'
-					confirm='delete' 
-					cancel='cancel'
-					confirmCallback={()=>deleteExpense(expenditure_id)} 
-					cancelCallback={()=>setShowModal(false)}
-				/>
-			</HoverBox>
+				{
+					notes &&
+					<div className='sub-group'>
+						<span className='label'>notes: </span>
+						<span>{notes}</span>
+					</div>
+				}
+				<div className='button-container'>
+					<CustomButton onClick={()=>setShowModal(true)}> 
+						delete 
+					</CustomButton>
+					<CustomButton 
+						onClick={()=>setExpenseToEdit(selectedExpense)}
+					> 
+						edit 
+					</CustomButton>
+				</div>
+				<HoverBox show={showModal}>
+					<MessageModal
+						title='Delete Expense'
+						message='Are you sure?'
+						confirm='delete' 
+						cancel='cancel'
+						confirmCallback={()=>deleteExpense(expenditure_id)} 
+						cancelCallback={()=>setShowModal(false)}
+					/>
+				</HoverBox>
+			</SectionBox>
 		</div>
 	)
 }

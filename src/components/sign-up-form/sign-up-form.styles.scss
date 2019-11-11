@@ -1,29 +1,21 @@
 .sign-up-form {
-	margin: 0 auto;
+	width: 380px;
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	margin: 0 10px 40px 10px;
+	flex-direction: column;
+	margin: 20px auto;
 
-	.panel {
-		width: 380px;
-		margin: 0 20px;
+	.button {
 		display: flex;
 		flex-direction: column;
 
-		.button {
-			display: flex;
-			flex-direction: column;
+		> * {
+			margin: 10px 0;
+		}
 
-			> * {
-				margin: 10px 0;
-			}
-
-			.but {
-				text-align: center;
-				display: block;
-				margin: 20px 0;
-			}
+		.but {
+			text-align: center;
+			display: block;
+			margin: 20px 0;
 		}
 	}
 

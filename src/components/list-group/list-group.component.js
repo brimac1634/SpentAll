@@ -9,6 +9,7 @@ import ExpenseList from '../../components/expense-list/expense-list.component';
 import ExpenditureDetails from '../../components/expenditure-details/expenditure-details.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
+import SectionBox from '../../components/section-box/section-box.component';
 
 import './list-group.styles.scss';
 
@@ -36,7 +37,9 @@ const ListGroup = ({ toggleAddExpense }) => {
 				</div>
 			</div>
 			<div className='list'>
-				<ExpenseList />
+				<SectionBox>
+					<ExpenseList />
+				</SectionBox>
 			</div>
 			<div className='details'>
 				<ExpenditureDetails />

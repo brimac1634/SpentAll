@@ -7,6 +7,7 @@ import { registerStart } from '../../redux/user/user.actions';
 
 import NewPassword from '../new-password/new-password.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
+import SectionBox from '../../components/section-box/section-box.component';
 
 import './new-password-form.styles.scss';
 
@@ -19,7 +20,7 @@ const NewPasswordForm = ({ location, history, setNewPassword }) => {
 		firstPassword: '',
 		secondPassword: ''
 	})
-	const [passwordError, setPasswordError] = useState(null);
+	const [passwordError, setPasswordError] = useState(true);
 	const { firstPassword } = passwords;
 
 	const parsed = queryString.parse(location.search);
@@ -38,19 +39,23 @@ const NewPasswordForm = ({ location, history, setNewPassword }) => {
 
 	return (
 		<div className='new-password-form'>
-			<NewPassword
-				passwords={passwords}
-				handleChange={handleChange}
-				passwordError={passwordError}
-				setPasswordError={setPasswordError}
-			/>
-			<CustomButton 
-				disabled={!!passwordError}
-				selected 
-				onClick={handleSubmit}
-			> 
-				submit
-			</CustomButton>
+			<SectionBox>
+				<NewPassword
+					passwords={passwords}
+					handleChange={handleChange}
+					passwordError={passwordError}
+					setPasswordError={setPasswordError}
+				/>
+				<div className='column'>
+					<CustomButton 
+						disabled={!!passwordError}
+						selected 
+						onClick={handleSubmit}
+					> 
+						submit
+					</CustomButton>
+				</div>
+			</SectionBox>
 		</div>
 	)
 }

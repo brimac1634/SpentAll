@@ -12,10 +12,17 @@ const LabelGroup = ({ children, label, tooltip }) => (
 			{
 				tooltip &&
 				<div>
-					<div data-tip={tooltip}>
+					<div data-tip={tooltip} data-for={tooltip}>
 						<QuestionIcon />
 					</div>
-					<ReactTooltip effect='solid'/>
+					<ReactTooltip 
+						className='tool-tip'
+						id={tooltip} 
+						data-html
+						insecure
+						effect='solid' 
+						multiline 
+					/>
 				</div>
 			}
 		</div>

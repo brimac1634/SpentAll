@@ -12,6 +12,12 @@
 
 		.info-group {
 			display: flex;
+
+			.tool-tip {
+				width: 280px;
+			    overflow-wrap: break-word;
+			    display: block;
+			}
 			
 			.label {
 				display: block;

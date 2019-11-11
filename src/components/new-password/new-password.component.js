@@ -27,7 +27,7 @@ const NewPassword = ({ passwords, handleChange, passwordError, setPasswordError 
 			<h2>Password</h2>
 			<form>
 				<LabelGroup
-					label='create a new password'
+					label='Create a new password'
 					tooltip='The password must contain at least 8 characters'
 				>
 					<FormInput 
@@ -40,7 +40,7 @@ const NewPassword = ({ passwords, handleChange, passwordError, setPasswordError 
 					/>
 				</LabelGroup>
 				<LabelGroup
-					label='rewrite your new password'
+					label='Rewrite your new password'
 				>
 					<FormInput 
 						name='secondPassword' 
