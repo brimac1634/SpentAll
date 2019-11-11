@@ -58,6 +58,26 @@ export const selectTimeFrame = createSelector(
 	expenses => expenses.timeFrame
 )
 
+export const selectTimeTitle = createSelector(
+	[selectTimeFrame],
+	timeFrame => {
+		switch (timeFrame) {
+			case 'today':
+				return 'today'
+			case 'this week':
+			case 'weekly':
+				return 'this week'
+			case 'this month':
+			case 'monthly':
+				return 'this month'
+			case 'this year':
+				return 'this year'
+			default:
+				return ''
+		}
+	}
+)
+
 export const selectDateRange = createSelector(
 	[selectExpenses],
 	expenses => expenses.dateRange

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { selectTimeFrame } from '../../redux/expenses/expenses.selectors';
+import { selectTimeTitle } from '../../redux/expenses/expenses.selectors';
 import { setTimeFrame } from '../../redux/expenses/expenses.actions';
 
 import Calendar from '../calendar/calendar.component';
@@ -11,14 +11,14 @@ import CustomButton from '../custom-button/custom-button.component';
 import './time-filter.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	timeFrame: selectTimeFrame
+	timeTitle: selectTimeTitle
 })
 
 const mapDispatchToProps = dispatch => ({
 	setTimeFrame: timeFrame => dispatch(setTimeFrame(timeFrame))
 })
 
-const ExpenseList = ({ setTimeFrame, timeFrame, confirm }) => {
+const ExpenseList = ({ setTimeFrame, timeTitle, confirm }) => {
 	const timeFrames = ['today', 'this week', 'this month', 'this year'];
 
 	return (
@@ -29,7 +29,7 @@ const ExpenseList = ({ setTimeFrame, timeFrame, confirm }) => {
 					timeFrames.map(time => (
 						<CustomButton
 							key={time} 
-							selected={time === timeFrame}
+							selected={time === timeTitle}
 							onClick={()=>{
 								setTimeFrame({
 									timeFrame: time,
