@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectDateRange } from '../../redux/expenses/expenses.selectors';
-import { setDateRange } from '../../redux/expenses/expenses.actions';
+import { setTimeFrame } from '../../redux/expenses/expenses.actions';
 
 import Week from './calendar.week.component';
 import DayNames from './calendar.day-names.component';
@@ -16,10 +16,10 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-	setDateRange: dateRange => dispatch(setDateRange(dateRange))
+	setTimeFrame: timeFrame => dispatch(setTimeFrame(timeFrame))
 })
 
-const Calendar = ({ setDateRange, dateRange }) => {
+const Calendar = ({ dateRange, setTimeFrame }) => {
 	const [month, setMonth] = useState(moment());
 	const [isStartDate, setIsStartDate] = useState(false);
 
@@ -37,11 +37,13 @@ const Calendar = ({ setDateRange, dateRange }) => {
 					date={date.clone()} 
 					month={month}
 					select={({ date })=>{
-						setDateRange(
-							isStartDate
-							?	{ ...dateRange, startDate: date}
-							: 	{ ...dateRange, endDate: date}
-						)
+						setTimeFrame({
+							timeFrame: 'custom', 
+							isTarget: false,
+							dateRange: isStartDate
+								?	{ ...dateRange, startDate: date}
+								: 	{ ...dateRange, endDate: date}
+						});
 						setMonth(date.clone())
 						setIsStartDate(!isStartDate);
 					}} 

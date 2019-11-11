@@ -30,12 +30,15 @@ const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArra
 
 	let labelArray;
 	let expenditures;
+	let titleTimeFrame;
 	if (timeFrame === 'this year') {
 		labelArray = monthNames;
 		expenditures = monthNames.map(month => expenseMonthMap[month] || 0)
+		titleTimeFrame = 'per month';
 	} else {
 		labelArray = datesArray;
 		expenditures = datesArray.map(date => expenseMap[date] || 0);
+		titleTimeFrame = 'per day'
 	}
 
 	const data = {
@@ -98,7 +101,7 @@ const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArra
 
 	return (
 		<div className='bar-chart'>
-    		<h4>total amount spent per day ({currency})</h4>
+    		<h4>total amount spent {titleTimeFrame} ({currency})</h4>
     		{
     			(startDate === endDate)
     			? 	<div className='none'>

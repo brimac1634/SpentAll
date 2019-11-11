@@ -24,7 +24,7 @@ export function* fetchExpensesAsync() {
 }
 
 export function* transformTimeFrame({payload}) {
-	const { timeFrame, isTarget } = payload;
+	const { timeFrame, isTarget, dateRange } = payload;
 	const getDateRange = timeFrame => {
 		switch (timeFrame) {
 			case 'this year':
@@ -39,15 +39,16 @@ export function* transformTimeFrame({payload}) {
 			case 'daily':
 				const now = moment();
 				return { startDate: now, endDate: now}
+			case 'custom':
+				return dateRange
 			default:
 				return { startDate: moment().date(1), endDate: moment().endOf('month')}
 		}
 	}
-	const dateRange = yield getDateRange(timeFrame);
+	const calculatedDates = yield getDateRange(timeFrame);
 	isTarget
-		? 	yield put(setCycleDateRange(dateRange))
-		: 	yield put(setDateRange(dateRange))
-	
+		? 	yield put(setCycleDateRange(calculatedDates))
+		: 	yield put(setDateRange(calculatedDates))
 }
 
 export function* addExpenditureStart({payload}) {
