@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { numberWithCommas } from '../../utils';
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
+import { selectCurrencySymbol } from '../../redux/expenses/expenses.selectors';
 import { updateSettingsStart } from '../../redux/user/user.actions'; 
 
 import CustomButton from '../custom-button/custom-button.component';
@@ -14,14 +15,15 @@ import Categories from '../categories/categories.component';
 import './settings.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	userSettings: selectUserSettings
+	userSettings: selectUserSettings,
+	currencySymbol: selectCurrencySymbol
 })
 
 const mapDispatchToProps = dispatch => ({
 	updateSettings: settings => dispatch(updateSettingsStart(settings)),
 })
 
-const Settings = ({ updateSettings, userSettings }) => {
+const Settings = ({ updateSettings, userSettings, currencySymbol }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [settings, setSettings] = useState({
 		target: userSettings.target,
@@ -66,7 +68,7 @@ const Settings = ({ updateSettings, userSettings }) => {
 					</div>
 					<div className='sub-group'>
 						<span className='label'>spending limit: </span>
-						<span>{currency}{numberWithCommas(target, false)}</span>
+						<span>{currencySymbol}{numberWithCommas(target, false)}</span>
 					</div>
 					<div className='sub-group'>
 						<span className='label'>spending cycle: </span>

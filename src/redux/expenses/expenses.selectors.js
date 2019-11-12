@@ -6,7 +6,9 @@ import {
 	sortProperties 
 } from '../../utils';
 
-const selectExpenses = state => state.expenses;
+import { selectCurrency } from '../user/user.selectors';
+
+const selectExpenses = state => state.expenses; 
 
 const filterList = (list, dates) => {
 	if (!list || !!!list.length) return null;
@@ -28,7 +30,7 @@ export const selectExpensesList = createSelector(
 
 const expenseMapper = (list, byMonth) => {
 	if (!list) return null;
-	return list.reduce((accum, expense)=>{
+	let map = list.reduce((accum, expense)=>{
 		const { timestamp, amount } = expense;
 		const key = formatDate(new Date(timestamp), false, byMonth);
 		accum[key] = accum[key] 
@@ -36,6 +38,8 @@ const expenseMapper = (list, byMonth) => {
 			: 	amount
 		return accum
 	}, {})
+	Object.keys(map).forEach(key => map[key] = Number(map[key]).toFixed(2)) 
+	return map;
 }
 
 export const selectExpensesDateMap = createSelector(
@@ -191,6 +195,15 @@ export const selectCurrencies = createSelector(
 			return accum;
 		}, {})
 		return ordered;
+	}
+)
+
+export const selectCurrencySymbol = createSelector(
+	selectCurrency,
+	selectCurrencies,
+	(currency, currencyMap) => {
+		const defaultCurrency = currencyMap[currency];
+		return defaultCurrency.currencySymbol || defaultCurrency.id || '';
 	}
 )
 

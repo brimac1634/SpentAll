@@ -9,7 +9,8 @@ import {
 	selectExpensesMonthMap, 
 	selectFixedDateRange,
 	selectDatesArray,
-	selectTimeFrame 
+	selectTimeFrame,
+	selectCurrencySymbol
 } from '../../redux/expenses/expenses.selectors';
 import { selectCurrency } from '../../redux/user/user.selectors';
 
@@ -20,11 +21,12 @@ const mapStateToProps = createStructuredSelector({
 	expenseMonthMap: selectExpensesMonthMap,
 	dateRange: selectFixedDateRange,
 	datesArray: selectDatesArray,
-	currency: selectCurrency,
+	currency: selectCurrencySymbol,
+	currencyID: selectCurrency,
 	timeFrame: selectTimeFrame
 })
 
-const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArray, currency }) => {
+const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArray, currency, currencyID }) => {
 	if (!expenseMap || !dateRange) return <span>No Data</span>
 	const { startDate, endDate } = dateRange;
 
@@ -92,7 +94,7 @@ const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArra
 	        },
 	        scaleLabel: {
 	          display: true,
-	          labelString: currency,
+	          labelString: currencyID,
 	          fontColor: '#f7f9fc'
 	        }
 	      }]

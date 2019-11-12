@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { numberWithCommas } from '../../utils';
 
-import { selectTotalTargetExpenses } from '../../redux/expenses/expenses.selectors';
-import { selectUserSettings, selectCurrency } from '../../redux/user/user.selectors';
+import { selectTotalTargetExpenses, selectCurrencySymbol } from '../../redux/expenses/expenses.selectors';
+import { selectUserSettings } from '../../redux/user/user.selectors';
 import { toggleAddExpense } from '../../redux/expenses/expenses.actions';
 
 import CustomButton from '../custom-button/custom-button.component';
@@ -14,7 +14,7 @@ import './meter.styles.scss';
 const mapStateToProps = createStructuredSelector({
 	totalTargetExpense: selectTotalTargetExpenses,
 	userSettings: selectUserSettings,
-	currency: selectCurrency
+	currency: selectCurrencySymbol
 })
 
 const mapDispatchToProps = dispatch => ({
