@@ -1,0 +1,13 @@
+.filter-selector {
+	max-width: 500px;
+
+	.options {
+		height: 400px;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-column-gap: 10px;
+		grid-row-gap: 10px;
+		grid-auto-rows: min-content;
+		overflow-y: scroll;
+	}
+}

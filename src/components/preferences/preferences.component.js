@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { selectCurrencies } from '../../redux/expenses/expenses.selectors';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import LabelGroup from '../label-group/label-group.component';
+import HoverBox from '../hover-box/hover-box.component';
+import FilterSelector from '../filter-selector/filter-selector.component';
 
 import './preferences.styles.scss';
 
-const Preferences = ({ settings, handleChange, setSettings }) => {
+const mapStateToProps = createStructuredSelector({
+	currencies: selectCurrencies
+})
+
+const Preferences = ({ settings, handleChange, setSettings, currencies }) => {
+	const [showCurrencies, setShowCurrencies] = useState(false);
 	let { target, cycle, currency } = settings;
 	const targetTimes = ['monthly', 'weekly', 'daily'];
 
@@ -14,17 +25,13 @@ const Preferences = ({ settings, handleChange, setSettings }) => {
 		<div className='preferences'>
 			<LabelGroup
 				label='currency'
-				tooltip='This will be your default currency. (USD$/EUR€/HKD$/etc.)'
+				tooltip='This will be your default currency. (USD/EUR/HKD/etc.)'
 			>
-				<FormInput 
-					name='currency' 
-					type='text' 
-					value={currency} 
-					margin='0'
-					label='currency'
-					placeholder='USD$'
-					handleChange={handleChange}
-				/>
+				<CustomButton
+					onClick={()=>setShowCurrencies(true)}
+				> 
+					 {currency}
+				</CustomButton>
 			</LabelGroup>
 			<LabelGroup
 				label='spending limit'
@@ -61,8 +68,26 @@ const Preferences = ({ settings, handleChange, setSettings }) => {
 					}
 				</div>
 			</LabelGroup>
+			<HoverBox 
+				show={showCurrencies} 
+				backgroundClick={e=>{
+					e.stopPropagation();
+					setShowCurrencies(false);
+				}}
+			>
+				<h3 className='filter-title'>Currency Selector</h3>
+				<FilterSelector 
+					options={currencies} 
+					select={currency=>{
+						setSettings({ 
+							...settings, currency
+						})
+						setShowCurrencies(false)
+					}} 
+				/>
+			</HoverBox>
 		</div>
 	)
 }
 
-export default Preferences;
+export default connect(mapStateToProps)(Preferences);

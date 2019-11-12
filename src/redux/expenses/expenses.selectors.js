@@ -183,6 +183,11 @@ export const selectCategoriesTotals = createSelector(
 	}
 )
 
+export const selectCurrencies = createSelector(
+	[selectExpenses],
+	({ currencies }) => currencies
+)
+
 
 
 

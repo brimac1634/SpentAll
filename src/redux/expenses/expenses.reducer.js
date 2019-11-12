@@ -1,6 +1,8 @@
 import ExpensesActionTypes from './expenses.types';
+import currencies from './expenses.data';
 
 const INITIAL_STATE = {
+	currencies,
 	showAddExpense: false,
 	timeFrame: 'this month',
 	dateRange: {
