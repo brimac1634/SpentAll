@@ -185,7 +185,13 @@ export const selectCategoriesTotals = createSelector(
 
 export const selectCurrencies = createSelector(
 	[selectExpenses],
-	({ currencies }) => currencies
+	({ currencies }) => {
+		const ordered = Object.keys(currencies).sort().reduce((accum, cur) => {
+			accum[cur] = currencies[cur];
+			return accum;
+		}, {})
+		return ordered;
+	}
 )
 
 

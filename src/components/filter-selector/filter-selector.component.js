@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import ReactTooltip from 'react-tooltip'
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
 
@@ -16,7 +17,6 @@ const mapStateToProps = createStructuredSelector({
 const FilterSelector = ({ options, select, userSettings }) => {
 	const [search, setSearch] = useState('');
 	const { currency } = userSettings;
-
 	return (
 		<div className='filter-selector'>
 			<FormInput 
@@ -41,18 +41,29 @@ const FilterSelector = ({ options, select, userSettings }) => {
 			<div className='options'>
 				{
 					options &&
-					options.filter(option => {
+					Object.keys(options).filter(option => {
 						return option.includes(search.toUpperCase())
-					}).sort().map((option, i)=>(
-						<Category 
-							key={i}
-							category={option}
-							style={{width: '100px', margin: '0'}}
-							onClick={()=>{
-								select(option)
-								setSearch('')
-							}}
-						/>
+					}).map((option, i)=>(
+						<div key={i}>
+							<div data-tip={options[option].currencyName} data-for={options[option].id}>
+								<Category 
+									category={option}
+									style={{width: '100px', margin: '0'}}
+									onClick={()=>{
+										select(option)
+										setSearch('')
+									}}
+								/>
+							</div>
+							<ReactTooltip 
+								className='tool-tip'
+								id={options[option].id} 
+								data-html
+								insecure
+								effect='solid' 
+								multiline 
+							/>
+						</div>
 					))
 				}
 			</div>
