@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { newExpenseStart, setExpenseToEdit } from '../../redux/expenses/expenses.actions';
-import { selectExpenseToEdit, selectCurrencies } from '../../redux/expenses/expenses.selectors';
+import { selectExpenseToEdit, selectCurrencies, selectShowAddExpense } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
 
 import FormInput from '../form-input/form-input.component';
@@ -17,15 +17,16 @@ import './expense-input.styles.scss';
 const mapStateToProps = createStructuredSelector({
 	userSettings: selectUserSettings,
 	expenseToEdit: selectExpenseToEdit,
-	currencies: selectCurrencies
+	currencies: selectCurrencies,
+	showAddExpense: selectShowAddExpense
 })
 
 const mapDispatchToProps = dispatch => ({
 	newExpenseStart: expense => dispatch(newExpenseStart(expense)),
-	setExpenseToEdit: () => dispatch(setExpenseToEdit(null))
+	closeExpense: () => dispatch(setExpenseToEdit(null))
 })
 
-const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpenseStart, currencies }) => {
+const ExpenseInput = ({ showAddExpense, expenseToEdit, userSettings, closeExpense, newExpenseStart, currencies }) => {
 	const [expense, setExpense] = useState({
 		currency: userSettings.currency,
 		amount: '', 
@@ -37,6 +38,12 @@ const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpens
 	let { amount, type, notes, currency } = expense;
 	const expenditure_id = expenseToEdit ? expenseToEdit.expenditure_id : null;
 	const { categories } = userSettings;
+
+	useEffect(()=>{
+		if (userSettings) setExpense({
+			currency: userSettings.currency
+		})
+	}, [userSettings])
 	
 	useEffect(()=>{
 		if (expenseToEdit) setExpense({
@@ -45,6 +52,17 @@ const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpens
 			type: expenseToEdit.type
 		})
 	}, [expenseToEdit])
+
+	useEffect(()=>{
+		if (!showAddExpense) {
+			setExpense({  
+				currency: userSettings.currency,
+				amount: '',
+				type: '', 
+				notes: ''
+			});
+		}
+	}, [showAddExpense, setExpense, userSettings])
 
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -62,11 +80,6 @@ const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpens
 	const handleChange = event => {
 		let { value, name } = event.target;
 		setExpense({ ...expense, [name]: value });
-	}
-
-	const cancel = () => {
-		setExpenseToEdit();
-		setExpense({amount: '', type: ''});
 	}
 
 	return (
@@ -128,7 +141,7 @@ const ExpenseInput = ({ expenseToEdit, userSettings, setExpenseToEdit, newExpens
 					</div>
 				</form>
 				<div className='button-container'>
-					<CustomButton onClick={cancel}> 
+					<CustomButton onClick={closeExpense}> 
 						cancel 
 					</CustomButton>
 					<CustomButton 

@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const numberWithCommas = (x, decimal) => {
-  if (!x) return null;
+  if (!x) return 0;
   const number = decimal && x % 1 !== 0 ?  Number(x).toFixed(2) : x;
   const numString = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return numString

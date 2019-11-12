@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
 const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseStart }) => {
 	const [showModal, setShowModal] = useState(false);
 	if (!selectedExpense) return <div className='expenditure-details'/>
-	const { expenditure_id, amount, timestamp, notes, type } = selectedExpense;
+	const { expenditure_id, currency, amount, timestamp, notes, type } = selectedExpense;
 	const deleteExpense = async expenditure_id => {
 		setShowModal(false);
 		deleteExpenseStart({ expenditure_id });
@@ -35,7 +35,7 @@ const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseSt
 		<div className='expenditure-details'>
 			<SectionBox>
 				<span>{dateAndTime(timestamp)}</span>
-				<h1>${numberWithCommas(amount)}</h1>
+				<h1>{currency} {numberWithCommas(amount)}</h1>
 				<div className='sub-group'>
 					<span className='label'>category: </span>
 					<span>{type}</span>

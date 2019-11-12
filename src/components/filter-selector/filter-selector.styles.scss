@@ -1,6 +1,18 @@
 .filter-selector {
 	max-width: 500px;
 
+	.default {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 20px 0;
+
+		> span {
+			display: block;
+			margin-right: 8px;
+		}
+	}
+
 	.options {
 		height: 400px;
 		display: grid;

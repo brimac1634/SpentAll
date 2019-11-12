@@ -19,7 +19,7 @@ const ListItem = ({ currency, expense, selected, onClick }) => {
 		<div className={`list-item ${selected ? 'selected' : null}`} onClick={onClick}>
 			<span>{formattedDate}</span>
 			<span>{type}</span>
-			<span>{currency}{numberWithCommas(amount, true)}</span>
+			<span>{currency} {numberWithCommas(amount, true)}</span>
 		</div>
 	)
 }
