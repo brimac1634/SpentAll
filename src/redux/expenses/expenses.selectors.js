@@ -202,6 +202,7 @@ export const selectCurrencySymbol = createSelector(
 	selectCurrency,
 	selectCurrencies,
 	(currency, currencyMap) => {
+		console.log(currency, currencyMap)
 		if (!currencyMap || !currency) return '';
 		const defaultCurrency = currencyMap[currency];
 		return defaultCurrency.currencySymbol || defaultCurrency.id || '';
