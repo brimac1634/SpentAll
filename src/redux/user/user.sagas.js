@@ -12,7 +12,7 @@ import {
 	updateSettingsSuccess
 } from './user.actions';
 
-import { setTimeFrame } from '../expenses/expenses.actions';
+import { setTimeFrame, fetchExpensesStart } from '../expenses/expenses.actions';
 import { setAlert } from '../alert/alert.actions';
 
 export function* handleError(error) {
@@ -45,6 +45,7 @@ export function* updateSettings({ payload }) {
 			yield put(setAlert('unable to update settings'))
 		} else {
 			yield call(setSettings, data)
+			yield put(fetchExpensesStart())
 			yield put(setAlert('settings updated!'))
 		}
 	} catch (err) {
