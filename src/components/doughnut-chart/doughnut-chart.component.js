@@ -49,13 +49,21 @@ const DoughnutChart = ({ categoryTotals }) => {
 	    	}
 	    },
 	    tooltips: {
-	    	cornerRadius: 3
+	    	cornerRadius: 3,
+	    	callbacks: {
+		        label: (tooltipItem, data) => {
+		        	const index = tooltipItem['index']
+		        	const dataItem = data.datasets[0].data[index]
+		        	const percent = dataItem >= 1 ? ' ' + Math.floor(dataItem) + '%' : ' <1%';
+		            return ' ' + data['labels'][index] + percent
+		        }
+			}
 	    }
 	}
 
     return (
     	<div>
-    		<h4>amount spent per category (% of total)</h4>
+    		<h4>Amount spent per category (% of total)</h4>
 		    <Doughnut data={data} options={options} />
 	    </div>
     );

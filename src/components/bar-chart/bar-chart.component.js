@@ -65,8 +65,15 @@ const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArra
 	    	display: false
 	    },
 	    tooltips: {
-	      mode: 'nearest',
-	      cornerRadius: 3
+	        mode: 'nearest',
+	        cornerRadius: 3,
+	        callbacks: {
+		        label: (tooltipItem, data) => {
+		        	const index = tooltipItem['index']
+		        	const dataItem = data.datasets[0].data[index]
+		            return ' ' + currency + dataItem
+		        }
+			}
 	    },
 	    hover: {
 	      mode: 'nearest',
@@ -103,7 +110,7 @@ const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArra
 
 	return (
 		<div className='bar-chart'>
-    		<h4>total amount spent {titleTimeFrame} ({currency})</h4>
+    		<h4>Total amount spent {titleTimeFrame} ({currency})</h4>
     		{
     			(startDate === endDate)
     			? 	<div className='none'>

@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-export const numberWithCommas = (x, decimal) => {
+export const numberWithCommas = (x, decimal, alwaysDecimal) => {
   if (!x) return 0;
-  const number = decimal && x % 1 !== 0 ?  Number(x).toFixed(2) : Number(x).toFixed(0);
+  const number = decimal && (x % 1 !== 0 || alwaysDecimal) ?  Number(x).toFixed(2) : Number(x).toFixed(0);
   const numString = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return numString
 }
