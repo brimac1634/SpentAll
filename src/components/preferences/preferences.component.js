@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -68,24 +69,29 @@ const Preferences = ({ settings, handleChange, setSettings, currencies }) => {
 					}
 				</div>
 			</LabelGroup>
-			<HoverBox 
-				show={showCurrencies} 
-				backgroundClick={e=>{
-					e.stopPropagation();
-					setShowCurrencies(false);
-				}}
-			>
-				<h3 className='filter-title'>Currency Selector</h3>
-				<FilterSelector 
-					options={currencies} 
-					select={currency=>{
-						setSettings({ 
-							...settings, currency
-						})
-						setShowCurrencies(false)
-					}} 
-				/>
-			</HoverBox>
+			{
+				ReactDOM.createPortal(
+					<HoverBox 
+						show={showCurrencies} 
+						backgroundClick={e=>{
+							e.stopPropagation();
+							setShowCurrencies(false);
+						}}
+					>
+						<h3 className='filter-title'>Currency Selector</h3>
+						<FilterSelector 
+							options={currencies} 
+							select={currency=>{
+								setSettings({ 
+									...settings, currency
+								})
+								setShowCurrencies(false)
+							}} 
+						/>
+					</HoverBox>
+					, document.body
+				)
+			}
 		</div>
 	)
 }

@@ -33,7 +33,6 @@ const Categories = ({ settings, setSettings }) => {
 				tooltip='These will be your category options when adding new expenditures.'
 			>
 				<FormInput 
-					name='category' 
 					type='text'
 					label='new category'
 					value={category}

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
 import Carousel from '../carousel/carousel.component';
 import Preferences from '../preferences/preferences.component';
 import Categories from '../categories/categories.component';
+import HoverBox from '../hover-box/hover-box.component';
+import MessageModal from '../../components/message-modal/message-modal.component';
 
 import { updateSettingsStart, signOutStart } from '../../redux/user/user.actions';
 
@@ -22,6 +24,13 @@ const NewSettings = ({ updateSettings, logout }) => {
 		categories: ['food', 'housing', 'transportation', 'travel', 'entertainment', 'clothing', 'groceries', 'utilities', 'health', 'education', 'work']
 	});
 	const [index, setIndex] = useState(0);
+	const [showAlert, setShowAlert] = useState(false);
+
+	useEffect(()=>{
+		setTimeout(()=>{
+			setShowAlert(true);
+		}, 200)
+	}, [setShowAlert])
 
 	const { categories } = userCredentials;
 
@@ -68,7 +77,7 @@ const NewSettings = ({ updateSettings, logout }) => {
 					</div>
 				</div>
 				<div className='item'>
-					<div className='container'>
+					<div className='container cats'>
 						<h2>Categories</h2>
 						<Categories
 							settings={userCredentials}
@@ -77,6 +86,20 @@ const NewSettings = ({ updateSettings, logout }) => {
 					</div>
 				</div>
 			</Carousel>
+			<HoverBox 
+				show={showAlert} 
+				backgroundClick={e=>{
+					e.stopPropagation();
+					setShowAlert(false);
+				}}
+			>
+				<MessageModal
+					title='Your Settings'
+					message={'Before proceeding, you must choose your default settings. Don\'t worry, you can change these settings at any time afterwards!'}
+					confirm='okay' 
+					confirmCallback={()=>setShowAlert(false)}
+				/>
+			</HoverBox>
 		</div>
 	)
 }
