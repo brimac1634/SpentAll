@@ -19,25 +19,27 @@ const FilterSelector = ({ options, select, userSettings }) => {
 	const { currency } = userSettings;
 	return (
 		<div className='filter-selector'>
-			<FormInput 
-				name='search' 
+			<FormInput  
 				type='text' 
 				value={search}
 				label='filter'
-				placeholder='USD'
+				placeholder='example: USD'
 				handleChange={e=>setSearch(e.target.value)}
 			/>
-			<div className='default'>
-				<span>Default:</span>
-				<Category
-					category={currency}
-					style={{width: '100px', margin: '0'}}
-					onClick={()=>{
-						select(currency)
-						setSearch('')
-					}}
-				/>
-			</div>
+			{
+				currency &&
+				<div className='default'>
+					<span>Default:</span>
+					<Category
+						category={currency}
+						style={{width: '100px', margin: '0'}}
+						onClick={()=>{
+							select(currency)
+							setSearch('')
+						}}
+					/>
+				</div>
+			}
 			<div className='options'>
 				{
 					options &&

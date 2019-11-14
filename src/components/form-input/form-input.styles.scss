@@ -45,11 +45,11 @@ $input-color: var(--white);
     color: $label-color;
     font-size: 18px;
     font-weight: normal;
-    pointer-events: none;
     padding: 0 10px;
     line-height: 50px;
     white-space: nowrap;
     text-transform: capitalize;
+    cursor: pointer;
   }
 }
 

@@ -111,7 +111,7 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 				</div>
 				<HoverBox show={!!signUpMessage && showMessasge}>
 					<MessageModal
-						title='Success'
+						title='Email Sent'
 						message={signUpMessage}
 						confirm='okay' 
 						confirmCallback={handleMessage}

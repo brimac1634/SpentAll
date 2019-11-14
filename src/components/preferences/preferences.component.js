@@ -30,7 +30,7 @@ const Preferences = ({ settings, handleChange, setSettings, currencies }) => {
 				<CustomButton
 					onClick={()=>setShowCurrencies(true)}
 				> 
-					 {currency}
+					 {currency || 'select'}
 				</CustomButton>
 			</LabelGroup>
 			<LabelGroup
@@ -44,7 +44,7 @@ const Preferences = ({ settings, handleChange, setSettings, currencies }) => {
 					value={target} 
 					margin='0'
 					label={`target ${currency}`}
-					placeholder='2000'
+					placeholder='example: 2000'
 					handleChange={handleChange}
 				/>
 			</LabelGroup>

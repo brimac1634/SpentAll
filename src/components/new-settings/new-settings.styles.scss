@@ -8,9 +8,10 @@
 		margin: 20px 0 90px 0;
 		overflow-y: scroll;
 		-webkit-overflow-scrolling: touch;
-		display: inline-block;
+		display: inline-flex;
 		text-align: center;
 		vertical-align: top;
+		white-space: normal;
 
 		> * {
 			margin: 0 auto;

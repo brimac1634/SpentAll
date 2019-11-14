@@ -60,8 +60,8 @@ const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchE
         isFetchingUser
           ? <Loader fixed />
           : <div>
+              <Header />
               <ErrorBoundary>
-                <Header />
                 <Suspense fallback={<Loader />}>
                   <Switch>
                       <Route 

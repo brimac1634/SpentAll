@@ -13,7 +13,8 @@ const Categories = ({ settings, setSettings }) => {
 	const handleNewCategory = event => {
 		if (event.which === 13) {
 			event.preventDefault();
-			const { value } = event.target;
+			let { value } = event.target;
+			value = value.toLowerCase();
 			categories = categories ? [...categories, value] : [value]
 			setSettings({ ...settings, categories });
 			setCategory('');
