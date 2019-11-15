@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { selectTimeTitle } from '../../redux/expenses/expenses.selectors';
+import { selectTimeTitle, selectDateRange } from '../../redux/expenses/expenses.selectors';
 import { setTimeFrame } from '../../redux/expenses/expenses.actions';
 
 import Calendar from '../calendar/calendar.component';
@@ -11,14 +11,15 @@ import CustomButton from '../custom-button/custom-button.component';
 import './time-filter.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	timeTitle: selectTimeTitle
+	timeTitle: selectTimeTitle,
+	dateRange: selectDateRange
 })
 
 const mapDispatchToProps = dispatch => ({
 	setTimeFrame: timeFrame => dispatch(setTimeFrame(timeFrame))
 })
 
-const ExpenseList = ({ setTimeFrame, timeTitle, confirm }) => {
+const TimeFilter = ({ setTimeFrame, timeTitle, confirm, dateRange }) => {
 	const timeFrames = ['today', 'this week', 'this month', 'this year'];
 
 	return (
@@ -44,7 +45,10 @@ const ExpenseList = ({ setTimeFrame, timeTitle, confirm }) => {
 				}
 			</div>
 			<div className='calendar-box'>
-				<Calendar />
+				<Calendar
+					dateRange={dateRange}
+					setDates={timeFrame => setTimeFrame(timeFrame)}
+				/>
 			</div>
 			<div className='button-container'>
 				<CustomButton 
@@ -58,4 +62,4 @@ const ExpenseList = ({ setTimeFrame, timeTitle, confirm }) => {
 	)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseList);
+export default connect(mapStateToProps, mapDispatchToProps)(TimeFilter);

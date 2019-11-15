@@ -14,7 +14,16 @@ export const monthNames = [
   'Nov', 'Dec'
 ];
 
-export const formatDate = (date, short, monthOnly) => {
+export const correctTimezone = date => {
+  const timezoneOffsetMinutes = date.getTimezoneOffset();
+  const setMinutes = date.getMinutes() - timezoneOffsetMinutes;
+  date.setMinutes(setMinutes);
+  return date
+}
+
+export const formatDate = (dateParam, short, monthOnly) => {
+  if (!dateParam) return '';
+  const date = correctTimezone(new Date(dateParam))
   const monthIndex = date.getMonth();
   if (monthOnly) return monthNames[monthIndex];
   const day = date.getDate();
@@ -26,10 +35,7 @@ export const formatDate = (date, short, monthOnly) => {
 }
 
 export const dateAndTime = date => {
-  const dateToFormat = new Date(date)
-  const timezoneOffsetMinutes = dateToFormat.getTimezoneOffset();
-  const setMinutes = dateToFormat.getMinutes() - timezoneOffsetMinutes;
-  dateToFormat.setMinutes(setMinutes);
+  const dateToFormat = correctTimezone(new Date(date))
   return dateToFormat.toLocaleDateString('en-US', { 
     weekday: 'short', 
     year: 'numeric', 

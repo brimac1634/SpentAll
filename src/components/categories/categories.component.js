@@ -29,18 +29,22 @@ const Categories = ({ settings, setSettings }) => {
 	return (
 		<div className='categories-input'>
 			<LabelGroup
-				label='add or remove spending categories'
-				tooltip='These will be your category options when adding new expenditures.'
+				label='create your own spending categories'
 			>
 				<FormInput 
 					type='text'
 					label='new category'
 					value={category}
 					margin='0'
-					placeholder='entertainment'
+					placeholder='example: entertainment'
 					handleChange={e=>setCategory(e.target.value)}
 					onKeyPress={handleNewCategory}
 				/>
+			</LabelGroup>
+			<LabelGroup
+				label='current categories'
+				tooltip='These will be your category options when adding new expenditures.'
+			>
 				<div className='categories'>
 					{
 						categories &&

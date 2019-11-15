@@ -4,6 +4,8 @@ import { createStructuredSelector } from 'reselect';
 
 import { numberWithCommas, formatDate } from '../../utils';
 
+import ExpenditureDetails from '../../components/expenditure-details/expenditure-details.component';
+
 import { selectCurrency } from '../../redux/user/user.selectors';
 
 import './list-item.styles.scss';
@@ -17,9 +19,18 @@ const ListItem = ({ currency, expense, selected, onClick }) => {
 	const formattedDate = formatDate(new Date(timestamp), true)
 	return (
 		<div className={`list-item ${selected ? 'selected' : null}`} onClick={onClick}>
-			<span>{formattedDate}</span>
-			<span>{type}</span>
-			<span>{currency} {numberWithCommas(amount, true, true)}</span>
+			{
+				!selected &&
+				<div className='item-interior'>
+					<span>{formattedDate}</span>
+					<span>{type}</span>
+					<span>{currency} {numberWithCommas(amount, true, true)}</span>
+				</div>
+			}
+			{
+				selected &&
+				<ExpenditureDetails />
+			}
 		</div>
 	)
 }

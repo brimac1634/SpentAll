@@ -1,27 +1,15 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-import { selectDateRange } from '../../redux/expenses/expenses.selectors';
-import { setTimeFrame } from '../../redux/expenses/expenses.actions';
 
 import Week from './calendar.week.component';
 import DayNames from './calendar.day-names.component';
 
 import './calendar.styles.scss'
 
-const mapStateToProps = createStructuredSelector({
-	dateRange: selectDateRange
-})
-
-const mapDispatchToProps = dispatch => ({
-	setTimeFrame: timeFrame => dispatch(setTimeFrame(timeFrame))
-})
-
-const Calendar = ({ dateRange, setTimeFrame }) => {
+const Calendar = ({ dateRange, setDates }) => {
 	const [month, setMonth] = useState(moment());
 	const [isStartDate, setIsStartDate] = useState(false);
+	if (!dateRange) return <span>No Dates Found</span>
 
     const renderWeeks = () => {
 	    let weeks = [];
@@ -37,12 +25,13 @@ const Calendar = ({ dateRange, setTimeFrame }) => {
 					date={date.clone()} 
 					month={month}
 					select={({ date })=>{
-						setTimeFrame({
+						setDates({
 							timeFrame: 'custom', 
 							isTarget: false,
 							dateRange: isStartDate
 								?	{ ...dateRange, startDate: date}
-								: 	{ ...dateRange, endDate: date}
+								: 	{ ...dateRange, endDate: date},
+							date
 						});
 						setMonth(date.clone())
 						setIsStartDate(!isStartDate);
@@ -99,4 +88,4 @@ const Calendar = ({ dateRange, setTimeFrame }) => {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default Calendar;

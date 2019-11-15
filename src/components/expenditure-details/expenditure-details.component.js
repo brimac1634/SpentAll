@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
 
 const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseStart }) => {
 	const [showModal, setShowModal] = useState(false);
-	if (!selectedExpense) return <div className='expenditure-details'/>
+	if (!selectedExpense) return <div className='expenditure-details'>No expense selected</div>
 	const { expenditure_id, currency, amount, timestamp, notes, type } = selectedExpense;
 	const deleteExpense = async expenditure_id => {
 		setShowModal(false);

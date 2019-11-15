@@ -36,7 +36,7 @@ const ListGroup = ({ toggleAddExpense }) => {
 					</CustomButton>
 				</div>
 			</div>
-			<div className='list'>
+			<div className='list-panel'>
 				<SectionBox>
 					<ExpenseList />
 				</SectionBox>

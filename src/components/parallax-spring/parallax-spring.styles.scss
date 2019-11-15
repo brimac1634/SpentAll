@@ -42,18 +42,22 @@
 		}
 	}
 
-	.card1 {
-		background-image: url('../../assets/1cloud.svg');
-		bottom: -20px;
+	@media screen and (min-width: 500px) {
+		.card1 {
+			background-image: url('../../assets/1cloud.svg');
+			bottom: -20px;
+		}
+		
+		.card4 {
+			background-image: url('../../assets/4cloud.svg');
+			bottom: 10px;
+		}
 	}
+
 	.card2 {
 		background-image: url('../../assets/2cloud.svg');
 	}
 	.card3 {
 		background-image: url('../../assets/3cloud.svg');
-	}
-	.card4 {
-		background-image: url('../../assets/4cloud.svg');
-		bottom: 10px;
 	}
 }

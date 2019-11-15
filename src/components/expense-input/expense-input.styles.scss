@@ -14,7 +14,11 @@
 			justify-content: center;
 			padding: 0 24px;
 
-			> :first-child {
+			&:first-child {
+				margin: 10px 0;
+			}
+
+			> h3 {
 				position: absolute;
 				left: 0;
 				top: 50%;
@@ -27,7 +31,7 @@
 			}
 
 			.categories-container {
-				margin: 30px 0;
+				margin: 20px 0;
 				display: flex;
 				justify-content: center;
 				flex-wrap: wrap;
@@ -36,7 +40,7 @@
 
 		.error {
 			display: block;
-			margin: 0 0 20px 0;
+			margin: 0 0 15px 0;
 			color: var(--white);
 			transition: all 300ms ease-in-out;
 
