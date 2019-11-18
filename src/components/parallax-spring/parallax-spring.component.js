@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSpring, animated } from 'react-spring'
+import MediaQuery from 'react-responsive';
 
 import './parallax-spring.styles.scss';
 
@@ -17,26 +18,28 @@ const ParallaxSpring = ({ x, y }) => {
 	const trans4 = (x, y) => `translate3d(${x / 5 + halfWidth * 0.7}px,${y / 7}px,0)`
 
 	return (
-		<div 
-			className='parallax-spring' 
-		>
-			<animated.div 
-				className='card2' 
-				style={{ transform: props.xy.interpolate(trans2) }} 
-			/>
-			<animated.div 
-				className='card3' 
-				style={{ transform: props.xy.interpolate(trans3) }} 
-			/>
-			<animated.div 
-				className='card1' 
-				style={{ transform: props.xy.interpolate(trans1) }} 
-			/>
-			<animated.div 
-				className='card4' 
-				style={{ transform: props.xy.interpolate(trans4) }} 
-			/>
-	    </div>
+		<MediaQuery minWidth={800}>
+			<div 
+				className='parallax-spring' 
+			>
+				<animated.div 
+					className='card2' 
+					style={{ transform: props.xy.interpolate(trans2) }} 
+				/>
+				<animated.div 
+					className='card3' 
+					style={{ transform: props.xy.interpolate(trans3) }} 
+				/>
+				<animated.div 
+					className='card1' 
+					style={{ transform: props.xy.interpolate(trans1) }} 
+				/>
+				<animated.div 
+					className='card4' 
+					style={{ transform: props.xy.interpolate(trans4) }} 
+				/>
+		    </div>
+	    </MediaQuery>
 	)
 }
 export default ParallaxSpring;

@@ -20,18 +20,20 @@ const mapDispatchToProps = dispatch => ({
 
 const ExpenseList = ({ expenseList, selectExpense, selectedExpense }) => (
 	<div className='expense-list'>
-		<h4>Expense List</h4>
 		<div className='list'>
 			{
 				expenseList &&
-				expenseList.map((expense, i) => (
-					<ListItem 
-						key={i} 
-						selected={expense === selectedExpense}
-						expense={expense}
-						onClick={()=>selectExpense(expense.expenditure_id)}
-					/>
-				))
+				expenseList.map((expense, i) => {
+					const selected = expense === selectedExpense
+					return (
+						<ListItem 
+							key={i} 
+							selected={selected}
+							expense={expense}
+							onClick={()=>selectExpense(selected ? null : expense.expenditure_id)}
+						/>
+					)
+				})
 			}
 		</div>
 	</div>

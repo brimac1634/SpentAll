@@ -33,41 +33,39 @@ const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseSt
 	
 	return (
 		<div className='expenditure-details'>
-			<SectionBox>
-				<span>{dateAndTime(timestamp)}</span>
-				<h1>{currency} {numberWithCommas(amount)}</h1>
+			<span>{dateAndTime(timestamp)}</span>
+			<h1>{currency} {numberWithCommas(amount, true, true)}</h1>
+			<div className='sub-group'>
+				<span className='label'>category: </span>
+				<span>{type}</span>
+			</div>
+			{
+				notes &&
 				<div className='sub-group'>
-					<span className='label'>category: </span>
-					<span>{type}</span>
+					<span className='label'>notes: </span>
+					<span>{notes}</span>
 				</div>
-				{
-					notes &&
-					<div className='sub-group'>
-						<span className='label'>notes: </span>
-						<span>{notes}</span>
-					</div>
-				}
-				<div className='button-container'>
-					<CustomButton onClick={()=>setShowModal(true)}> 
-						delete 
-					</CustomButton>
-					<CustomButton 
-						onClick={()=>setExpenseToEdit(selectedExpense)}
-					> 
-						edit 
-					</CustomButton>
-				</div>
-				<HoverBox show={showModal}>
-					<MessageModal
-						title='Delete Expense'
-						message='Are you sure?'
-						confirm='delete' 
-						cancel='cancel'
-						confirmCallback={()=>deleteExpense(expenditure_id)} 
-						cancelCallback={()=>setShowModal(false)}
-					/>
-				</HoverBox>
-			</SectionBox>
+			}
+			<div className='button-container'>
+				<CustomButton onClick={()=>setShowModal(true)}> 
+					delete 
+				</CustomButton>
+				<CustomButton 
+					onClick={()=>setExpenseToEdit(selectedExpense)}
+				> 
+					edit 
+				</CustomButton>
+			</div>
+			<HoverBox show={showModal}>
+				<MessageModal
+					title='Delete Expense'
+					message='Are you sure?'
+					confirm='delete' 
+					cancel='cancel'
+					confirmCallback={()=>deleteExpense(expenditure_id)} 
+					cancelCallback={()=>setShowModal(false)}
+				/>
+			</HoverBox>
 		</div>
 	)
 }

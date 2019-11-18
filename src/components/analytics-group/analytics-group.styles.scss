@@ -23,6 +23,7 @@
 
 	@media screen and (max-width: 780px) {
 	    @include column();
+	    padding: 15px 10px 20px 10px;
 	}
 
 	@media screen and (max-width: 1024px) and (min-height: 1000px) {

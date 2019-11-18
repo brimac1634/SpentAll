@@ -37,12 +37,7 @@ const ListGroup = ({ toggleAddExpense }) => {
 				</div>
 			</div>
 			<div className='list-panel'>
-				<SectionBox>
-					<ExpenseList />
-				</SectionBox>
-			</div>
-			<div className='details'>
-				<ExpenditureDetails />
+				<ExpenseList />
 			</div>
 			<HoverBox show={showFilter}>
 				<TimeFilter confirm={()=>setShowFilter(false)}/>

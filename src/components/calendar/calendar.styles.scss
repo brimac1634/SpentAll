@@ -91,6 +91,7 @@
             transition: all .2s;
             overflow: hidden;
             color: var(--cantoDarkBlue);
+            min-width: 45px;
 
             &:hover {
                 border: 1px solid var(--purple);
