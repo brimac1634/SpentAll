@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Bar } from 'react-chartjs-2';
-import { lightenDarkenColor, monthNames } from '../../utils';
+import { lightenDarkenColor, monthNames, formatDate } from '../../utils';
 
 import { 
 	selectExpensesDateMap,
@@ -38,7 +38,7 @@ const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArra
 		expenditures = monthNames.map(month => expenseMonthMap[month] || 0)
 		titleTimeFrame = 'per month';
 	} else {
-		labelArray = datesArray;
+		labelArray = datesArray.map(date => formatDate(date, true));
 		expenditures = datesArray.map(date => expenseMap[date] || 0);
 		titleTimeFrame = 'per day'
 	}

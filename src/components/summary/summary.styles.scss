@@ -3,6 +3,7 @@
 	flex-direction: column;
 	text-align: center;
 	margin: 20px 0;
+	white-space: nowrap;
 
 	@media screen and (max-width: 1100px) {
 	    font-size: 70%;
@@ -10,6 +11,10 @@
 	    span {
 	    	font-size: 140%;
 	    }
+	}
+
+	@media screen and (max-width: 680px) {
+		margin: 10px 0;
 	}
 
 	h1 {
