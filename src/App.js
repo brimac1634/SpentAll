@@ -58,7 +58,7 @@ const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchE
     <div>
       {
         isFetchingUser
-          ? <Loader fixed />
+          ? <Loader logo fixed />
           : <div>
               <Header />
               <ErrorBoundary>
@@ -95,7 +95,7 @@ const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchE
                 </Suspense>
               </ErrorBoundary>
               {isExpenseLoading || isUserLoading
-                ?  <Loader logo fixed />
+                ?  <Loader fixed />
                 :  null
               }
               <Alert />

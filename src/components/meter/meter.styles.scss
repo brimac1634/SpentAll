@@ -5,7 +5,7 @@
 }
 
 .meter {
-	padding: 10px 10px 0 10px;
+	padding: 5px 5px 0 5px;
 	display: flex;
 	flex-direction: column;
 
@@ -27,7 +27,7 @@
 			margin: 10px 20px;
 
 			@media screen and (max-width: 990px) {
-				margin: 10px 10px;
+				margin: 5px;
 			}
 		}
 
@@ -96,6 +96,16 @@
 
 				@media screen and (max-width: 780px) {
 					justify-content: center;
+				}
+
+				:last-child {
+					@media screen and (max-width: 780px){
+						margin-right: 0;
+					}
+
+					@media screen and (max-width: 1024px) and (min-height: 1000px) {
+						margin-right: 0;
+					}
 				}
 			}
 		}

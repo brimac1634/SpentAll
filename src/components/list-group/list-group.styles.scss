@@ -14,11 +14,11 @@
 		justify-content: center;
 
 		@media screen and (max-width: 680px) {
-			height: 50%;
-		    bottom: 50%;
+			position: absolute;
+		    top: 0;
 		    left: 50%;
 		    padding: 0 5px;
-		    transform: translate(-50%, -100%);
+		    transform: translate(-50%, 0);
 		}
 
 		.buttons {
@@ -43,12 +43,11 @@
 		right: 0;
 
 		@media screen and (max-width: 680px) {
+			position: absolute;
+			top: 240px;
+			bottom: 10px;
 			width: 100%;
-			height: 60%;
-		    top: unset;
-		    bottom: 0;
-		    left: 50%;
-		    transform: translateX(-50%);
+			height: calc(100% - 250px);
 		}
 	}
 }
