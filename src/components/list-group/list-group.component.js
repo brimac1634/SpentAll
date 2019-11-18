@@ -6,10 +6,8 @@ import { toggleAddExpense } from '../../redux/expenses/expenses.actions';
 import TimeFilter from '../../components/time-filter/time-filter.component';
 import Summary from '../../components/summary/summary.component';
 import ExpenseList from '../../components/expense-list/expense-list.component';
-import ExpenditureDetails from '../../components/expenditure-details/expenditure-details.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
-import SectionBox from '../../components/section-box/section-box.component';
 
 import './list-group.styles.scss';
 

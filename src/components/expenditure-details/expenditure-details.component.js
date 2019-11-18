@@ -9,7 +9,6 @@ import { setExpenseToEdit, deleteExpenseStart } from '../../redux/expenses/expen
 import CustomButton from '../../components/custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import MessageModal from '../../components/message-modal/message-modal.component';
-import SectionBox from '../../components/section-box/section-box.component';
 
 import './expenditure-details.styles.scss';
 
