@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MediaQuery from 'react-responsive';
@@ -22,13 +22,21 @@ const mapStateToProps = createStructuredSelector({
 
 const Header = ({ userSettings }) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
+	
+	const closeMenu = useCallback(()=>{
+		setMenuIsOpen(false);
+	}, [setMenuIsOpen])
 
 	useEffect(()=>{
 		if (menuIsOpen) {
-			window.addEventListener('click', ()=>setMenuIsOpen(false))
-			return window.removeEventListener('click', ()=>setMenuIsOpen(false))
+			window.addEventListener('click', closeMenu)
+		} else {
+			window.removeEventListener('click', closeMenu)
 		}
-	}, [menuIsOpen])
+		return () => {
+			window.removeEventListener('click', closeMenu)
+		}
+	}, [menuIsOpen, closeMenu])
 
 	const accountComplete = userSettings ? !!userSettings.cycle : false;
 	return (
