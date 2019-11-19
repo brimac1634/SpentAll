@@ -1,5 +1,9 @@
 .message-modal {
-	max-width: 400px;
+	width: 400px;
+
+	@media screen and (max-width: 650px) {
+		width: 100%;
+	}
 
 	h1 {
 		text-align: center;
@@ -18,9 +22,5 @@
 	.button-container {
 		display: flex;
 		justify-content: space-between;
-
-		:last-child {
-			margin-left: auto;
-		}
 	}
 }

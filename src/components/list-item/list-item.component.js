@@ -17,10 +17,13 @@ const ListItem = ({ currency, expense, selected, onClick }) => {
 	const formattedDate = formatDate(new Date(timestamp), true)
 	return (
 		<div className={`list-item ${selected ? 'selected' : null}`} onClick={onClick}>
-			<div className='item-interior'>
+			<div className={`item-interior ${selected ? null : 'show-int'}`}>
 				<span>{formattedDate}</span>
 				<span>{type}</span>
 				<span>{currency} {numberWithCommas(amount, true, true)}</span>
+			</div>
+			<div className={`arrow-container ${selected ? 'show-arr' : null}`}>
+				<div className='arrow' />
 			</div>
 		</div>
 	)

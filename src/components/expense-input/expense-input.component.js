@@ -160,7 +160,7 @@ const ExpenseInput = ({ showAddExpense, expenseToEdit, userSettings, closeExpens
 				<div className='button-container'>
 					<CustomButton 
 						selected={isAdding}
-						onClick={handleSubmit}
+						onClick={isAdding ? handleSubmit : closeExpense}
 					> 
 						{isAdding ? 'spent': 'done'} 
 					</CustomButton>
