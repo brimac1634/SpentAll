@@ -1,5 +1,6 @@
 import ExpensesActionTypes from './expenses.types';
 import currencies from './expenses.data';
+import { correctTimezone } from '../../utils';
 
 const INITIAL_STATE = {
 	currencies,
@@ -38,7 +39,12 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				isFetching: false,
-				expenses: action.payload
+				expenses: action.payload.map(item => {
+					return {
+						...item,
+						timestamp: correctTimezone(new Date(item.timestamp))
+					}
+				})
 			}
 		case ExpensesActionTypes.EXPENSES_FAILURE:
 			return {

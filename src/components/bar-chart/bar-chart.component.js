@@ -29,7 +29,6 @@ const mapStateToProps = createStructuredSelector({
 const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArray, currency, currencyID }) => {
 	if (!expenseMap || !dateRange) return <span>No Data</span>
 	const { startDate, endDate } = dateRange;
-
 	let labelArray;
 	let expenditures;
 	let titleTimeFrame;

@@ -39,16 +39,24 @@ const ExpenseInput = ({ showAddExpense, expenseToEdit, userSettings, closeExpens
 	const [incomplete, setIncomplete] = useState(false);
 	const [showCurrencies, setShowCurrencies] = useState(false);
 	const [showCalendar, setShowCalendar] = useState(false);
+	const [isAdding, setIsAdding] = useState(false);
 	let { timestamp, amount, type, notes, currency } = expense;
 	const expenditure_id = expenseToEdit ? expenseToEdit.expenditure_id : null;
 	const { categories } = userSettings;
+
+	useEffect(()=>{
+		if (amount || type || notes) {
+			setIsAdding(true);
+		} else { setIsAdding(false); }
+	}, [amount, type, notes, setIsAdding])
 	
 	useEffect(()=>{
 		if (expenseToEdit) setExpense({
 			timestamp: expenseToEdit.timestamp,
 			currency: expenseToEdit.currency,
 			amount: expenseToEdit.amount, 
-			type: expenseToEdit.type
+			type: expenseToEdit.type,
+			notes: expenseToEdit.notes
 		})
 	}, [expenseToEdit])
 
@@ -150,15 +158,18 @@ const ExpenseInput = ({ showAddExpense, expenseToEdit, userSettings, closeExpens
 					</div>
 				</form>
 				<div className='button-container'>
-					<CustomButton onClick={closeExpense}> 
-						cancel 
-					</CustomButton>
 					<CustomButton 
-						selected
+						selected={isAdding}
 						onClick={handleSubmit}
 					> 
-						spent 
+						{isAdding ? 'spent': 'done'} 
 					</CustomButton>
+					{
+						isAdding &&
+						<CustomButton onClick={closeExpense}> 
+							cancel 
+						</CustomButton>
+					}
 				</div>
 			</div>
 			<HoverBox 

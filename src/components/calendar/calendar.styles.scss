@@ -63,7 +63,10 @@
 
                 h3 {
                     color: var(--white);
-                    font-size: 100%;
+                    font-size: 90%;
+                    width: 100%;
+                    text-align: center;
+                    margin: 5px;
                 }
 
                 &:hover {
@@ -91,7 +94,7 @@
             transition: all .2s;
             overflow: hidden;
             color: var(--cantoDarkBlue);
-            min-width: 45px;
+            min-width: 42px;
 
             &:hover {
                 border: 1px solid var(--purple);

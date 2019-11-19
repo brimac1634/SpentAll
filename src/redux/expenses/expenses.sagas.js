@@ -61,7 +61,9 @@ export function* addExpenditureStart({payload}) {
 		} else {
 			yield put(fetchExpensesSuccess(data));
 			yield put(setAlert(payload.expenditure_id ? 'updated!' : 'spent!'));
-			yield put(setExpenseToEdit(null));
+			if (payload.expenditure_id) {
+				yield put(setExpenseToEdit(null));
+			}
 		}
 	} catch (err) {
 		yield put(setExpensesFailure(err.message))

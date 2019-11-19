@@ -15,28 +15,34 @@ export const monthNames = [
 ];
 
 export const correctTimezone = date => {
+  if (!date) return '';
   const timezoneOffsetMinutes = date.getTimezoneOffset();
   const setMinutes = date.getMinutes() - timezoneOffsetMinutes;
   date.setMinutes(setMinutes);
   return date
 }
 
-export const formatDate = (dateParam, short, monthOnly) => {
-  if (!dateParam) return '';
-  const date = correctTimezone(new Date(dateParam))
+export const getShortMonth = date => {
+  if (!date) return '';
   const monthIndex = date.getMonth();
-  if (monthOnly) return monthNames[monthIndex];
+  return monthNames[monthIndex];
+}
+
+export const formatDate = (dateParam, short) => {
+  if (!dateParam) return '';
+  const date = new Date(dateParam)
+  const month = getShortMonth(date);
   const day = date.getDate();
   
-  if (short) return day + ' ' + monthNames[monthIndex]
+  if (short) return day + ' ' + month
 
   const year = date.getFullYear();
-  return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  return day + ' ' + month + ' ' + year;
 }
 
 export const dateAndTime = date => {
-  const dateToFormat = correctTimezone(new Date(date))
-  return dateToFormat.toLocaleDateString('en-US', { 
+  if (!date) return '';
+  return date.toLocaleDateString('en-US', { 
     weekday: 'short', 
     year: 'numeric', 
     month: 'short', 

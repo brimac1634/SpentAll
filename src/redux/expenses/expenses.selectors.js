@@ -3,7 +3,8 @@ import { createSelector } from 'reselect'
 import { 
 	checkDateRange, 
 	formatDate,
-	sortProperties 
+	getShortMonth,
+	sortProperties
 } from '../../utils';
 
 import { selectCurrency } from '../user/user.selectors';
@@ -14,7 +15,7 @@ const filterList = (list, dates) => {
 	if (!list || !!!list.length) return null;
 	const { startDate, endDate } = dates;
 	return list.filter(({ timestamp }) => {
-		return checkDateRange(new Date(timestamp), startDate, endDate)
+		return checkDateRange(timestamp, startDate, endDate)
 	})
 }
 
@@ -32,7 +33,9 @@ const expenseMapper = (list, byMonth) => {
 	if (!list) return null;
 	let map = list.reduce((accum, expense)=>{
 		const { timestamp, amount } = expense;
-		const key = formatDate(new Date(timestamp), false, byMonth);
+		const key = byMonth 
+			? 	getShortMonth(new Date(timestamp))
+			: 	formatDate(new Date(timestamp), false)
 		accum[key] = accum[key] 
 			? 	accum[key] + amount
 			: 	amount
