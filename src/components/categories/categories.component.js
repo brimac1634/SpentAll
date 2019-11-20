@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import Category from '../category/category.component';
 import LabelGroup from '../label-group/label-group.component';
+import CustomButton from '../custom-button/custom-button.component';
 
 import './categories.styles.scss';
 
@@ -10,15 +11,11 @@ const Categories = ({ settings, setSettings }) => {
 	const [category, setCategory] = useState('');
 	let { categories } = settings;
 
-	const handleNewCategory = event => {
-		if (event.which === 13) {
-			event.preventDefault();
-			let { value } = event.target;
-			value = value.toLowerCase();
-			categories = categories ? [...categories, value] : [value]
-			setSettings({ ...settings, categories });
-			setCategory('');
-		}
+	const addCategory = category => {
+		category = category.toLowerCase();
+		categories = categories ? [...categories, category] : [category]
+		setSettings({ ...settings, categories });
+		setCategory('');
 	}
 
 	const removeFromArray = (array, index) => {
@@ -29,17 +26,28 @@ const Categories = ({ settings, setSettings }) => {
 	return (
 		<div className='categories-input'>
 			<LabelGroup
-				label='create your own spending categories'
+				label='add a new spending category'
 			>
-				<FormInput 
-					type='text'
-					label='new category'
-					value={category}
-					margin='0'
-					placeholder='example: entertainment'
-					handleChange={e=>setCategory(e.target.value)}
-					onKeyPress={handleNewCategory}
-				/>
+				<div className='cat-row'>
+					<FormInput 
+						type='text'
+						label='new category'
+						value={category}
+						margin='0'
+						placeholder='example: entertainment'
+						handleChange={e=>setCategory(e.target.value)}
+						onKeyPress={e=>{
+							if (e.which !== 13) return;
+							e.preventDefault();
+							addCategory(category)
+						}}
+					/>
+					<CustomButton
+						onClick={()=>addCategory(category)}
+					> 
+						 Add
+					</CustomButton>
+				</div>
 			</LabelGroup>
 			<LabelGroup
 				label='current categories'

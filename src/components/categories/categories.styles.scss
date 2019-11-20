@@ -6,4 +6,19 @@
 		justify-content: center;
 		flex-wrap: wrap;
 	}
+
+	.cat-row {
+		display: flex;
+		justify-content: space-between;
+
+		> * {
+			&:first-child {
+				width: 100%;
+			}
+
+			&:nth-child(2) {
+				margin-left: 10px;
+			}
+		}
+	}
 }
