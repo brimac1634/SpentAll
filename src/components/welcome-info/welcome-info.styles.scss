@@ -1,5 +1,5 @@
 .welcome-info {
-	margin: 20px auto;
+	margin: 10px auto;
 	max-width: 500px;
 	display: flex;
 	flex-direction: column;
@@ -36,6 +36,11 @@
 			background-color: var(--purple);
 			margin: 10px 40px;
 			border-radius: 30%;
+		}
+
+		.contact {
+			display: block;
+			margin: 10px 5px 0 5px;
 		}
 	}
 

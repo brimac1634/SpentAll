@@ -1,4 +1,9 @@
 .welcome {
 	width: 100%;
 	height: calc(100vh - 70px);
+
+	.contact {
+		max-width: 500px;
+		margin: 0 auto;
+	}
 }

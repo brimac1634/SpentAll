@@ -4,7 +4,7 @@ import './form-input.styles.scss';
 const FormInput = ({ area, handleChange, margin, label, ...otherProps }) => {
 	const input = useRef(0);
 	return (
-		<div className='group' style={{margin: margin ? margin : null}}>
+		<div className={`group ${area ? 'area-group' : null}`} style={{margin: margin ? margin : null}}>
 			{
 				label ? 
 				(<label 

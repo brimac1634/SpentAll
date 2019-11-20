@@ -50,7 +50,7 @@ const SignInForm = ({ match, history, emailSignInStart }) => {
 						handleChange={handleChange}
 						required 
 					/>
-					<Link to={`${match.path}/reset-account`} className='forgot'>forgot password?</Link>
+					<Link to={'welcome/reset-account'} className='forgot'>forgot password?</Link>
 					<div className='column'>
 						<CustomButton 
 							selected

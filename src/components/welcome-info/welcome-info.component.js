@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import CustomButton from '../custom-button/custom-button.component';
 import SectionBox from '../../components/section-box/section-box.component';
@@ -9,7 +9,7 @@ import { ReactComponent as Logo } from '../../assets/logo_square.svg'
 
 import './welcome-info.styles.scss';
 
-const WelcomeInfo = ({ history }) => {
+const WelcomeInfo = ({ history, match }) => {
 	const [showAbout, setShowAbout] = useState(false);
 	return (
 		<div className='welcome-info'>
@@ -36,6 +36,12 @@ const WelcomeInfo = ({ history }) => {
 					> 
 						tell me more
 					</CustomButton>
+					<Link 
+						to={`${match.path}/contact-us`} 
+						className='contact'
+					>
+						contact us
+					</Link>
 				</div>
 			</SectionBox>
 			<HoverBox 
