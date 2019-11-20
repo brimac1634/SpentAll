@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import MediaQuery from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
 
@@ -20,9 +20,8 @@ const mapStateToProps = createStructuredSelector({
 	userSettings: selectUserSettings
 })
 
-const Header = ({ userSettings }) => {
+const Header = ({ userSettings, location }) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
-	
 	const closeMenu = useCallback(()=>{
 		setMenuIsOpen(false);
 	}, [setMenuIsOpen])
@@ -41,11 +40,14 @@ const Header = ({ userSettings }) => {
 	const accountComplete = userSettings ? !!userSettings.cycle : false;
 	return (
 		<div className='header'>
-			<div className='logo-container'>
-				<Link to={'/'}>
-					<Logo className='logo'/>
-				</Link>
-			</div>
+			{
+				location.pathname !== '/welcome' &&
+				<div className='logo-container'>
+					<Link to={'/'}>
+						<Logo className='logo'/>
+					</Link>
+				</div>
+			}
 			<div 
 				className={`icon-set ${accountComplete ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
 				onClick={()=>setMenuIsOpen(!menuIsOpen)}
@@ -75,4 +77,4 @@ const Header = ({ userSettings }) => {
 	)
 }
 
-export default connect(mapStateToProps)(Header);
+export default withRouter(connect(mapStateToProps)(Header));

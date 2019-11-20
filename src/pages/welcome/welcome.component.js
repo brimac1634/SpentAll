@@ -1,11 +1,12 @@
 import React, { lazy, useState } from 'react';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 
-import SignInForm from '../../components/sign-in-form/sign-in-form.component';
+import WelcomeInfo from '../../components/welcome-info/welcome-info.component';
 import ParallaxSpring from '../../components/parallax-spring/parallax-spring.component';
 
 import './welcome.styles.scss';
 
+const SignInForm = lazy(() => import('../../components/sign-in-form/sign-in-form.component'))
 const SignUpForm = lazy(() => import('../../components/sign-up-form/sign-up-form.component'))
 const NewPasswordForm = lazy(() => import('../../components/new-password-form/new-password-form.component'))
 
@@ -22,6 +23,10 @@ const Welcome = ({ match }) => {
 				<Route
 					exact
 					path={match.path}
+					component={WelcomeInfo}
+				/>
+				<Route
+					path={`${match.path}/sign-in`}
 					component={SignInForm}
 				/>
 				<Route

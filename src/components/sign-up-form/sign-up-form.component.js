@@ -11,6 +11,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import MessageModal from '../../components/message-modal/message-modal.component';
 import SectionBox from '../../components/section-box/section-box.component';
+import FacebookButton from '../../components/facebook-button/facebook-button.component';
 
 import { resetStart, emailSignUpStart, setSuccessMessage } from '../../redux/user/user.actions';
 
@@ -29,7 +30,6 @@ const mapDispatchToProps = dispatch => ({
 const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setSuccessMessage, history }) => {
 	const [userCredentials, setCredentials] = useState({name: '', email: ''});
 	const [showMessasge, setshowMessage] = useState(true);
-	const [showAbout, setShowAbout] = useState(false);
 	const { name, email } = userCredentials;
 
 
@@ -87,24 +87,19 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 						</CustomButton>
 						{
 							!isReset &&
-							<span className='but'>BUT WAIT...</span>
-						}
-						{
-							!isReset &&
-							<CustomButton 
-								selected={(!name && !email)}
-								onClick={()=>setShowAbout(!showAbout)}
-								type='button'
-							> 
-								What is SpentAll?
-							</CustomButton>
+							<div className='sign-up-column'>
+								<span className='separator-text'>OR</span>
+								<FacebookButton 
+									label='sign up with Facebook'
+								/>
+							</div>
 						}
 					</div>
 				</form>
 				<div className='login'>
 				    <CustomButton 
 						selected
-						onClick={()=>history.push('/welcome')}
+						onClick={()=>history.push('/welcome/sign-in')}
 					> 
 						Login 
 					</CustomButton>
@@ -117,26 +112,6 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 						confirmCallback={handleMessage}
 					/>
 				</HoverBox>
-				{
-					!isReset &&
-					<HoverBox 
-						show={showAbout} 
-						backgroundClick={()=>setShowAbout(!showAbout)}
-					>
-						<div className='info-container'>
-							<h2>What is SpentAll?</h2>
-							<p className='info'>
-							SpentAll is a simple-to-use spending tracker. Log your expenditures, categorize them, and track your spending habits. Customize your account by selecting your local currency, setting spending limits, and personalizing spending categories. Keep an eye on the spending guage on the home dashboard to help you stay conscious of your spending! Make use of the analytics page to see more detailed metrics into where your money goes, and when. This app is perfect for those simply looking to keep an eye on their expenditures. More functionalities coming soon! 
-							</p>
-							<CustomButton 
-								selected
-								onClick={()=>setShowAbout(!showAbout)}
-							> 
-								I'm Ready! 
-							</CustomButton>
-						</div>
-					</HoverBox>
-				}
 			</SectionBox>
 		</div>
 	)
