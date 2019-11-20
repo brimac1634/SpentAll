@@ -33,11 +33,11 @@
 				box-shadow: -3px 3px 0 white;
 				transition: all 300ms ease-in-out;
 				-webkit-transition: all 300ms ease-in-out;
-				transform-origin: 50% 50%;
-				transform: rotate(-135deg);
+				transform-origin: 25% 75% 0;
+				transform: translate(0, -5px) rotate(-135deg);
 
 				&.down {
-					transform: rotate(-45deg);
+					transform: translate(0, -5px) rotate(-45deg);
 				}
 			}
 		}
