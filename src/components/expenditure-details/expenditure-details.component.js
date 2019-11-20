@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { numberWithCommas, dateAndTime } from '../../utils';
 
 import { selectSelectedExpense } from '../../redux/expenses/expenses.selectors';
-import { setExpenseToEdit, deleteExpenseStart } from '../../redux/expenses/expenses.actions';
+import { editNewExpense, deleteExpenseStart, toggleAddExpense } from '../../redux/expenses/expenses.actions';
 
 import CustomButton from '../../components/custom-button/custom-button.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
@@ -17,11 +17,12 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-	setExpenseToEdit: expense => dispatch(setExpenseToEdit(expense)),
+	editNewExpense: expense => dispatch(editNewExpense(expense)),
 	deleteExpenseStart: expenseID => dispatch(deleteExpenseStart(expenseID)),
+	toggleAddExpense: () => dispatch(toggleAddExpense())
 })
 
-const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseStart }) => {
+const ExpenditureDetails = ({ selectedExpense, editNewExpense, deleteExpenseStart, toggleAddExpense }) => {
 	const [showModal, setShowModal] = useState(false);
 	if (!selectedExpense) return <div className='expenditure-details'>No expense selected</div>
 	const { expenditure_id, currency, amount, timestamp, notes, type } = selectedExpense;
@@ -50,7 +51,11 @@ const ExpenditureDetails = ({ selectedExpense, setExpenseToEdit, deleteExpenseSt
 					delete 
 				</CustomButton>
 				<CustomButton 
-					onClick={()=>setExpenseToEdit(selectedExpense)}
+					onClick={()=>{
+						console.log(selectedExpense)
+						editNewExpense(selectedExpense);
+						toggleAddExpense();
+					}}
 				> 
 					edit 
 				</CustomButton>

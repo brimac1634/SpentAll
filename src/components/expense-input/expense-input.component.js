@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { formatDate, datesAreOnSameDay } from '../../utils';
 
-import { newExpenseStart, setExpenseToEdit } from '../../redux/expenses/expenses.actions';
-import { selectExpenseToEdit, selectCurrencies, selectShowAddExpense } from '../../redux/expenses/expenses.selectors';
+import { newExpenseStart, editNewExpense, toggleAddExpense } from '../../redux/expenses/expenses.actions';
+import { selectCurrencies, selectShowAddExpense, selectNewExpense } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
 
 import FormInput from '../form-input/form-input.component';
@@ -18,30 +18,23 @@ import './expense-input.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
 	userSettings: selectUserSettings,
-	expenseToEdit: selectExpenseToEdit,
 	currencies: selectCurrencies,
-	showAddExpense: selectShowAddExpense
+	showAddExpense: selectShowAddExpense,
+	expense: selectNewExpense
 })
 
 const mapDispatchToProps = dispatch => ({
 	newExpenseStart: expense => dispatch(newExpenseStart(expense)),
-	closeExpense: () => dispatch(setExpenseToEdit(null))
+	closeExpense: () => dispatch(toggleAddExpense()),
+	setExpense: expense => dispatch(editNewExpense(expense))
 })
 
-const ExpenseInput = ({ showAddExpense, expenseToEdit, userSettings, closeExpense, newExpenseStart, currencies }) => {
-	const [expense, setExpense] = useState({
-		timestamp: new Date(),
-		currency: userSettings.currency,
-		amount: '', 
-		type: '',
-		notes: ''
-	});
+const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseStart, currencies, expense, setExpense }) => {
 	const [incomplete, setIncomplete] = useState(false);
 	const [showCurrencies, setShowCurrencies] = useState(false);
 	const [showCalendar, setShowCalendar] = useState(false);
 	const [isAdding, setIsAdding] = useState(false);
-	let { timestamp, amount, type, notes, currency } = expense;
-	const expenditure_id = expenseToEdit ? expenseToEdit.expenditure_id : null;
+	let { expenditure_id, timestamp, amount, type, notes, currency } = expense;
 	const { categories } = userSettings;
 
 	useEffect(()=>{
@@ -49,33 +42,17 @@ const ExpenseInput = ({ showAddExpense, expenseToEdit, userSettings, closeExpens
 			setIsAdding(true);
 		} else { setIsAdding(false); }
 	}, [amount, type, notes, setIsAdding])
-	
-	useEffect(()=>{
-		if (expenseToEdit) setExpense({
-			timestamp: expenseToEdit.timestamp,
-			currency: expenseToEdit.currency,
-			amount: expenseToEdit.amount, 
-			type: expenseToEdit.type,
-			notes: expenseToEdit.notes
-		})
-	}, [expenseToEdit])
 
 	useEffect(()=>{
 		if (!showAddExpense) {
-			setExpense({  
-				timestamp: new Date(),
-				currency: userSettings.currency,
-				amount: '',
-				type: '', 
-				notes: ''
-			});
 			setIncomplete(false);
 		}
-	}, [showAddExpense, setExpense, userSettings, setIncomplete])
+	}, [showAddExpense, setIncomplete])
 
 	const handleSubmit = async event => {
 		event.preventDefault();
 		if (!amount || !type || amount <= 0) return setIncomplete(true);
+		setIncomplete(false);
 		newExpenseStart({
 			expenditure_id,
 			currency,

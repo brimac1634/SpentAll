@@ -1,4 +1,4 @@
-import { takeLatest, put, all, call } from 'redux-saga/effects';
+import { takeLatest, put, all, call, select } from 'redux-saga/effects';
 import Cookies from 'universal-cookie';
 import axiosConfig from '../../axios-config';
 
@@ -11,9 +11,14 @@ import {
 	signOutSuccess,
 	updateSettingsSuccess
 } from './user.actions';
-
-import { setTimeFrame, fetchExpensesStart } from '../expenses/expenses.actions';
+import { 
+	setTimeFrame, 
+	fetchExpensesStart,
+	editNewExpense
+} from '../expenses/expenses.actions';
 import { setAlert } from '../alert/alert.actions';
+
+const newExpense = state => state.expenses.newExpense;
 
 export function* handleError(error) {
 	yield put(userFailure(error))
@@ -26,6 +31,11 @@ export function* setSettings({ target, cycle, currency, categories }) {
 		cycle, 
 		currency,
 		categories: categories ? categories.split(',') : []
+	}));
+	const expense = yield select(newExpense);
+	yield put(editNewExpense({
+		...expense,
+		currency
 	}));
 	yield put(setTimeFrame({ timeFrame: cycle, isTarget: true }))
 	yield put(setTimeFrame({ timeFrame: cycle, isTarget: false }))

@@ -1,4 +1,4 @@
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { takeLatest, call, put, all, select } from 'redux-saga/effects';
 import axiosConfig from '../../axios-config';
 import moment from 'moment';
 
@@ -7,12 +7,15 @@ import {
 	setExpensesFailure,
 	setDateRange,
 	setCycleDateRange,
-	setExpenseToEdit
+	editNewExpense,
+	toggleAddExpense
 } from './expenses.actions';
 
 import { setAlert } from '../alert/alert.actions';
 
 import ExpensesActionTypes from './expenses.types';
+
+const newExpense = state => state.expenses.newExpense;
 
 export function* fetchExpensesAsync() {
 	try {
@@ -61,8 +64,24 @@ export function* addExpenditureStart({payload}) {
 		} else {
 			yield put(fetchExpensesSuccess(data));
 			yield put(setAlert(payload.expenditure_id ? 'updated!' : 'spent!'));
+			const expense = yield select(newExpense);
 			if (payload.expenditure_id) {
-				yield put(setExpenseToEdit(null));
+				yield put(toggleAddExpense());
+				yield put(editNewExpense({
+					...expense,
+					expenditure_id: null,
+					timestamp: new Date(),
+					amount: '',
+					type: '',
+					notes: ''
+				}));
+			} else {
+				yield put(editNewExpense({
+					...expense,
+					amount: '',
+					type: '',
+					notes: ''
+				}));
 			}
 		}
 	} catch (err) {

@@ -5,6 +5,13 @@ import { correctTimezone } from '../../utils';
 const INITIAL_STATE = {
 	currencies,
 	showAddExpense: false,
+	newExpense: {
+		timestamp: new Date(),
+		currency: '',
+		amount: '', 
+		type: '',
+		notes: ''
+	},
 	timeFrame: 'this month',
 	dateRange: {
 		startDate: null,
@@ -15,7 +22,6 @@ const INITIAL_STATE = {
 		endDate: null
 	},
 	selectedExpense: null,
-	expenseToEdit: null,
 	expenses: null,
 	isFetching: false,
 	errorMessage: undefined
@@ -34,6 +40,12 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				isFetching: true
+			}
+		case ExpensesActionTypes.EDIT_NEW_EXPENSE:
+			const expense = action.payload
+			return {
+				...state,
+				newExpense: expense
 			}
 		case ExpensesActionTypes.FETCH_EXPENSES_SUCCESS:
 			return {
@@ -71,12 +83,6 @@ const expensesReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				selectedExpense: action.payload
-			}
-		case ExpensesActionTypes.SET_EXPENSE_TO_EDIT:
-			return {
-				...state,
-				expenseToEdit: action.payload,
-				showAddExpense: !!action.payload
 			}
 		default:
 			return state;

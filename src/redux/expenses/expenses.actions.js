@@ -4,6 +4,11 @@ export const toggleAddExpense = () => ({
 	type: ExpensesActionTypes.TOGGLE_ADD_EXPENSE
 })
 
+export const editNewExpense = expense => ({
+	type: ExpensesActionTypes.EDIT_NEW_EXPENSE,
+	payload: expense
+})
+
 export const fetchExpensesStart = () => ({
 	type: ExpensesActionTypes.FETCH_EXPENSES_START
 })
@@ -41,11 +46,6 @@ export const setCycleDateRange = cycleDateRange => ({
 export const setSelectedExpense = selectedExpense => ({
 	type: ExpensesActionTypes.SET_SELECTED_EXPENSE,
 	payload: selectedExpense
-})
-
-export const setExpenseToEdit = expenseToEdit => ({
-	type: ExpensesActionTypes.SET_EXPENSE_TO_EDIT,
-	payload: expenseToEdit
 })
 
 export const deleteExpenseStart = expenseID => ({

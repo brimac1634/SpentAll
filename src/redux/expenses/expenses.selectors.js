@@ -24,6 +24,11 @@ export const selectExpenseIsLoading = createSelector(
 	expenses => expenses.isFetching
 )
 
+export const selectNewExpense = createSelector(
+	[selectExpenses],
+	expenses => expenses.newExpense
+)
+
 export const selectExpensesList = createSelector(
 	[selectExpenses],
 	({ expenses, dateRange }) => filterList(expenses, dateRange)
