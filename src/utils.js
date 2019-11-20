@@ -7,6 +7,15 @@ export const numberWithCommas = (x, decimal, alwaysDecimal) => {
   return numString
 }
 
+export const datesAreOnSameDay = (first, second) => {
+  first = new Date(first);
+  second = new Date(second);
+  return first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
+}
+    
+
 export const monthNames = [
   'Jan', 'Feb', 'Mar',
   'Apr', 'May', 'Jun', 'Jul',

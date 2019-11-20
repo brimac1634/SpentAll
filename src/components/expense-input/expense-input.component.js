@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { formatDate } from '../../utils';
+import { formatDate, datesAreOnSameDay } from '../../utils';
 
 import { newExpenseStart, setExpenseToEdit } from '../../redux/expenses/expenses.actions';
 import { selectExpenseToEdit, selectCurrencies, selectShowAddExpense } from '../../redux/expenses/expenses.selectors';
@@ -102,7 +102,11 @@ const ExpenseInput = ({ showAddExpense, expenseToEdit, userSettings, closeExpens
 								type='button'
 								onClick={()=>setShowCalendar(true)}
 							> 
-								{formatDate(timestamp)}
+								{
+									datesAreOnSameDay(timestamp, new Date()) 
+									? 'Today' 
+									: formatDate(timestamp)
+								}
 							</CustomButton>
 						</div>
 						<div className='row'>

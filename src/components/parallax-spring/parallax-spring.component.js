@@ -10,6 +10,7 @@ const ParallaxSpring = ({ x, y }) => {
 	useEffect(()=>{
 		set({ xy: calc(x, y) });
 	}, [set, x, y])
+	
 	const halfWidth = window.innerWidth / 2;
 	const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2]
 	const trans1 = (x, y) => `translate3d(${x / 5 - halfWidth * 0.7}px,${y / 7}px,0)`
