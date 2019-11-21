@@ -8,6 +8,38 @@
   }
 }
 
+@mixin scrimGradient($direction, $startColor) {
+  
+  $scrimCoordinates: (
+    0: 1,
+    19: 0.738,
+    34: 0.541,
+    47: 0.382,
+    56.5: 0.278,
+    65: 0.194,
+    73: 0.126,
+    80.2: 0.075,
+    86.1: 0.042,
+    91: 0.021,
+    95.2: 0.008,
+    98.2: 0.002,
+    100: 0
+  );
+  
+  $hue: hue($startColor);
+  $saturation: saturation($startColor);
+  $lightness: lightness($startColor);
+  $stops: ();
+  
+  @each $colorStop, $alphaValue in $scrimCoordinates {
+    $stop: hsla($hue, $saturation, $lightness, $alphaValue) percentage($colorStop/100);
+    $stops: append($stops, $stop, comma);
+  }
+  
+  background: linear-gradient(unquote($direction), $stops);
+  
+}
+
 .header {
   position: relative;
   height: 70px;
@@ -30,9 +62,8 @@
       top: 0;
       right: 0;
       bottom: 0;
-      width: 50%;
-      background: linear-gradient(to left, #6672e4, rgba(255, 255, 255, 0));
-      background: -webkit-linear-gradient(to left, #6672e4, rgba(255, 255, 255, 0));
+      width: 70%;
+      @include scrimGradient('to left', #6672e4);
       opacity: 0;
       transition: all 500ms ease-in-out;
 
