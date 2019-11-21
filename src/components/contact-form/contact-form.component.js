@@ -32,10 +32,10 @@ const ContactForm = ({ currentUser, setAlert }) => {
 	
 	useEffect(() => {
 		if (currentUser) {
-			const { name, email } = currentUser;
+			const { userName, userEmail } = currentUser;
 			setNewMessage({
-				fullName: name,
-				email,
+				fullName: userName,
+				email: userEmail,
 				subject: '',
 				message: ''
 			})
@@ -50,8 +50,7 @@ const ContactForm = ({ currentUser, setAlert }) => {
 			setIsLoading(false);
 			setAlert('Your message has been sent')
 			setNewMessage({ 
-				fullName: '',
-				email: '',
+				...newMessage,
 				subject: '',
 				message: ''
 			})

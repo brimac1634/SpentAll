@@ -48,6 +48,9 @@ const Header = ({ userSettings, location }) => {
 					</Link>
 				</div>
 			}
+			<MediaQuery maxWidth={780}>
+				<div className={`gradient-back ${menuIsOpen ? 'show' : null}`} />
+			</MediaQuery>
 			<div 
 				className={`icon-set ${accountComplete ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
 				onClick={()=>setMenuIsOpen(!menuIsOpen)}
