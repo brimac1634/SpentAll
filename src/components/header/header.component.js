@@ -7,6 +7,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { selectUserSettings } from '../../redux/user/user.selectors';
 
 import MenuButton from '../menu-button/menu-button.component';
+import HeaderButton from '../header-button/header-button.component';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
@@ -55,21 +56,21 @@ const Header = ({ userSettings, location }) => {
 				className={`icon-set ${accountComplete ? 'show' : 'hide'} ${menuIsOpen ? 'drop-in' : 'drop-out'}`}
 				onClick={()=>setMenuIsOpen(!menuIsOpen)}
 			>
-				<Link to='/user/account' className='icon'>
+				<HeaderButton to='/user/account'>
 					<HomeIcon />
-				</Link>
-				<Link to='/user/account/analytics' className='icon'>
+				</HeaderButton>
+				<HeaderButton to='/user/account/analytics'>
 					<AnalyticsIcon />
-				</Link>
-				<Link to='/user/account/expenditures' className='icon'>
+				</HeaderButton>
+				<HeaderButton to='/user/account/expenditures'>
 					<ListIcon />
-				</Link>
-				<Link to='/user/account/settings' className='icon'>
+				</HeaderButton>
+				<HeaderButton to='/user/account/settings'>
 					<SettingsIcon />
-				</Link>
+				</HeaderButton>
 				<MediaQuery maxWidth={780}>
 					<div 
-						className='icon' 
+						className='header-button' 
 						onClick={()=>setMenuIsOpen(!menuIsOpen)} 
 					>
 						<MenuButton showMenu={menuIsOpen} />

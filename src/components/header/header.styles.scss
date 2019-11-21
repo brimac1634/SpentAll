@@ -94,7 +94,7 @@
         }
       }
 
-      .icon {
+      .header-button {
         position: absolute;
         top: 0;
         right: 0;
@@ -110,24 +110,6 @@
 
     &.hide {
       opacity: 0;
-    }
-  }
-
-  .icon {
-    width: 48px;
-    height: 48px;
-    padding: 10px;
-    fill: var(--white);
-    background-color: var(--pink);
-    border-radius: 50%;
-    outline: none;
-    cursor: pointer;
-    border: none;
-    transition: all 200ms ease-in-out;
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
-
-    &:hover {
-      transform: scale(1.04);
     }
   }
 }
