@@ -31,6 +31,7 @@ const mapDispatchToProps = dispatch => ({
 
 const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseStart, currencies, expense, setExpense }) => {
 	const [incomplete, setIncomplete] = useState(false);
+	const [catFilter, setCatFilter] = useState('');
 	const [showCurrencies, setShowCurrencies] = useState(false);
 	const [showCalendar, setShowCalendar] = useState(false);
 	const [isAdding, setIsAdding] = useState(false);
@@ -107,21 +108,36 @@ const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseSt
 						</div>
 						<div className='row'>
 							<h3>3.</h3>
-							<div className='categories-container'>
-								{
-									categories &&
-									categories.map((category, i)=>(
-										<Category 
-											key={i}
-											selected={type === category}
-											category={category}
-											onClick={()=>setExpense({
-												...expense,
-												type: category
-											})}
-										/>
-									))
-								}
+							<div className='row-column'>
+								<FormInput 
+									id='catFilter' 
+									type='text' 
+									value={catFilter} 
+									label='category'
+									placeholder='groceries, transportation, etc.'
+									handleChange={({ target })=> {
+										setCatFilter(target.value)
+									}} 
+								/>
+								<div className='categories-container'>
+									{
+										categories &&
+										categories.filter(cat=>{
+											return cat.includes(catFilter.toLowerCase())
+										}).map((category, i)=>(
+											<Category 
+												key={i}
+												style={{margin: '0 5px 10px 0'}}
+												selected={type === category}
+												category={category}
+												onClick={()=>setExpense({
+													...expense,
+													type: category
+												})}
+											/>
+										))
+									}
+								</div>
 							</div>
 						</div>
 						<div className='row'>

@@ -16,5 +16,10 @@
 		padding: 10px;
 		overflow-y: scroll;
 		-webkit-overflow-scrolling: touch;
+
+		@media screen and (max-width: 680px) {
+			position: static;
+			padding: 10px 5px;
+		}
 	}
 }

@@ -1,4 +1,5 @@
 :root {
+	--background: #6672e4;
 	--dark-purple: #6772e5;
 	--purple: #819efc;
 	--pink: #ffb9f6;
@@ -17,7 +18,7 @@ html {
 	background-attachment: fixed;
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-color: #6672e4;
+	background-color: var(--background);
 }
 
 body {
@@ -39,12 +40,5 @@ a {
 	display: block;
 	color: var(--white);
 	margin: 10px 0;
-}
-
-// reusable hover 
-.hover {
-	background: var(--dark-purple);
-	border-radius: 3px;
-	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--dark-purple);
 }
 

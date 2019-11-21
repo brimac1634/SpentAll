@@ -15,6 +15,7 @@ code {
 /*--------Scroll Bar------------*/
 /* width */
 ::-webkit-scrollbar {
+  height: 2px;
   width: 2px;
 }
 

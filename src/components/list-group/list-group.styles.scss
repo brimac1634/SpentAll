@@ -4,6 +4,14 @@
 	width: 100%;
 	min-height: calc(100vh - 90px);
 
+	@media screen and (max-width: 680px) {
+		min-height: unset;
+		padding: 15px 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
 	.summary-panel { 
 		position: fixed;
 		top: 50%;
@@ -14,11 +22,8 @@
 		justify-content: center;
 
 		@media screen and (max-width: 680px) {
-			position: absolute;
-		    top: 0;
-		    left: 50%;
-		    padding: 0 5px;
-		    transform: translate(-50%, 0);
+			position: static;
+			transform: unset;
 		}
 
 		.buttons {
@@ -43,11 +48,8 @@
 		right: 0;
 
 		@media screen and (max-width: 680px) {
-			position: absolute;
-			top: 240px;
-			bottom: 10px;
+			position: static;
 			width: 100%;
-			height: calc(100% - 250px);
 		}
 	}
 }
