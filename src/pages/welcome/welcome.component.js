@@ -11,6 +11,7 @@ const SignInForm = lazy(() => import('../../components/sign-in-form/sign-in-form
 const SignUpForm = lazy(() => import('../../components/sign-up-form/sign-up-form.component'))
 const NewPasswordForm = lazy(() => import('../../components/new-password-form/new-password-form.component'))
 const ContactForm = lazy(() => import('../../components/contact-form/contact-form.component'))
+const EmailSent = lazy(() => import('../../components/email-sent/email-sent.component'))
 
 const Welcome = ({ match }) => {
 	const [props, set] = useState({ x: 0, y: 0 });
@@ -44,6 +45,10 @@ const Welcome = ({ match }) => {
 				<Route
 					path={`${match.path}/new-password`}
 					component={NewPasswordForm}
+				/>
+				<Route
+					path={`${match.path}/email-sent`}
+					component={EmailSent}
 				/>
 				<Route
 					path={`${match.path}/contact-us`}

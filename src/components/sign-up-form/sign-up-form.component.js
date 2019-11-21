@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
@@ -8,30 +8,31 @@ import { selectMessage } from '../../redux/user/user.selectors';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import HoverBox from '../../components/hover-box/hover-box.component';
-import MessageModal from '../../components/message-modal/message-modal.component';
 import SectionBox from '../../components/section-box/section-box.component';
 import FacebookButton from '../../components/facebook-button/facebook-button.component';
 
-import { resetStart, emailSignUpStart, setSuccessMessage } from '../../redux/user/user.actions';
+import { resetStart, emailSignUpStart } from '../../redux/user/user.actions';
 
 import './sign-up-form.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-	signUpMessage: selectMessage
+	successMessage: selectMessage
 })
 
 const mapDispatchToProps = dispatch => ({
 	emailSignUpStart: (name, email) => dispatch(emailSignUpStart({ name, email })),
-	resetStart: email => dispatch(resetStart({ email })),
-	setSuccessMessage: message => dispatch(setSuccessMessage(message))
+	resetStart: email => dispatch(resetStart({ email }))
 })
 
-const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setSuccessMessage, history }) => {
+const SignUpForm = ({ isReset, emailSignUpStart, resetStart, successMessage, history }) => {
 	const [userCredentials, setCredentials] = useState({name: '', email: ''});
-	const [showMessasge, setshowMessage] = useState(true);
 	const { name, email } = userCredentials;
 
+	useEffect(()=>{
+		if (successMessage) {
+			history.push('/welcome/email-sent')
+		}
+	}, [successMessage, history])
 
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -45,12 +46,6 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 	const handleChange = event => {
 		const { value, name } = event.target;
 		setCredentials({ ...userCredentials, [name]: value });
-	}
-
-	const handleMessage = () => {
-		setshowMessage(false);
-		setTimeout(()=>setSuccessMessage(null), 100)
-		setTimeout(()=>setshowMessage(true), 200)
 	}
 
 	return (
@@ -104,14 +99,6 @@ const SignUpForm = ({ isReset, emailSignUpStart, resetStart, signUpMessage, setS
 						Login 
 					</CustomButton>
 				</div>
-				<HoverBox show={!!signUpMessage && showMessasge}>
-					<MessageModal
-						title='Email Sent'
-						message={signUpMessage}
-						confirm='okay' 
-						confirmCallback={handleMessage}
-					/>
-				</HoverBox>
 			</SectionBox>
 		</div>
 	)
