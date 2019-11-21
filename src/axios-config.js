@@ -16,6 +16,7 @@ const axiosConfig = (method, endpoint, data) => {
 			'Content-Type': 'application/json'
 		}
 	})
+	.catch(err => console.log(err))
 }
 
 export default axiosConfig
