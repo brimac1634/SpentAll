@@ -8,7 +8,7 @@ const MessageModal = ({ title, message, confirm, cancel, confirmCallback, cancel
 	<div className='message-modal'>
 		<h1>{title}</h1>
 		<span className='message'>{message}</span>
-		<div className='button-container'>
+		<div className={`button-container ${cancel ? null : 'end'}`}>
 			{
 				cancel &&
 				<CustomButton onClick={cancelCallback}>

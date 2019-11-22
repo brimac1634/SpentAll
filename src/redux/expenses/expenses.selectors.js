@@ -165,11 +165,6 @@ export const selectSelectedExpense = createSelector(
 	}
 )
 
-export const selectExpenseToEdit = createSelector(
-	[selectExpenses],
-	expenses => expenses.expenseToEdit
-)
-
 export const selectCategoriesTotals = createSelector(
 	selectTotalExpenses,
 	selectExpensesList,
