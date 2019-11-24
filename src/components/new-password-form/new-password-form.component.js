@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
-import { registerStart } from '../../redux/user/user.actions';
+import { registerStart, updatePassword } from '../../redux/user/user.actions';
 
 import NewPassword from '../new-password/new-password.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
@@ -12,10 +12,11 @@ import SectionBox from '../../components/section-box/section-box.component';
 import './new-password-form.styles.scss';
 
 const mapDispatchToProps = dispatch => ({
-	setNewPassword: (password, token) => dispatch(registerStart({ password, token }))
+	setNewPassword: (password, token) => dispatch(registerStart({ password, token })),
+	updatePassword: password => dispatch(updatePassword({ password }))
 })
 
-const NewPasswordForm = ({ location, history, setNewPassword }) => {
+const NewPasswordForm = ({ location, history, setNewPassword, loggedIn, updatePassword }) => {
 	const [passwords, setPasswords] = useState({
 		firstPassword: '',
 		secondPassword: ''
@@ -25,11 +26,15 @@ const NewPasswordForm = ({ location, history, setNewPassword }) => {
 
 	const parsed = queryString.parse(location.search);
 	const { token } = parsed;
-	if (!token) history.push('/welcome');
+	if (!token && !loggedIn) history.push('/welcome');
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		setNewPassword(firstPassword, token);
+		if (loggedIn) {
+			updatePassword(firstPassword)
+		} else {
+			setNewPassword(firstPassword, token);
+		}
 	} 
 
 	const handleChange = event => {

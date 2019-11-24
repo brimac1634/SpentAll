@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Profile from '../../components/profile/profile.component';
+import DeleteAccount from '../../components/delete-account/delete-account.component';
 import SettingsContainer from '../../components/settings/settings.container';
 import SectionBox from '../../components/section-box/section-box.component';
 import ContactForm from '../../components/contact-form/contact-form.component';
@@ -23,6 +24,11 @@ const ProfileSettings = () => (
 		<CollapseBar label='contact us'>
 			<SectionBox>
 				<ContactForm />
+			</SectionBox>
+		</CollapseBar>
+		<CollapseBar label='delete account'>
+			<SectionBox>
+				<DeleteAccount />
 			</SectionBox>
 		</CollapseBar>
 	</div>

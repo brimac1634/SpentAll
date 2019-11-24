@@ -37,7 +37,13 @@ const ListGroup = ({ toggleAddExpense }) => {
 			<div className='list-panel'>
 				<ExpenseList />
 			</div>
-			<HoverBox show={showFilter}>
+			<HoverBox 
+				show={showFilter}
+				backgroundClick={e=>{
+					e.stopPropagation();
+					setShowFilter(false);
+				}}
+			>
 				<TimeFilter confirm={()=>setShowFilter(false)}/>
 			</HoverBox>
 		</div>

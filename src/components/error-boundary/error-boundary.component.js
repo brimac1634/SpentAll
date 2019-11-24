@@ -26,6 +26,7 @@ class ErrorBoundary extends Component {
 				<div className='error-boundary'>
 					<img src={iceCream} alt='SpentAll' />
 					<span>Oops! Something has gone wrong.</span>
+					<span>Please try refreshing.</span>
 				</div>
 			)
 		} 

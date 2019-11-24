@@ -15,6 +15,11 @@ export const registerStart = passwordAndTokenAndSettings => ({
 	payload: passwordAndTokenAndSettings
 });
 
+export const updatePassword = password => ({
+	type: UserActionTypes.UPDATE_PASSWORD_START,
+	payload: password
+});
+
 export const emailSignInStart = emailAndPassword => ({
 	type: UserActionTypes.EMAIL_SIGN_IN_START,
 	payload: emailAndPassword

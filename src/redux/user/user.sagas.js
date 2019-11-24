@@ -50,6 +50,7 @@ export function* updateSettings({ payload }) {
 			categories: categories.join(',')
 		}
 		const { data } =  yield axiosConfig('post', '/update-settings', settings)
+
 		if (data.error) {
 			yield handleError(data.error)
 			yield put(setAlert('unable to update settings'))
@@ -137,6 +138,20 @@ export function* register({ payload: { password, token }}) {
 	}
 }
 
+export function* updatePassword({ payload: { password }}) {
+	try {
+		const { data } = yield axiosConfig('post', '/update-password', {password })
+		if (data.error) {
+			yield handleError(data.error)
+		} else {
+			// send alert and maybe sign out
+			yield put(setAlert('password updated'))
+		}
+	} catch (err) {
+		yield put(userFailure(err))
+	}
+}
+
 export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
 	try {
 		const { data } = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
@@ -178,7 +193,6 @@ export function* signOut() {
 export function* deleteAccount() {
 	try {
 		const { data } = yield axiosConfig('get', '/delete-account')
-		console.log(data)
 		if (data === 'user deleted') {
 			yield call(signOut)
 		} else {
@@ -219,6 +233,12 @@ export function* onRegisterStart() {
 	)
 }
 
+export function* onUpdatePasswordStart() {
+	yield takeLatest(UserActionTypes.UPDATE_PASSWORD_START,
+		updatePassword
+	)
+}
+
 export function* onCheckUserSession() {
 	yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated)
 }
@@ -246,6 +266,7 @@ export function* userSagas() {
 		call(onCheckUserSession),
 		call(onUpdateSettings),
 		call(onSignOutStart),
+		call(onUpdatePasswordStart),
 		call(onDeleteAccountStart)
 	])
 }

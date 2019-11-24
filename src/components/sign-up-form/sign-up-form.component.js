@@ -21,7 +21,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
 	emailSignUpStart: (name, email) => dispatch(emailSignUpStart({ name, email })),
-	resetStart: email => dispatch(resetStart({ email }))
+	resetStart: email => dispatch(resetStart({ email })) 
 })
 
 const SignUpForm = ({ isReset, emailSignUpStart, resetStart, successMessage, history }) => {

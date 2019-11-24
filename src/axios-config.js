@@ -12,7 +12,7 @@ const axiosConfig = (method, endpoint, data) => {
 		url: url + endpoint,
 		data,
 		headers: {
-			'x-access-token': token,
+			'x-access-token': 'Bearer ' + token,
 			'Content-Type': 'application/json'
 		}
 	})

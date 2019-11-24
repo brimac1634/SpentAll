@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
-import { signOutStart, deleteAccountStart } from '../../redux/user/user.actions';
+import { signOutStart, resetStart } from '../../redux/user/user.actions';
 
 import CustomButton from '../custom-button/custom-button.component';
-import HoverBox from '../../components/hover-box/hover-box.component';
-import MessageModal from '../../components/message-modal/message-modal.component';
 
 import './profile.styles.scss';
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
+  currentUser: selectCurrentUser
 })
 
 const mapDispatchToProps = dispatch => ({
 	logout: () => dispatch(signOutStart()),
-	deleteAccount: () => dispatch(deleteAccountStart())
+	resetStart: email => dispatch(resetStart({ email }))
 })
 
-const Profile = ({ currentUser, logout, deleteAccount }) => {
-	const [showModal, setShowModal] = useState(false);
+const Profile = ({ match, history, currentUser, logout }) => {
 	if (!currentUser) return <span>Not Currently Logged In</span>
 	const { userName } = currentUser;
 
@@ -36,22 +34,12 @@ const Profile = ({ currentUser, logout, deleteAccount }) => {
 					logout
 				</CustomButton>
 				<CustomButton
-					onClick={()=>setShowModal(true)}
+					onClick={()=>history.push(`/user/account/new-password`)}
 				> 
-					delete account
+					change password
 				</CustomButton>
 			</div>
-			<HoverBox show={showModal}>
-				<MessageModal
-					title='Account Deletion'
-					message='Are you sure? All data and settings will be lost.'
-					confirm='delete' 
-					cancel='cancel'
-					confirmCallback={()=>deleteAccount()} 
-					cancelCallback={()=>setShowModal(false)}
-				/>
-			</HoverBox>
 		</div>
 	)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
