@@ -74,41 +74,45 @@ const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseSt
 				<h3>Add Expenditure</h3>
 				<form onSubmit={handleSubmit}>
 					<div className='form'>
-						<div className='row'>
-							<h3>1.</h3>
-							<CustomButton 
-								type='button'
-								onClick={()=>setShowCalendar(true)}
-							> 
-								{
-									datesAreOnSameDay(timestamp, new Date()) 
-									? 'Today' 
-									: formatDate(timestamp)
-								}
-							</CustomButton>
+						<div className='number-group'>
+							<span className='section'>1. Date</span>
+							<div className='row'>
+								<CustomButton 
+									type='button'
+									onClick={()=>setShowCalendar(true)}
+								> 
+									{
+										datesAreOnSameDay(timestamp, new Date()) 
+										? 'Today' 
+										: formatDate(timestamp)
+									}
+								</CustomButton>
+							</div>
 						</div>
-						<div className='row'>
-							<h3>2.</h3>
-							<CustomButton 
-								type='button'
-								style={{minWidth: '60px', marginRight: '10px'}}
-								onClick={()=>setShowCurrencies(true)}
-							> 
-								{currency} 
-							</CustomButton>
-							<FormInput 
-								id='amount' 
-								type='number' 
-								min='0'
-								value={amount} 
-								placeholder='125.50'
-								handleChange={handleChange}
-								required 
-							/>
+						<div className='number-group'>
+							<span className='section'>2. Currency and Amount</span>
+							<div className='row'>
+								<CustomButton 
+									type='button'
+									style={{minWidth: '60px', marginRight: '10px'}}
+									onClick={()=>setShowCurrencies(true)}
+								> 
+									{currency} 
+								</CustomButton>
+								<FormInput 
+									id='amount' 
+									type='number' 
+									min='0'
+									value={amount} 
+									placeholder='125.50'
+									handleChange={handleChange}
+									required 
+								/>
+							</div>
 						</div>
-						<div className='row'>
-							<h3>3.</h3>
-							<div className='row-column'>
+						<div className='number-group'>
+							<span className='section'>3. Category</span>
+							<div className='column'>
 								<FormInput 
 									id='catFilter' 
 									type='text' 
@@ -140,16 +144,18 @@ const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseSt
 								</div>
 							</div>
 						</div>
-						<div className='row'>
-							<h3>4.</h3>
-							<FormInput 
-								id='notes' 
-								type='text' 
-								value={notes} 
-								label='notes'
-								placeholder='(Optional)'
-								handleChange={handleChange} 
-							/>
+						<div className='number-group'>
+							<span className='section'>4. Notes</span>
+							<div className='row'>
+								<FormInput 
+									id='notes' 
+									type='text' 
+									value={notes} 
+									label='notes'
+									placeholder='(Optional)'
+									handleChange={handleChange} 
+								/>
+							</div>
 						</div>
 						<span className={`error ${incomplete ? 'show' : 'hide'}`}>*You must add a valid amount and choose a spending category*</span>
 					</div>
