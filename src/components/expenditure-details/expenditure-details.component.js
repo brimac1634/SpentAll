@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { numberWithCommas, dateAndTime } from '../../utils';
@@ -52,7 +53,6 @@ const ExpenditureDetails = ({ selectedExpense, editNewExpense, deleteExpenseStar
 				</CustomButton>
 				<CustomButton 
 					onClick={()=>{
-						console.log(selectedExpense)
 						editNewExpense(selectedExpense);
 						toggleAddExpense();
 					}}
@@ -60,16 +60,20 @@ const ExpenditureDetails = ({ selectedExpense, editNewExpense, deleteExpenseStar
 					edit 
 				</CustomButton>
 			</div>
-			<HoverBox show={showModal}>
-				<MessageModal
-					title='Delete Expense'
-					message='Are you sure?'
-					confirm='delete' 
-					cancel='cancel'
-					confirmCallback={()=>deleteExpense(expenditure_id)} 
-					cancelCallback={()=>setShowModal(false)}
-				/>
-			</HoverBox>
+			{
+				ReactDOM.createPortal(
+					<HoverBox show={showModal}>
+						<MessageModal
+							title='Delete Expense'
+							message='Are you sure?'
+							confirm='delete' 
+							cancel='cancel'
+							confirmCallback={()=>deleteExpense(expenditure_id)} 
+							cancelCallback={()=>setShowModal(false)}
+						/>
+					</HoverBox>
+				, document.body)
+			}
 		</div>
 	)
 }
