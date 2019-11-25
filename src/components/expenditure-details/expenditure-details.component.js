@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { numberWithCommas, dateAndTime } from '../../utils';
+import { numberWithCommas, formatDate } from '../../utils';
 
 import { selectSelectedExpense } from '../../redux/expenses/expenses.selectors';
 import { editNewExpense, deleteExpenseStart, toggleAddExpense } from '../../redux/expenses/expenses.actions';
@@ -34,7 +34,7 @@ const ExpenditureDetails = ({ selectedExpense, editNewExpense, deleteExpenseStar
 	
 	return (
 		<div className='expenditure-details'>
-			<span>{dateAndTime(timestamp)}</span>
+			<span>{formatDate(timestamp)}</span>
 			<h1>{currency} {numberWithCommas(amount, true, true)}</h1>
 			<div className='sub-group'>
 				<span className='label'>category: </span>

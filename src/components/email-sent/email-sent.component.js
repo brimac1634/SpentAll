@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
 
 import { selectMessage } from '../../redux/user/user.selectors';
 
@@ -25,6 +26,12 @@ const EmailSent = ({ history, message }) => {
 				> 
 					Go to homepage 
 				</CustomButton>
+				<Link 
+					to='/welcome/contact-us' 
+					className='contact'
+				>
+					having trouble? contact us
+				</Link>
 			</SectionBox>
 		</div>
 	)
