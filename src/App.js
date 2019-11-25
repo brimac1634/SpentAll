@@ -38,6 +38,14 @@ const mapDispatchToProps = dispatch => ({
 
 const App = ({ setAlert, checkUserSession, currentUser, isExpenseLoading, fetchExpenses, showAddExpense, isUserLoading, toggleAddExpense }) => {
   const [isFetchingUser, setIsFetchingUser] = useState(true);
+
+  useEffect(()=>{
+    let { protocol } = window.location;
+    if (protocol !== "https:") {
+      protocol = "https:";
+    }
+  }, [])
+
   useEffect(() => {
     checkUserSession();
   }, [checkUserSession])

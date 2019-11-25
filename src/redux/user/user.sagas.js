@@ -144,8 +144,8 @@ export function* updatePassword({ payload: { password }}) {
 		if (data.error) {
 			yield handleError(data.error)
 		} else {
-			// send alert and maybe sign out
 			yield put(setAlert('password updated'))
+			yield call(signOut)
 		}
 	} catch (err) {
 		yield put(userFailure(err))

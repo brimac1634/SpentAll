@@ -113,8 +113,8 @@ const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseSt
 									id='catFilter' 
 									type='text' 
 									value={catFilter} 
-									label='category'
-									placeholder='groceries, transportation, etc.'
+									label='filter'
+									placeholder='groceries'
 									handleChange={({ target })=> {
 										setCatFilter(target.value)
 									}} 
