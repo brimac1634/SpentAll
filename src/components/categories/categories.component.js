@@ -34,7 +34,7 @@ const Categories = ({ settings, setSettings }) => {
 						label='new category'
 						value={category}
 						margin='0'
-						placeholder='example: entertainment'
+						placeholder='entertainment'
 						handleChange={e=>setCategory(e.target.value)}
 						onKeyPress={e=>{
 							if (e.which !== 13) return;

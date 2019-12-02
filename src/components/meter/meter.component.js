@@ -8,6 +8,7 @@ import { selectUserSettings } from '../../redux/user/user.selectors';
 import { toggleAddExpense } from '../../redux/expenses/expenses.actions';
 
 import CustomButton from '../custom-button/custom-button.component';
+import NumberEncounting from '../number-encounting/number-encounting.component';
 
 import './meter.styles.scss';
 
@@ -24,12 +25,13 @@ const mapDispatchToProps = dispatch => ({
 const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency }) => {
 	const { target, cycle } = userSettings;
 	if (!target || !cycle) return <span>user settings not found</span>
+
 	let percent = totalTargetExpense
 		? 	totalTargetExpense * 100 / target
 		: 	0
 	percent = percent > 100 ? 100 : percent;
 	percent = Math.ceil(percent);
-
+	
 	const screenWidth = window.innerWidth;
 	const diameter = screenWidth > 890 ? 320 : 220;
 	const strokeWidth = 22;
@@ -60,7 +62,13 @@ const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency })
 							}}
 						/>
 					</svg>
-					<h1 className='percent'>{percent}%</h1>
+					<NumberEncounting 
+						className='percent'
+						duration={2500} 
+						starting={0}
+						ending={percent}
+						after='%'
+					/>
 				</div>
 				<div className='message-group'>
 					<div className='row'>
