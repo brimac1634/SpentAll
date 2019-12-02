@@ -10,10 +10,9 @@ const NumberEncounting = ({ starting, ending, before, after, duration, ...otherP
 		const baseInterval = halfOfTheAnimation * r;
 		let halfOfIntervals = [];
 		for (var i = 0; i < halfofIntervals; i++) {
-		halfOfIntervals.unshift(baseInterval * Math.pow(increment, i))
+			halfOfIntervals.push(baseInterval * Math.pow(increment, i))
 		}
-		console.log(halfOfIntervals)
-		const intervals = [...halfOfIntervals, ...halfOfIntervals.reverse()]
+		const intervals = [...halfOfIntervals.slice().reverse(), ...halfOfIntervals]
 		console.log(intervals)
 		return intervals
 	}
