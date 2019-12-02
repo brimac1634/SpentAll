@@ -12,11 +12,14 @@ const NumberEncounting = ({ starting, ending, before, after, duration, ...otherP
 		for (var i = 0; i < halfofIntervals; i++) {
 		halfOfIntervals.unshift(baseInterval * Math.pow(increment, i))
 		}
+		console.log(halfOfIntervals)
 		const intervals = [...halfOfIntervals, ...halfOfIntervals.reverse()]
+		console.log(intervals)
 		return intervals
 	}
 
 	const intervals = useMemo(()=>getIntervals(1.2, duration, ending), [duration, ending])
+	
 
 	useEffect(()=>{
 		if (ending <= 0 || number === ending) return;
