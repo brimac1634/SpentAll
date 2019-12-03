@@ -77,7 +77,12 @@ export function* parseLoginWithToken(data) {
 		} else {
 			const { user, token } = data;
 			const cookies = new Cookies();
-			cookies.set('authToken', token, { path: '/' });
+			let date = new Date()
+			date.setDate(date.getDate() + 7)
+			cookies.set('authToken', token, { 
+				path: '/',
+				expires: date
+			});
 			yield call(handleSignIn, user)
 		}
 	} catch (err) {

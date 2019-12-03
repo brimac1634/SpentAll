@@ -54,6 +54,13 @@
 			.meter-ring {
 				transform: rotate(-90deg);
 
+				&.back {
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+				}
+
 				.circle {
 					transition: stroke-dashoffset 2500ms ease-in-out;
 				}

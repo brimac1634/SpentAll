@@ -44,6 +44,21 @@ const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency })
 			<div className='display-panel'>
 				<div className='ring-group'>
 					<svg
+						className='meter-ring back'
+						height={diameter}
+						width={diameter}
+					>
+						<circle
+							className='circle'
+							stroke='rgba(129, 158, 252, 0.2)'
+							strokeWidth={strokeWidth}
+							fill='transparent'
+							r={radius}
+							cx={diameter / 2}
+							cy={diameter / 2}
+						/>
+					</svg>
+					<svg
 						className='meter-ring'
 						height={diameter}
 						width={diameter}

@@ -13,7 +13,6 @@ const NumberEncounting = ({ starting, ending, before, after, duration, ...otherP
 			halfOfIntervals.push(baseInterval * Math.pow(increment, i))
 		}
 		const intervals = [...halfOfIntervals.slice().reverse(), ...halfOfIntervals]
-		console.log(intervals)
 		return intervals
 	}
 
