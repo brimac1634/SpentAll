@@ -77,11 +77,15 @@ export function* parseLoginWithToken(data) {
 		} else {
 			const { user, token } = data;
 			const cookies = new Cookies();
-			let date = new Date()
-			date.setDate(date.getDate() + 7)
+			let expires = new Date()
+			expires.setDate(expires.getDate() + 7)
+			const domain = process.env.NODE_ENV === 'production'
+				?	'.spentall.com'
+				: 	'localhost'
 			cookies.set('authToken', token, { 
 				path: '/',
-				expires: date
+				expires,
+				domain,
 			});
 			yield call(handleSignIn, user)
 		}
