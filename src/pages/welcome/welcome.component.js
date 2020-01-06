@@ -2,13 +2,13 @@ import React, { lazy, useState } from 'react';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 
 import WelcomeInfo from '../../components/welcome-info/welcome-info.component';
+import SignInForm from '../../components/sign-in-form/sign-in-form.component';
+import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
 import ParallaxSpring from '../../components/parallax-spring/parallax-spring.component';
 import SectionBox from '../../components/section-box/section-box.component';
 
 import './welcome.styles.scss';
 
-const SignInForm = lazy(() => import('../../components/sign-in-form/sign-in-form.component'))
-const SignUpForm = lazy(() => import('../../components/sign-up-form/sign-up-form.component'))
 const NewPasswordForm = lazy(() => import('../../components/new-password-form/new-password-form.component'))
 const ContactForm = lazy(() => import('../../components/contact-form/contact-form.component'))
 const EmailSent = lazy(() => import('../../components/email-sent/email-sent.component'))
