@@ -36,8 +36,8 @@ export const selectExpensesList = createSelector(
 
 export const selectExpenseMap = createSelector(
 	[selectExpensesList],
-	expenseList => expenseList.reduce((accum, item, i)=>{
-		accum[i] = item;
+	expenseList => expenseList.reduce((accum, item)=>{
+		accum[item.expenditure_id] = item;
 		return accum;
 	}, {})
 )

@@ -48,7 +48,7 @@ export const setSelectedExpense = selectedExpense => ({
 	payload: selectedExpense
 })
 
-export const deleteExpenseStart = expenseID => ({
+export const deleteExpenseStart = expenseIDs => ({
 	type: ExpensesActionTypes.DELETE_EXPENSE_START,
-	payload: expenseID
+	payload: expenseIDs
 })

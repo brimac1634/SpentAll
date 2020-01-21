@@ -14,7 +14,7 @@ const mapStateToProps = createStructuredSelector({
 	currency: selectCurrency
 })
 
-const ListItem = ({ key, currency, expense, selected, onClick, checked, handleCheck }) => {
+const ListItem = ({ currency, expense, selected, checked, handleCheck, onClick }) => {
 	const { timestamp, type, amount } = expense;
 	const formattedDate = formatDate(new Date(timestamp), true)
 	return (
@@ -27,7 +27,10 @@ const ListItem = ({ key, currency, expense, selected, onClick, checked, handleCh
 			<div className='fixed-checkbox'>
 				<Checkbox 
 					selected={checked}
-					onClick={handleCheck}
+					onClick={e=>{
+						e.stopPropagation()
+						handleCheck()
+					}}
 				/>
 			</div>
 			<div className={`arrow-container ${selected ? 'show-arr' : null}`}>
