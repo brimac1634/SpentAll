@@ -14,7 +14,6 @@ import CustomButton from '../custom-button/custom-button.component';
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
 import { ReactComponent as AnalyticsIcon } from '../../assets/analytics.svg'
-import { ReactComponent as ListIcon } from '../../assets/list.svg'
 import { ReactComponent as HomeIcon } from '../../assets/home.svg'
 
 import './header.styles.scss';
@@ -67,9 +66,6 @@ const Header = ({ toggleAddExpense, userSettings, location }) => {
 				</HeaderButton>
 				<HeaderButton to='/user/account/analytics'>
 					<AnalyticsIcon />
-				</HeaderButton>
-				<HeaderButton to='/user/account/expenditures'>
-					<ListIcon />
 				</HeaderButton>
 				<HeaderButton to='/user/account/settings'>
 					<SettingsIcon />

@@ -112,7 +112,7 @@
       right: 0;
 
       &.drop-in {
-        @include stagger($item-count: 6, $item-size: 48px)
+        @include stagger($item-count: 5, $item-size: 48px)
       }
 
       &.drop-out {
