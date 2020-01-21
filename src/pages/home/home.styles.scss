@@ -6,6 +6,7 @@
 	position: relative;
 	overflow: hidden;
 	min-height: calc(100vh - 70px);
+	animation: fade-in 600ms ease-in-out;
 
 	@media screen and (max-width: 780px) {
 		margin: 10px 0;

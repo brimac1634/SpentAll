@@ -1,6 +1,7 @@
 .welcome {
 	width: 100%;
 	height: calc(100vh - 70px);
+	animation: fade-in 600ms ease-in-out;
 
 	.contact {
 		max-width: 500px;

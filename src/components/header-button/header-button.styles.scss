@@ -2,21 +2,22 @@
     width: 48px;
     height: 48px;
     padding: 10px;
-    fill: var(--white);
-    background-color: var(--purple);
+    fill: var(--purple);
+    background-color: var(--white);
     border-radius: 50%;
     outline: none;
     cursor: pointer;
     border: none;
     transition: all 200ms ease-in-out;
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--purple);
+    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--white);
 
     &:hover {
       transform: scale(1.04);
     }
 
 	&.selected {
-		background-color: var(--pink);
-		box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--pink);
+		background-color: var(--purple);
+        fill: var(--white);
+		box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--purple);
 	}
 }

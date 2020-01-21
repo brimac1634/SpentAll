@@ -5,9 +5,11 @@ import MediaQuery from 'react-responsive';
 import { Link, withRouter } from 'react-router-dom';
 
 import { selectUserSettings } from '../../redux/user/user.selectors';
+import { toggleAddExpense } from '../../redux/expenses/expenses.actions';
 
 import MenuButton from '../menu-button/menu-button.component';
 import HeaderButton from '../header-button/header-button.component';
+import CustomButton from '../custom-button/custom-button.component';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
@@ -21,7 +23,11 @@ const mapStateToProps = createStructuredSelector({
 	userSettings: selectUserSettings
 })
 
-const Header = ({ userSettings, location }) => {
+const mapDispatchToProps = dispatch => ({
+	toggleAddExpense: () => dispatch(toggleAddExpense())
+})
+
+const Header = ({ toggleAddExpense, userSettings, location }) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
 	const closeMenu = useCallback(()=>{
 		setMenuIsOpen(false);
@@ -69,16 +75,32 @@ const Header = ({ userSettings, location }) => {
 					<SettingsIcon />
 				</HeaderButton>
 				<MediaQuery maxWidth={780}>
+					<div className='header-button pink' onClick={toggleAddExpense}>
+						<div className='add' />
+					</div>
 					<div 
-						className='header-button' 
+						className={`header-button ${menuIsOpen ? 'enlarge' : null}`} 
 						onClick={()=>setMenuIsOpen(!menuIsOpen)} 
 					>
 						<MenuButton showMenu={menuIsOpen} />
 					</div>
 				</MediaQuery>
 			</div>
+			<MediaQuery minWidth={781}>
+				<div className='button-container'>
+					<CustomButton 
+						selected
+						onClick={toggleAddExpense}
+					> 	
+						<div className='add-container'>
+							<div className='add' />
+						</div>
+						add 
+					</CustomButton>
+				</div>
+			</MediaQuery>
 		</div>
 	)
 }
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

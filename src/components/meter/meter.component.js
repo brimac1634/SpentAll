@@ -5,9 +5,7 @@ import { numberWithCommas } from '../../utils';
 
 import { selectTotalTargetExpenses, selectCurrencySymbol } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
-import { toggleAddExpense } from '../../redux/expenses/expenses.actions';
 
-import CustomButton from '../custom-button/custom-button.component';
 import NumberEncounting from '../number-encounting/number-encounting.component';
 
 import './meter.styles.scss';
@@ -18,11 +16,7 @@ const mapStateToProps = createStructuredSelector({
 	currency: selectCurrencySymbol
 })
 
-const mapDispatchToProps = dispatch => ({
-	toggleAddExpense: () => dispatch(toggleAddExpense())
-})
-
-const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency }) => {
+const Meter = ({ totalTargetExpense, userSettings, currency }) => {
 	const { target, cycle } = userSettings;
 	if (!target || !cycle) return <span>user settings not found</span>
 
@@ -98,16 +92,8 @@ const Meter = ({ totalTargetExpense, userSettings, toggleAddExpense, currency })
 					</div>
 				</div>
 			</div>
-			<div className='button-container'>
-				<CustomButton 
-					selected
-					onClick={toggleAddExpense}
-				> 
-					add expenditure 
-				</CustomButton>
-			</div>
 		</div>
 	)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Meter);
+export default connect(mapStateToProps)(Meter);
