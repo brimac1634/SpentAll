@@ -4,6 +4,7 @@ import Summary from '../../components/summary/summary.component';
 import TimeFilter from '../../components/time-filter/time-filter.component';
 import BarChart from '../../components/bar-chart/bar-chart.component';
 import DoughnutChart from '../../components/doughnut-chart/doughnut-chart.component';
+import ExpenseList from '../../components/expense-list/expense-list.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import SectionBox from '../../components/section-box/section-box.component';
@@ -30,6 +31,9 @@ const AnalyticsGroup = () => {
 				<SectionBox>
 					<DoughnutChart />
 				</SectionBox>
+			</div>
+			<div className='list-panel'>
+				<ExpenseList />
 			</div>
 			<HoverBox 
 				show={showFilter} 

@@ -2,7 +2,8 @@
 	grid-template-areas: 
 		'summary'
 		'bar'
-		'doughnut';
+		'doughnut'
+		'list';
 	grid-template-rows: auto  1fr 1fr;
 	grid-template-columns: 1fr;
 	grid-row-gap: 30px;
@@ -15,7 +16,8 @@
 	display: grid;
 	grid-template-areas: 
 		'summary summary summary summary'
-		'bar bar doughnut doughnut';
+		'doughnut doughnut list list'
+		'bar bar list list';
 	grid-column-gap: 30px;
 	grid-row-gap: 10px;
 	grid-template-rows: auto 1fr;
@@ -48,5 +50,10 @@
 		&.bar { grid-area: bar; }
 		&.doughnut { grid-area: doughnut; }
 	}
-	
+
+	.list-panel { 
+		// width: 50%;
+		// height: 100%;
+		grid-area: list;
+	}
 }

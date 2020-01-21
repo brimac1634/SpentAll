@@ -2,18 +2,61 @@
 	width: 100%;
 	height: 100%;
 	text-align: center;
+	position: relative;
 
 	h4 {
 		margin: 10px 0;
 	}
 
-	.list {
+	.list-control {
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
+		height: 46px;
+		background: var(--white);
+		border-radius: 3px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 10px;
+		margin-right: 7px;
+		box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--white);
+
+		> :first-child {
+			height: 100%;
+			display: flex;
+			align-items: center;
+			width: 50%;
+
+			:last-child {
+				color: var(--purple);
+				white-space: nowrap;
+			}
+		}
+
+		.delete {
+			color: var(--background);
+			cursor: pointer;
+			opacity: 0;
+			font-weight: 600;
+			transition: all 300ms ease-in-out;
+			text-align: right;
+
+			&.show {
+				opacity: 1;
+			}
+		}
+	}
+
+	.list {
+		position: absolute;
+		top: 52px;
+		left: 0;
+		right: 0;
 		bottom: 0;
-		padding: 10px;
+		padding: 0;
+		padding-right: 5px;
 		overflow-y: scroll;
 		-webkit-overflow-scrolling: touch;
 

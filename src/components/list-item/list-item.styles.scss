@@ -20,6 +20,7 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		transition: all 300ms ease-in-out;
+		margin-left: 36px;
 
 		&.show-int {
 			opacity: 1;
@@ -40,6 +41,13 @@
 		:last-child {
 			text-align: right;
 		}
+	}
+
+	.fixed-checkbox {
+		position: absolute;
+		left: 10px;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 
 	.arrow-container {

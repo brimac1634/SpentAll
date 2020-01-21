@@ -34,6 +34,14 @@ export const selectExpensesList = createSelector(
 	({ expenses, dateRange }) => filterList(expenses, dateRange)
 )
 
+export const selectExpenseMap = createSelector(
+	[selectExpensesList],
+	expenseList => expenseList.reduce((accum, item, i)=>{
+		accum[i] = item;
+		return accum;
+	}, {})
+)
+
 const expenseMapper = (list, byMonth) => {
 	if (!list) return null;
 	let map = list.reduce((accum, expense)=>{
