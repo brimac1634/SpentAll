@@ -3,6 +3,7 @@
 	display: flex;
 	flex-direction: column;
 	margin: 20px auto;
+	animation: fade-in 600ms ease-in-out;
 
 	.button {
 		display: flex;

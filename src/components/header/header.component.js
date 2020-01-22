@@ -82,11 +82,14 @@ const Header = ({ toggleAddExpense, userSettings, location }) => {
 					</div>
 				</MediaQuery>
 			</div>
-			<MediaQuery minWidth={781}>
-				<div className='button-container'>
-					<AddButton />
-				</div>
-			</MediaQuery>
+			{
+				accountComplete &&
+				<MediaQuery minWidth={781}>
+					<div className='button-container'>
+						<AddButton />
+					</div>
+				</MediaQuery>
+			}
 		</div>
 	)
 }
