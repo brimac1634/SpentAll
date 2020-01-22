@@ -1,4 +1,18 @@
+import { useLayoutEffect, useState } from 'react';
 import moment from 'moment';
+
+export const useWindowSize = () => {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
 
 export const numberWithCommas = (x, decimal, alwaysDecimal) => {
   if (!x) return 0;

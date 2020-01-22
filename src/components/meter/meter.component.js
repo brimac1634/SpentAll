@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { numberWithCommas } from '../../utils';
+import { numberWithCommas, useWindowSize } from '../../utils';
 
 import { selectTotalTargetExpenses, selectCurrencySymbol } from '../../redux/expenses/expenses.selectors';
 import { selectUserSettings } from '../../redux/user/user.selectors';
@@ -17,6 +17,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const Meter = ({ totalTargetExpense, userSettings, currency }) => {
+	const [innerWidth] = useWindowSize();
 	const { target, cycle } = userSettings;
 	if (!target || !cycle) return <span>user settings not found</span>
 
@@ -25,9 +26,23 @@ const Meter = ({ totalTargetExpense, userSettings, currency }) => {
 		: 	0
 	percent = percent > 100 ? 100 : percent;
 	percent = Math.ceil(percent);
+
+	const getDiameter = width => {
+		switch(true) {
+			case (width >= 850):
+				return 360;
+			case (width >= 750 && width < 850):
+				return width * 0.4;
+			case (width < 750 && width >= 630):
+				return width * 0.5;
+			case (width < 630):
+				return width * 0.6;
+			default:
+				return width * 0.4;
+		}
+	}
 	
-	const screenWidth = window.innerWidth;
-	const diameter = screenWidth > 890 ? 320 : 220;
+	const diameter = getDiameter(innerWidth);
 	const strokeWidth = 22;
 	const radius = diameter / 2 - strokeWidth;
 	const circumference = radius * 2 * Math.PI;

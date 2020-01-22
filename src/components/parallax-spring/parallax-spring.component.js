@@ -19,7 +19,7 @@ const ParallaxSpring = ({ x, y }) => {
 	const trans4 = (x, y) => `translate3d(${x / 5 + halfWidth * 0.7}px,${y / 7}px,0)`
 
 	return (
-		<MediaQuery minWidth={800}>
+		<MediaQuery minWidth={750}>
 			<div 
 				className='parallax-spring' 
 			>
