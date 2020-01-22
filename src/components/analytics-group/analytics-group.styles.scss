@@ -1,35 +1,34 @@
-@mixin column() {
-	grid-template-areas: 
-		'summary'
-		'bar'
-		'doughnut'
-		'list';
-	grid-template-rows: auto  1fr 1fr;
-	grid-template-columns: 1fr;
-	grid-row-gap: 30px;
+@mixin blockPadding() {
+	display: block;
+
+	> * {
+		margin-bottom: 10vw;
+	}
 }
 
 .analytics-group {
 	padding: 15px 30px 30px 30px;
 	width: 100%;
-	min-height: calc(100vh - 90px);
 	display: grid;
 	grid-template-areas: 
 		'summary summary summary summary'
 		'doughnut doughnut list list'
+		'doughnut doughnut list list'
+		'bar bar list list'
 		'bar bar list list';
 	grid-column-gap: 30px;
-	grid-row-gap: 10px;
-	grid-template-rows: auto 1fr;
+	grid-row-gap: 30px;
+	grid-template-rows: repeat(5, 1fr);
 	grid-template-columns: repeat(4, 1fr);
 
+
 	@media screen and (max-width: 780px) {
-	    @include column();
-	    padding: 15px 10px 20px 10px;
+	    @include blockPadding();
+	    padding: 15px 16px 20px 16px;
 	}
 
 	@media screen and (max-width: 1024px) and (min-height: 1000px) {
-		@include column();
+		@include blockPadding();
 	}
 
 	.summary-panel { 
@@ -52,8 +51,6 @@
 	}
 
 	.list-panel { 
-		// width: 50%;
-		// height: 100%;
 		grid-area: list;
 	}
 }

@@ -6,6 +6,8 @@ import { lightenDarkenColor } from '../../utils';
 
 import { selectCategoriesTotals } from '../../redux/expenses/expenses.selectors';
 
+import './doughnut-chart.styles.scss';
+
 const mapStateToProps = createStructuredSelector({
 	categoryTotals: selectCategoriesTotals
 })
@@ -62,8 +64,10 @@ const DoughnutChart = ({ categoryTotals }) => {
 	}
 
     return (
-    	<div>
-    		<h4>Amount spent per category (% of total)</h4>
+    	<div className='doughnut-chart'>
+    		<div className='chart-bar'>
+	    		<span>Amount spent per category (% of total)</span>
+    		</div>
 		    <Doughnut data={data} options={options} />
 	    </div>
     );

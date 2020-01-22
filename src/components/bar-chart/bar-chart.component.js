@@ -109,7 +109,9 @@ const BarChart = ({ expenseMonthMap, timeFrame, expenseMap, dateRange, datesArra
 
 	return (
 		<div className='bar-chart'>
-    		<h4>Total amount spent {titleTimeFrame} ({currency})</h4>
+			<div className='chart-bar'>
+	    		<span>Total amount spent {titleTimeFrame} ({currency})</span>
+    		</div>
     		{
     			(startDate === endDate)
     			? 	<div className='none'>
