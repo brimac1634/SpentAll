@@ -57,9 +57,7 @@ const ExpenseList = ({ deleteExpenseStart, expenseList, expenseListMap, selectEx
 	            </div>
 	            <span 
 	            	className={`delete ${checkListKeys.length ? 'show' : null}`}
-	            	onClick={()=>deleteExpenseStart({
-	            		expenditureIDs: Object.keys(checkedList)
-	            	})}
+	            	onClick={()=>setShowModal(true)}
             	>
 	            	Delete
 	            </span>
@@ -88,9 +86,7 @@ const ExpenseList = ({ deleteExpenseStart, expenseList, expenseListMap, selectEx
 								{
 									selected &&
 									<SectionBox style={{borderRadius: '0 0 3px 3px'}} >
-										<ExpenditureDetails 
-											handleDelete={()=>setShowModal(true)} 
-										/>
+										<ExpenditureDetails />
 									</SectionBox>
 								}
 							</Collapsible>
@@ -102,11 +98,11 @@ const ExpenseList = ({ deleteExpenseStart, expenseList, expenseListMap, selectEx
 				ReactDOM.createPortal(
 					<HoverBox show={showModal}>
 						<MessageModal
-							title='Delete Expense'
+							title={checkedList.length <= 1 ? 'Delete Expense' : 'Delete Expenses'}
 							message='Are you sure?'
 							confirm='delete' 
 							cancel='cancel'
-							confirmCallback={()=>deleteExpense([selectedExpense.expenditure_id])} 
+							confirmCallback={()=>deleteExpense(Object.keys(checkedList))} 
 							cancelCallback={()=>setShowModal(false)}
 						/>
 					</HoverBox>

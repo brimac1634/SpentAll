@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
 	toggleAddExpense: () => dispatch(toggleAddExpense())
 })
 
-const ExpenditureDetails = ({ selectedExpense, editNewExpense, toggleAddExpense, handleDelete }) => {
+const ExpenditureDetails = ({ selectedExpense, editNewExpense, toggleAddExpense }) => {
 	if (!selectedExpense) return <div className='expenditure-details'>No expense selected</div>
 	const { currency, amount, timestamp, notes, type } = selectedExpense;
 	
@@ -39,9 +39,6 @@ const ExpenditureDetails = ({ selectedExpense, editNewExpense, toggleAddExpense,
 				</div>
 			}
 			<div className='button-container'>
-				<CustomButton onClick={handleDelete}> 
-					delete 
-				</CustomButton>
 				<CustomButton 
 					onClick={()=>{
 						editNewExpense(selectedExpense);
