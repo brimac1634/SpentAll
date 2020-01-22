@@ -9,7 +9,7 @@ import { toggleAddExpense } from '../../redux/expenses/expenses.actions';
 
 import MenuButton from '../menu-button/menu-button.component';
 import HeaderButton from '../header-button/header-button.component';
-import CustomButton from '../custom-button/custom-button.component';
+import AddButton from '../add-button/add-button.component';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
@@ -24,7 +24,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
 	toggleAddExpense: () => dispatch(toggleAddExpense())
-})
+}) 
 
 const Header = ({ toggleAddExpense, userSettings, location }) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -84,15 +84,7 @@ const Header = ({ toggleAddExpense, userSettings, location }) => {
 			</div>
 			<MediaQuery minWidth={781}>
 				<div className='button-container'>
-					<CustomButton 
-						selected
-						onClick={toggleAddExpense}
-					> 	
-						<div className='add-container'>
-							<div className='add' />
-						</div>
-						add 
-					</CustomButton>
+					<AddButton />
 				</div>
 			</MediaQuery>
 		</div>

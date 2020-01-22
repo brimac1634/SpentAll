@@ -1,0 +1,25 @@
+.add-button {
+  height: 22px;
+  width: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+
+  .add {
+	  display: block;
+	  content: "";
+	  width: 2px;
+	  height: 100%;
+	  background: var(--white);
+
+	  &:after {
+	    display: block;
+	    content: "";
+	    width: 2px;
+	    height: 100%;
+	    background: white;
+	    transform: rotate(90deg);
+	  }
+	}
+}

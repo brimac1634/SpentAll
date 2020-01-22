@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import { createStructuredSelector } from 'reselect';
 import { numberWithCommas, useWindowSize } from '../../utils';
 
@@ -7,6 +8,7 @@ import { selectTotalTargetExpenses, selectCurrencySymbol } from '../../redux/exp
 import { selectUserSettings } from '../../redux/user/user.selectors';
 
 import NumberEncounting from '../number-encounting/number-encounting.component';
+import AddButton from '../add-button/add-button.component';
 
 import './meter.styles.scss';
 
@@ -27,22 +29,15 @@ const Meter = ({ totalTargetExpense, userSettings, currency }) => {
 	percent = percent > 100 ? 100 : percent;
 	percent = Math.ceil(percent);
 
-	const getDiameter = width => {
-		switch(true) {
-			case (width >= 850):
-				return 360;
-			case (width >= 750 && width < 850):
-				return width * 0.4;
-			case (width < 750 && width >= 630):
-				return width * 0.5;
-			case (width < 630):
-				return width * 0.6;
-			default:
-				return width * 0.4;
-		}
+	let diameter;
+	if (innerWidth >= 750) {
+		diameter = 360;
+	} else if (innerWidth >= 630) {
+		diameter = 330;
+	} else {
+		diameter = 280;
 	}
-	
-	const diameter = getDiameter(innerWidth);
+
 	const strokeWidth = 22;
 	const radius = diameter / 2 - strokeWidth;
 	const circumference = radius * 2 * Math.PI;
@@ -107,6 +102,11 @@ const Meter = ({ totalTargetExpense, userSettings, currency }) => {
 					</div>
 				</div>
 			</div>
+			<MediaQuery maxWidth={780}>
+				<div className='button-container'>
+					<AddButton />
+				</div>
+			</MediaQuery>
 		</div>
 	)
 }
