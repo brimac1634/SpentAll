@@ -7,6 +7,7 @@ import DoughnutChart from '../../components/doughnut-chart/doughnut-chart.compon
 import ExpenseList from '../../components/expense-list/expense-list.component';
 import HoverBox from '../../components/hover-box/hover-box.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
+import ExportExcel from '../../components/export-excel/export-excel.component';
 
 import './analytics-group.styles.scss';
 
@@ -20,6 +21,7 @@ const AnalyticsGroup = () => {
 				<CustomButton onClick={()=>setShowFilter(true)}>
 					time filter
 				</CustomButton>
+				<ExportExcel />
 			</div>
 			<div className='chart bar'>
 				<BarChart />
