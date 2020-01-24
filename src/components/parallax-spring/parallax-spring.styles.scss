@@ -24,6 +24,7 @@
 		width: 35ch;
 		height: 25ch;
 		bottom: 0;
+		animation: fade-in 600ms ease-in-out;
 
 		@media screen and (max-width: 990px) {
 			width: 25ch;

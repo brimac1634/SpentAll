@@ -101,7 +101,8 @@ const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseSt
 								</CustomButton>
 								<FormInput 
 									id='amount' 
-									type='number' 
+									type='number'
+									label='amount' 
 									min='0'
 									value={amount} 
 									placeholder='125.50'
@@ -114,7 +115,7 @@ const ExpenseInput = ({ showAddExpense, userSettings, closeExpense, newExpenseSt
 							<span className='section'>3. Category</span>
 							<div className='column'>
 								<FormInput 
-									id='catFilter' 
+									id='filter' 
 									type='text' 
 									value={catFilter} 
 									label='filter'

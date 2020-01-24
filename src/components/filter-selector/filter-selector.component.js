@@ -23,6 +23,7 @@ const FilterSelector = ({ options, select, userSettings }) => {
 				type='text' 
 				value={search}
 				label='filter'
+				id='filter'
 				placeholder='example: USD'
 				handleChange={e=>setSearch(e.target.value)}
 			/>

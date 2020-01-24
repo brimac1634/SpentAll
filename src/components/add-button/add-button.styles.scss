@@ -12,14 +12,14 @@
 	content: "";
 	width: 2px;
 	height: 100%;
-	background: var(--white);
+	background: var(--dark-purple);
 
 	&:after {
 		display: block;
 		content: "";
 		width: 2px;
 		height: 100%;
-		background: white;
+		background: var(--dark-purple);
 		transform: rotate(90deg);
 	}
 }
