@@ -20,9 +20,10 @@ import { setAlert } from '../alert/alert.actions';
 
 const newExpense = state => state.expenses.newExpense;
 
-export function* handleError(error) {
+export function* handleError(err) {
+	const error = err.response?.data || 'Unexpected Error';
 	yield put(userFailure(error))
-	yield put(setAlert(error.title))
+	yield put(setAlert(error))
 }
 
 export function* setSettings({ target, cycle, currency, categories }) {
@@ -49,18 +50,15 @@ export function* updateSettings({ payload }) {
 			target: Number(target).toFixed(0),
 			categories: categories.join(',')
 		}
-		const { data } =  yield axiosConfig('post', '/update-settings', settings)
+		const { data } =  yield axiosConfig('post', '/settings/update-settings', settings)
 
-		if (data.error) {
-			yield handleError(data.error)
-			yield put(setAlert('unable to update settings'))
-		} else {
+		if (data) {
 			yield call(setSettings, data)
 			yield put(fetchExpensesStart())
 			yield put(setAlert('settings updated!'))
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
@@ -72,9 +70,7 @@ export function* handleSignIn(user) {
 
 export function* parseLoginWithToken(data) {
 	try {	
-		if (data.error) {
-			yield handleError(data.error)
-		} else {
+		if (data) {
 			const { user, token } = data;
 			const cookies = new Cookies();
 			let expires = new Date()
@@ -90,87 +86,77 @@ export function* parseLoginWithToken(data) {
 			yield call(handleSignIn, user)
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
 
 export function* signInWithEmail({ payload: { email, password }}) {
 	try {
-		const { data } = yield axiosConfig('post', '/login', {email, password})
+		const { data } = yield axiosConfig('post', '/auth/login', {email, password})
 		if (data) {
 			yield call(parseLoginWithToken, data)
-		} else {
-			yield put(userFailure('unable to login'))
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
 export function* signUpWithEmail({ payload: { name, email }}) {
 	try {
-		const { data } = yield axiosConfig('post', '/register', {name, email})
-		if (data.error) {
-			yield handleError(data.error)
-		} else {
+		const { data } = yield axiosConfig('post', '/auth/register', {name, email})
+		if (data) {
 			yield put(setSuccessMessage('Please check your email for a verification link!'))
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
 export function* resetAccount({ payload: { email }}) {
 	try {
-		const { data } = yield axiosConfig('post', '/reset', {email})
-		if (data.error) {
-			yield handleError(data.error)
-		} else {
+		const { data } = yield axiosConfig('post', '/auth/reset', {email})
+		if (data) {
 			yield put(setSuccessMessage('Please check your email for a reset link!'))
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
 export function* register({ payload: { password, token }}) {
 	try {
-		const { data } = yield axiosConfig('post', '/complete-register', {password, token})
-		if (data.error) {
-			yield handleError(data.error)
-		} else {
+		const { data } = yield axiosConfig('post', '/auth/complete-register', {password, token});
+		if (data) {
 			yield call(parseLoginWithToken, data)
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
 export function* updatePassword({ payload: { password }}) {
 	try {
-		const { data } = yield axiosConfig('post', '/update-password', {password })
-		if (data.error) {
-			yield handleError(data.error)
-		} else {
+		const { data } = yield axiosConfig('post', '/auth/update-password', {password })
+		if (data) {
 			yield put(setAlert('password updated'))
 			yield call(signOut)
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
 export function* signInWithFacebook({ payload: { accessToken, id, email, name } }) {
 	try {
-		const { data } = yield axiosConfig('post', '/api/v1/auth/facebook', {accessToken, id, email, name})
+		const { data } = yield axiosConfig('post', 'auth/facebook', {accessToken, id, email, name})
 		if (data) {
 			yield call(parseLoginWithToken, data)
 		} else {
 			yield put(userFailure('unable to login'))
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 
@@ -179,9 +165,9 @@ export function* isUserAuthenticated() {
     const token = cookies.get('authToken')
     if (token) {
     	try {
-			const { data } = yield axiosConfig('get', '/check-user')
-			if (data.error) {
-				yield handleError(data.error)
+			const { data } = yield axiosConfig('get', '/auth')
+			if (!data) {
+				yield handleError()
 			} else {
 				yield call(handleSignIn, data)
 			}
@@ -201,14 +187,14 @@ export function* signOut() {
 
 export function* deleteAccount() {
 	try {
-		const { data } = yield axiosConfig('get', '/delete-account')
+		const { data } = yield axiosConfig('get', '/auth/delete-account')
 		if (data === 'user deleted') {
 			yield call(signOut)
 		} else {
 			yield put(userFailure('unable to delete account'))
 		}
 	} catch (err) {
-		yield put(userFailure(err))
+		yield handleError(err);
 	}
 }
 

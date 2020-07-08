@@ -19,10 +19,11 @@ const newExpense = state => state.expenses.newExpense;
 
 export function* fetchExpensesAsync() {
 	try {
-		const { data } = yield axiosConfig('get', '/get-expenditures');
+		const { data } = yield axiosConfig('get', '/expenditures');
 		yield put(fetchExpensesSuccess(data));
 	} catch (err) {
-		yield put(setExpensesFailure(err.message))
+		const error = err.response?.data || 'Unexpected Error';
+		yield put(setExpensesFailure(error));
 	}
 }
 
@@ -56,12 +57,8 @@ export function* transformTimeFrame({payload}) {
 
 export function* addExpenditureStart({payload}) {
 	try {
-		const { data } = yield axiosConfig('post', '/add-expenditure', payload);
-		if (data.error) {
-			const { message } = data.error;
-			yield put(setExpensesFailure(message))
-			yield put(setAlert('error'));
-		} else {
+		const { data } = yield axiosConfig('post', '/expenditures/add', payload);
+		if (data) {
 			yield put(fetchExpensesSuccess(data));
 			yield put(setAlert(payload.expenditure_id ? 'updated!' : 'spent!'));
 			const expense = yield select(newExpense);
@@ -85,24 +82,22 @@ export function* addExpenditureStart({payload}) {
 			}
 		}
 	} catch (err) {
-		yield put(setExpensesFailure(err.message))
+		const error = err.response?.data || 'Unexpected Error';
+		yield put(setExpensesFailure(error))
 		yield put(setAlert('unable to update expenditures'))
 	}
 }
 
 export function* deleteExpenseStart({payload}) {
 	try {
-		const { data } = yield axiosConfig('post', '/delete-expenditure', payload);
-		if (data.error) {
-			const { message } = data.error;
-			yield put(setExpensesFailure(message))
-			yield put(setAlert('error'));
-		} else {
+		const { data } = yield axiosConfig('post', '/expenditures/delete', payload);
+		if (data) {
 			yield put(fetchExpensesSuccess(data));
 			yield put(setAlert('deleted'));
 		}
 	} catch (err) {
-		yield put(setExpensesFailure(err.message))
+		const error = err.response?.data || 'Unexpected Error';
+		yield put(setExpensesFailure(error))
 		yield put(setAlert('failed to delete'))
 	}
 }

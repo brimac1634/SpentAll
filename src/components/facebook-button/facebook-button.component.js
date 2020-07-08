@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
 
 const FacebookButton = ({ label, signInWithFacebookStart }) => (
 	<FacebookLogin
-        appId='1337514576424164'
+        appId={process.env.REACT_APP_FACEBOOK_ID}
         fields='name,email'
         cssClass='custom-fb-button'
         callback={signInWithFacebookStart}

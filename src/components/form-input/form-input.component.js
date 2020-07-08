@@ -8,7 +8,7 @@ const FormInput = ({ area, handleChange, margin, label, id, ...otherProps }) => 
 			{
 				label ? 
 				(<label 
-					for={id}
+					htmlFor={id}
 					onClick={()=>{
 						input.current.focus()
 					}}

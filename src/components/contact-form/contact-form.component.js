@@ -45,7 +45,7 @@ const ContactForm = ({ currentUser, setAlert }) => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 		setIsLoading(true);
-		axiosConfig('post', '/contact-us', newMessage)
+		axiosConfig('post', '/contact', newMessage)
 		.then(() => {
 			setIsLoading(false);
 			setAlert('Your message has been sent')
@@ -56,7 +56,7 @@ const ContactForm = ({ currentUser, setAlert }) => {
 			})
 		}).catch(err => {
 			setIsLoading(false);
-			setAlert(err.title)
+			setAlert(err.response?.data || 'Unable to Send')
 		});
 	}
 

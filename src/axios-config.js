@@ -2,11 +2,9 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 const axiosConfig = (method, endpoint, data) => {
-	const url = (process.env.NODE_ENV === 'production') 
-		? 'https://spentall-server.herokuapp.com'
-		: 'http://localhost:5000'
+	const url = process.env.REACT_APP_SERVER;
 	const cookies = new Cookies();
-	const token = cookies.get('authToken')
+	const token = cookies.get('authToken');
 	return axios({
 		method,
 		url: url + endpoint,
@@ -16,7 +14,6 @@ const axiosConfig = (method, endpoint, data) => {
 			'Content-Type': 'application/json'
 		}
 	})
-	.catch(err => console.log(err))
 }
 
 export default axiosConfig
