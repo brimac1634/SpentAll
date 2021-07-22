@@ -25,7 +25,7 @@
     "redux-saga": "^1.1.1",
     "reselect": "^4.0.0",
     "universal-cookie": "^4.0.2",
-    "xlsx": "^0.15.4"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "react-scripts start",
